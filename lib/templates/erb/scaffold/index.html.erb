@@ -5,7 +5,7 @@
   </ol>
 </div>
 
-<div class="main container"<%%# ng-controller="<%= plural_table_name %>IndexCtrl" %>>
+<div class="main container" ng-controller="<%= plural_table_name.camelize %>IndexCtrl as indexCtrl">
   <div class="panel panel-default">
     <div class="panel-heading panel-heading-toolbox">
       <h3 class="panel-title"><%%= <%= class_name %>.model_name.human(count: 2) %></h3>

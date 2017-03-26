@@ -13,6 +13,6 @@
   </ol>
 </div>
 
-<div class="form-wrapper"<%%# ng-controller="<%= plural_table_name %>NewCtrl" %>>
+<div class="form-wrapper" ng-controller="<%= plural_table_name.camelize %>NewCtrl as newCtrl">
   <%%= render 'form' %>
 </div>

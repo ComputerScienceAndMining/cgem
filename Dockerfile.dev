@@ -1,32 +1,31 @@
-FROM phusion/passenger-ruby22:0.9.15
+FROM phusion/passenger-customizable:0.9.20
 
-# Set correct environment variables.
+# Set correct environment variables
 ENV HOME /root
 ENV APP_HOME /home/app/webapp
-# ENV BUNDLE_PATH /home/app/webapp/vendor/bundle
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
 
-# Workdir
-WORKDIR /home/app/webapp/
+# Ruby support, Node.js and Meteor support.
+RUN /pd_build/ruby-2.2.*.sh
+RUN /pd_build/nodejs.sh
 
-# PG Client for ops container
-RUN apt-get update && apt-get install -y postgresql-client-9.3
-
-# Backups for ops container
+# PG Client, backup database, bower global
+RUN apt-get update && apt-get install -y postgresql-client-9.5
 RUN gem install backup -v 4.2.3
-
-# Install bower globally
 RUN npm -g install bower@1.7.9
+
+# Workdir for bundle and bower
+WORKDIR /home/app/webapp/
 
 # Add files
 ADD . /home/app/webapp/
 
 # Change /home/app/webapp owner to user app
-RUN sudo chown -R app:app /home/app/webapp/
+RUN chown -R app:app /home/app/webapp/
 
-# Enable ssh and insecure key permanently
+# Enable ssh and insecure key permanently (development)
 RUN rm -f /etc/service/sshd/down
 RUN /usr/sbin/enable_insecure_key
 

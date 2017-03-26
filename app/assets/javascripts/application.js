@@ -17,15 +17,20 @@
 //= require i18n/translations
 //= require angular/angular
 //= require angular-resource/angular-resource
-//= require ng/app
-//= require ng/controllers/application
-//= require ng/controllers/home
+
+//= require ng/app.module
+//= require ng/app.config
+//  require_tree ./ng/services
+//  require_tree ./ng/filters
+//  require_tree ./ng/directives
+//  require_tree ./ng/components
+//= require_tree ./ng/controllers
+//  require_tree ./ng/components
+
 
 $(function(){
-
   // Tooltips
   $('[data-tooltip="tooltip"]').tooltip({
     container: 'body'
   })
-
 })

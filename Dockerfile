@@ -1,23 +1,26 @@
-FROM phusion/passenger-ruby22:0.9.15
+FROM phusion/passenger-customizable:0.9.20
 
-# Set correct environment variables.
+# Set correct environment variables
 ENV HOME /root
 ENV APP_HOME /home/app/webapp
-ENV BUNDLE_PATH /home/app/webapp/vendor/bundle
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
 
+# Ruby support, Node.js and Meteor support.
+RUN /pd_build/ruby-2.2.*.sh
+RUN /pd_build/nodejs.sh
+
+# PG Client, backup database, bower global
+RUN apt-get update && apt-get install -y postgresql-client-9.5
+RUN gem install backup -v 4.2.3
+RUN npm -g install bower@1.7.9
+
 # Workdir for bundle and bower
 WORKDIR /home/app/webapp/
 
-# PG Client for ops container
-RUN apt-get update && apt-get install -y postgresql-client-9.3
-
-# Backups for ops container
-RUN gem install backup -v 4.2.3
-
 # Install gems in a cache efficient way
+ENV BUNDLE_PATH /home/app/webapp/vendor/bundle
 ADD Gemfile /home/app/webapp/
 ADD Gemfile.lock /home/app/webapp/
 RUN bundle install --jobs 4 --retry 6 --deployment --without development test
@@ -25,7 +28,6 @@ RUN bundle install --jobs 4 --retry 6 --deployment --without development test
 # Install bower in a cache efficient way
 ADD .bowerrc /home/app/webapp/
 ADD bower.json /home/app/webapp/
-RUN npm -g install bower@1.7.9
 RUN bower install --allow-root
 
 # Add files
@@ -35,7 +37,7 @@ ADD . /home/app/webapp/
 RUN RAILS_ENV=production bundle exec rake assets:precompile
 
 # Change /home/app/webapp owner to user app
-RUN sudo chown -R app:app /home/app/webapp/
+RUN chown -R app:app /home/app/webapp/
 
 # Add init script
 ADD docker/my_init.d/*.sh /etc/my_init.d/

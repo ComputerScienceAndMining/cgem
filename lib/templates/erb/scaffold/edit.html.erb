@@ -19,6 +19,6 @@
   </ol>
 </div>
 
-<div class="form-wrapper"<%%# ng-controller="<%= plural_table_name %>EditCtrl" %>>
+<div class="form-wrapper" ng-controller="<%= plural_table_name.camelize %>EditCtrl as editCtrl">
   <%%= render 'form' %>
 </div>

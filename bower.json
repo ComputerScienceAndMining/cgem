@@ -1,11 +1,12 @@
 {
   "name": "rails-seed",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "jquery-ujs": "1.2.2",
     "bootstrap-sass": "3.3.6",
-    "angular": "1.5.8",
-    "angular-resource": "1.5.8",
+    "angular": "1.6.2",
+    "angular-resource": "1.6.2",
+    "lodash": "4.17.4",
     "async": "1.4.2"
   },
   "private": true

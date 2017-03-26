@@ -2,18 +2,16 @@
   "use strict";
 
   // Define controller
-  function applicationCtrl ($scope) {
-    console.log('applicationCtrl: Hi')
-    var data = $scope.data = {}
-    var view = $scope.view = {}
-    var fn = $scope.fn = {}
+  function AppCtrl ($log) {
+    $log.debug('AppCtrl: Hi')
+    var vm = this
   }
+
+  // Inject dependencies
+  AppCtrl.$inject = ['$log']
 
   // Register controller
   angular
     .module('app.controllers.application', [])
-    .controller('applicationCtrl', [
-      '$scope',
-      applicationCtrl
-    ])
+    .controller('AppCtrl', AppCtrl)
 })();

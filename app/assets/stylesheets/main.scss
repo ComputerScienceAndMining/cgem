@@ -1,0 +1,11 @@
+// Fix for navbar fixed top
+// See more: http://getbootstrap.com/components/#navbar-fixed-top
+body { 
+	padding-top: 70px;
+	padding-bottom: 30px;
+}
+
+// Panel toolbar
+.btn-panel-toolbar {
+	padding: 9px 12px;
+}

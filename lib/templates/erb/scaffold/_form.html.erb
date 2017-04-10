@@ -46,6 +46,8 @@
                 <%%= f.date_field :<%= attribute.name %>, class: "form-control" %>
 <%- elsif attribute.field_type.to_s == "time_select" -%>
                 <%%= f.time_field :<%= attribute.name %>, class: "form-control" %>
+<%- elsif attribute.field_type.to_s == "check_box" -%>
+                <%%= f.check_box :<%= attribute.name %> %>
 <%- else -%>
                 <%%= f.<%= attribute.field_type %> :<%= attribute.name %>, class: "form-control", placeholder: "<%= attribute.human_name %>" %>
 <%- end -%>

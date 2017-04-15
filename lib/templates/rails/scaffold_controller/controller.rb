@@ -10,10 +10,11 @@ class <%= controller_class_name %>Controller < ApplicationController
   # GET <%= route_url %>
   def index
     @page = params[:page]
+    @per_page = 10
 
-    <%= plural_table_name %>_filtered = params[:q].present? ? <%= class_name %>.by_name(params[:q]) : <%= orm_class.all(class_name) %>
+    @<%= plural_table_name %>_filtered = params[:q].present? ? <%= class_name %>.by_name(params[:q]) : <%= orm_class.all(class_name) %>
 
-    @<%= plural_table_name %> = <%= plural_table_name %>_filtered.paginate page: params[:page], per_page: 10
+    @<%= plural_table_name %> = @<%= plural_table_name %>_filtered.paginate page: params[:page], per_page: @per_page
 
     # Display the data collected according to a format
     respond_to do |format|

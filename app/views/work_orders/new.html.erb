@@ -1,0 +1,18 @@
+<%= show_error_messages!(@work_order) %>
+
+<div class="container"<%# ng-controller="work_ordersNewCtrl" %>>
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(WorkOrder).index? %>
+        <%= link_to WorkOrder.model_name.human(count: 2), work_orders_path %>
+      <% else %>
+        <%= WorkOrder.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li class="active"><%= t('new', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="WorkOrdersNewCtrl as newCtrl">
+  <%= render 'form' %>
+</div>

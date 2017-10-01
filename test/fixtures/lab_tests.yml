@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyString
+  started_at: 2017-09-17 23:24:20
+  ended_at: 2017-09-17 23:24:20
+  work_order_id:
+  test_status_id:
+  test_type_id:
+  test_type_version_id:
+  specimen_id:
+  tested_by_id: 
+  data:
+
+two:
+  name: MyString
+  description: MyString
+  started_at: 2017-09-17 23:24:20
+  ended_at: 2017-09-17 23:24:20
+  work_order_id:
+  test_status_id:
+  test_type_id:
+  test_type_version_id:
+  specimen_id:
+  tested_by_id: 
+  data:

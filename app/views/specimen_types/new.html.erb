@@ -1,0 +1,18 @@
+<%= show_error_messages!(@specimen_type) %>
+
+<div class="container"<%# ng-controller="specimen_typesNewCtrl" %>>
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(SpecimenType).index? %>
+        <%= link_to SpecimenType.model_name.human(count: 2), specimen_types_path %>
+      <% else %>
+        <%= SpecimenType.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li class="active"><%= t('new', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="SpecimenTypesNewCtrl as newCtrl">
+  <%= render 'form' %>
+</div>

@@ -122,7 +122,7 @@ pt-BR:
       odd: deve ser ímpar
       record_invalid: 'A validação falhou: %{errors}'
       restrict_dependent_destroy:
-        one: Não é possível excluir o registro pois existe um %{record} dependente
+        one: Não é possível excluir o registro pois existe um(a) %{record} dependente
         many: Não é possível excluir o registro pois existem %{record} dependentes
       taken: já está em uso
       too_long:

@@ -1,0 +1,3 @@
+module SpecimenGroupRelationshipsHelper
+  attr_reader :specimen_group_relationships, :specimen_group_relationship
+end

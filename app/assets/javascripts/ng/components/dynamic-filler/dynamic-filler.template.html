@@ -1,0 +1,54 @@
+<div style="display:none">
+  <input type="text" name="{{dynamicFiller.name}}" value="{{dynamicFiller.template}}">
+</div>
+
+<div ng-show="dynamicFiller.template" class="panel panel-primary">
+  <div class="panel-heading">Datos</div>
+  <div class="panel-body dynamic-filler">
+
+    <div class="dynamic-fields">
+      <div class="dynamic-field" ng-repeat="field in dynamicFiller.template.fields">
+
+        <div class="form-group" ng-switch="field.type">
+          <label class="control-label">{{field.name}}</label>
+          <textarea ng-model="field.value" ng-switch-when="textarea" class="form-control" rows="3"></textarea>
+          <input ng-model="field.value" ng-switch-when="color" class="form-control" type="{{field.type}}" value="">
+          <input ng-model="field.value" ng-switch-when="number" class="form-control" type="{{field.type}}" value="">
+          <input ng-model="field.value" ng-switch-when="text" class="form-control" type="{{field.type}}" value="">
+          <input ng-model="field.value" ng-switch-when="date" class="form-control" type="{{field.type}}" value="">
+          <input ng-model="field.value" ng-switch-when="email" class="form-control" type="{{field.type}}" value="">
+
+          <div ng-switch-when="pictures" class="dynamic-multiple-media">
+            <label ng-repeat="picture in field.pictures">
+              <input id="{{picture.id}}" name="dynamic_files[pictures][{{picture.id}}]" class="form-control" type="file" accept="image/*" capture="camera">
+            </label>
+            <button class="btn btn-default btn-block" type="button" ng-click="dynamicFiller.addPicture(field)">New picture</button>
+          </div><!-- /.dynamic-multiple-media -->
+
+          <input ng-switch-when="video" class="form-control" type="file" accept="video/*" capture="camcorder">
+          <input ng-switch-when="audio" class="form-control" type="file" accept="audio/*" capture="microphone">
+
+          <div class="dynamic-toggle-input" data-toggle="buttons">
+            <div ng-switch-when="checkbox" ng-repeat="alternative in field.alternatives">
+              <label ng-click="dynamicFiller.toggleCheckbox(field, alternative)" class="btn btn-default btn-block">
+                <input name="{{field.name}}" type="{{field.type}}"> {{alternative.name}}
+                <i ng-show="alternative.selected" class="fa fa-check"></i>
+              </label>
+            </div>
+
+            <div ng-switch-when="radio" ng-repeat="alternative in field.alternatives">
+              <label ng-click="dynamicFiller.changeRadioButton(field, alternative)" class="btn btn-default btn-block">
+                <input name="{{field.name}}" type="{{field.type}}"> {{alternative.name}}
+                <i ng-show="field.value == alternative.name" class="fa fa-check"></i>
+              </label>
+            </div>
+          </div>
+        </div><!-- /.form-group -->
+      </div>
+    </div>
+  </div>
+</div><!-- /.panel -->
+
+<div ng-show="dynamicFiller.showJSON" class="well">
+  {{dynamicFiller.template.fields|json}}
+</div><!-- /.well -->

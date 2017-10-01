@@ -1,0 +1,32 @@
+<%= show_error_messages!(@lab_test) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(WorkOrder).index? %>
+        <%= link_to WorkOrder.model_name.human(count: 2), work_orders_path %>
+      <% else %>
+        <%= WorkOrder.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @work_order.to_s, work_order_path(@work_order) %></li>
+    <li>
+      <% if policy(LabTest).index? %>
+        <%= link_to LabTest.model_name.human(count: 2), lab_tests_path %>
+      <% else %>
+        <%= LabTest.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li>
+      <% if policy(@lab_test).show? %>
+        <%= link_to @lab_test.to_s, lab_test_path(@lab_test) %></li>
+      <% else %>
+        <%= @lab_test.to_s %></li>
+      <% end -%>
+    <li class="active"><%= t('edit', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="LabTestsEditCtrl as editCtrl">
+  <%= render 'form' %>
+</div>

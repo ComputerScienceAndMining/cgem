@@ -1,0 +1,110 @@
+<div class="container">
+  <ol class="breadcrumb">
+    <li><%= link_to TestTypeVersion.model_name.human(count: 2), test_type_versions_path %></li>
+    <li class="active"><%= t('index', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="main container" ng-controller="TestTypeVersionsIndexCtrl as indexCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= TestTypeVersion.model_name.human(count: 2) %></h3>
+      <div class="panel-toolbar">
+        <%= form_tag test_type_versions_path, {method: :get, class: "form-inline", "role" => "form"} do %>
+          <div class="input-group">
+            <%= text_field_tag :q, nil, placeholder: t('search', scope: :crud_views), class: 'form-control' %>
+            <span class="input-group-btn">
+              <%= button_tag type: 'submit', class: 'btn btn-default btn-panel-toolbar', title: t('search_resources', scope: :crud_views, resources: TestTypeVersion.model_name.human(count: 2)) , name: '' do %>
+                <%= icon 'search' %>
+              <% end -%>
+            </span>
+          </div>
+        <% end %>
+        
+        <% if policy(TestTypeVersion).new? %>
+          <%= link_to new_test_type_version_path, class: "btn btn-primary btn-panel-toolbar", data: { tooltip: 'tooltip' }, title: t('new_resource', scope: :crud_views, resource: TestTypeVersion.model_name.human) do %>
+            <%= icon 'plus' %>
+          <% end %>
+        <% end -%>
+      </div>
+    </div>
+    <% unless @test_type_versions.empty? %>
+    <div class="table-responsive">
+      <table class="table table-striped pretty">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th><%= TestTypeVersion.human_attribute_name('name') %></th>
+            <th><%= TestTypeVersion.human_attribute_name('description') %></th>
+            <th><%= TestTypeVersion.human_attribute_name('data') %></th>
+            <th><%= TestTypeVersion.human_attribute_name('test_type') %></th>
+            <th><%= t('actions', scope: :crud_views) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @test_type_versions.each_with_index do |test_type_version, index| %>
+          <tr>
+            <td><%= "#{index + 1}" %></td>
+            <td><%= link_to test_type_version, test_type_version_path(test_type_version) %></td>
+            <td><%= test_type_version.description %></td>
+            <td><%= test_type_version.data %></td>
+            <td><%= test_type_version.test_type %></td>
+            <td>
+              <div class="btn-group" role="group">
+                <% if policy(test_type_version).show? %>
+                  <%= link_to test_type_version_path(test_type_version), class: "btn btn-sm btn-default", data: { tooltip: 'tooltip', title: t('details', scope: :crud_views, resource: TestTypeVersion.model_name.human) } do %>
+                    <%= icon 'eye'  %>
+                  <% end -%>
+                <% end -%>
+
+                <% if policy(test_type_version).edit? %>
+                  <%= link_to edit_test_type_version_path(test_type_version), class: "btn btn-sm btn-primary", data: { tooltip: 'tooltip', title: t('edit', scope: :crud_views, resource: TestTypeVersion.model_name.human) } do %>
+                    <%= icon 'pencil'  %>
+                  <% end -%>
+                <% end -%>
+
+                <% if policy(test_type_version).destroy? %>
+                  <%= link_to test_type_version_path(test_type_version), class: "btn btn-sm btn-danger", data: { tooltip: 'tooltip', title: t('delete', scope: :crud_views, resource: TestTypeVersion.model_name.human), confirm: t('are_you_sure', scope: :crud_views) }, method: :delete do %>
+                    <%= icon 'trash'  %>
+                  <% end -%>
+                <% end -%>
+              </div>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div><!-- /.table-responsive -->
+    <% else %>
+      <div class="panel-body">
+        <div class="no-resources-found text-center text-muted">
+          <h3><%= icon 'exclamation-triangle' %> <%= t('no_resources_found', scope: :crud_views, resources: TestTypeVersion.model_name.human(count: 2)) %>.</h3>
+        </div>
+      </div><!--/.panel-body-->
+    <% end %>
+    <% if @test_type_versions_filtered.size > @per_page %>
+      <div class="panel-footer panel-footer-toolbox">
+        <div class="pull-right">
+          <%= will_paginate @test_type_versions, renderer: BootstrapPagination::Rails, inner_window: 2, outer_window: 0 %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'test_type_version',
+      'plural_name': 'test_type_versions',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for test_type_versions index view -->
+<% end %>

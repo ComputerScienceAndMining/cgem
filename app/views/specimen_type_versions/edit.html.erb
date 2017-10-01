@@ -1,0 +1,24 @@
+<%= show_error_messages!(@specimen_type_version) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(SpecimenTypeVersion).index? %>
+        <%= link_to SpecimenTypeVersion.model_name.human(count: 2), specimen_type_versions_path %>
+      <% else %>
+        <%= SpecimenTypeVersion.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li>
+      <% if policy(@specimen_type_version).show? %>
+        <%= link_to @specimen_type_version.to_s, specimen_type_version_path(@specimen_type_version) %></li>
+      <% else %>
+        <%= @specimen_type_version.to_s %></li>
+      <% end -%>
+    <li class="active"><%= t('edit', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="SpecimenTypeVersionsEditCtrl as editCtrl">
+  <%= render 'form' %>
+</div>

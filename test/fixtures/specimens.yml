@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  remarks: MyText
+  sample_id:
+  specimen_type_id:
+  specimen_type_version_id:
+  prepared_by_id: 
+  data:
+
+two:
+  code: MyString
+  remarks: MyText
+  sample_id:
+  specimen_type_id:
+  specimen_type_version_id:
+  prepared_by_id: 
+  data:

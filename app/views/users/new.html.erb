@@ -1,0 +1,18 @@
+<%= show_error_messages!(@user) %>
+
+<div class="container"<%# ng-controller="usersNewCtrl" %>>
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(User).index? %>
+        <%= link_to User.model_name.human(count: 2), users_path %>
+      <% else %>
+        <%= User.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li class="active"><%= t('new', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="UsersNewCtrl as newCtrl">
+  <%= render 'form' %>
+</div>

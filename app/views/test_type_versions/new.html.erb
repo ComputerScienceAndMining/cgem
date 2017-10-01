@@ -1,0 +1,18 @@
+<%= show_error_messages!(@test_type_version) %>
+
+<div class="container"<%# ng-controller="test_type_versionsNewCtrl" %>>
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(TestTypeVersion).index? %>
+        <%= link_to TestTypeVersion.model_name.human(count: 2), test_type_versions_path %>
+      <% else %>
+        <%= TestTypeVersion.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li class="active"><%= t('new', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="TestTypeVersionsNewCtrl as newCtrl">
+  <%= render 'form' %>
+</div>

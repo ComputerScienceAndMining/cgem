@@ -1,0 +1,118 @@
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(WorkOrder).index? %>
+        <%= link_to WorkOrder.model_name.human(count: 2), work_orders_path %>
+      <% else %>
+        <%= WorkOrder.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @work_order.to_s, work_order_path(@work_order) %></li>
+    <li><%= link_to Specimen.model_name.human(count: 2), specimens_path %></li>
+    <li class="active"><%= t('index', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="main container" ng-controller="SpecimensIndexCtrl as indexCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= Specimen.model_name.human(count: 2) %></h3>
+      <div class="panel-toolbar">
+        <%= form_tag specimens_path, {method: :get, class: "form-inline", "role" => "form"} do %>
+          <div class="input-group">
+            <%= text_field_tag :q, nil, placeholder: t('search', scope: :crud_views), class: 'form-control' %>
+            <span class="input-group-btn">
+              <%= button_tag type: 'submit', class: 'btn btn-default btn-panel-toolbar', title: t('search_resources', scope: :crud_views, resources: Specimen.model_name.human(count: 2)) , name: '' do %>
+                <%= icon 'search' %>
+              <% end -%>
+            </span>
+          </div>
+        <% end %>
+
+        <% if policy(Specimen).new? %>
+          <%= link_to new_specimen_path, class: "btn btn-primary btn-panel-toolbar", data: { tooltip: 'tooltip' }, title: t('new_resource', scope: :crud_views, resource: Specimen.model_name.human) do %>
+            <%= icon 'plus' %>
+          <% end %>
+        <% end -%>
+      </div>
+    </div>
+    <% unless @specimens.empty? %>
+    <div class="table-responsive">
+      <table class="table table-striped pretty">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th><%= Specimen.human_attribute_name('code') %></th>
+            <th><%= Specimen.human_attribute_name('sample') %></th>
+            <th><%= Specimen.human_attribute_name('specimen_type') %></th>
+            <th><%= Specimen.human_attribute_name('prepared_by') %></th>
+            <th><%= t('actions', scope: :crud_views) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @specimens.each_with_index do |specimen, index| %>
+          <tr>
+            <td><%= "#{index + 1}" %></td>
+            <td><%= specimen.code %></td>
+            <td><%= specimen.sample %></td>
+            <td><%= specimen.specimen_type %></td>
+            <td><%= specimen.prepared_by %></td>
+            <td>
+              <div class="btn-group" role="group">
+                <% if policy(specimen).show? %>
+                  <%= link_to work_order_specimen_path(@work_order, specimen), class: "btn btn-sm btn-default", data: { tooltip: 'tooltip', title: t('details', scope: :crud_views, resource: Specimen.model_name.human) } do %>
+                    <%= icon 'eye'  %>
+                  <% end -%>
+                <% end -%>
+
+                <% if policy(specimen).edit? %>
+                  <%= link_to edit_work_order_specimen_path(@work_order, specimen), class: "btn btn-sm btn-primary", data: { tooltip: 'tooltip', title: t('edit', scope: :crud_views, resource: Specimen.model_name.human) } do %>
+                    <%= icon 'pencil'  %>
+                  <% end -%>
+                <% end -%>
+
+                <% if policy(specimen).destroy? %>
+                  <%= link_to work_order_specimen_path(@work_order, specimen), class: "btn btn-sm btn-danger", data: { tooltip: 'tooltip', title: t('delete', scope: :crud_views, resource: Specimen.model_name.human), confirm: t('are_you_sure', scope: :crud_views) }, method: :delete do %>
+                    <%= icon 'trash'  %>
+                  <% end -%>
+                <% end -%>
+              </div>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div><!-- /.table-responsive -->
+    <% else %>
+      <div class="panel-body">
+        <div class="no-resources-found text-center text-muted">
+          <h3><%= icon 'exclamation-triangle' %> <%= t('no_resources_found', scope: :crud_views, resources: Specimen.model_name.human(count: 2)) %>.</h3>
+        </div>
+      </div><!--/.panel-body-->
+    <% end %>
+    <% if @specimens_filtered.size > @per_page %>
+      <div class="panel-footer panel-footer-toolbox">
+        <div class="pull-right">
+          <%= will_paginate @specimens, renderer: BootstrapPagination::Rails, inner_window: 2, outer_window: 0 %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'specimen',
+      'plural_name': 'specimens',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for specimens index view -->
+<% end %>

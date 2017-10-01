@@ -1,0 +1,226 @@
+<%= show_error_messages!(@work_order) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(WorkOrder).index? %>
+        <%= link_to WorkOrder.model_name.human(count: 2), work_orders_path %>
+      <% else %>
+        <%= WorkOrder.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @work_order.to_s, work_order_path(@work_order) %></li>
+    <li class="active"><%= t('details', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="container" ng-controller="WorkOrdersShowCtrl as showCtrl">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-toolbox">
+          <h3 class="panel-title"><%= WorkOrder.model_name.human %></h3>
+          <div class="panel-toolbar">
+            <%= link_to edit_work_order_path(@work_order), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: WorkOrder.model_name.human) do %>
+              <%= icon 'pencil' %>
+            <% end %>
+
+            <%= link_to @work_order, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: WorkOrder.model_name.human) do %>
+              <%= icon 'trash' %>
+            <% end %>
+          </div>
+        </div>
+        <div class="panel-body">
+          <dl class="dl-show-item">
+            <dt><%= WorkOrder.human_attribute_name('name') %></dt>
+            <dd><%= @work_order.name %></dd>
+            <dt><%= WorkOrder.human_attribute_name('description') %></dt>
+            <dd><%= @work_order.description %></dd>
+            <dt><%= WorkOrder.human_attribute_name('due_date') %></dt>
+            <dd><%= @work_order.due_date %></dd>
+            <dt><%= WorkOrder.human_attribute_name('responsible') %></dt>
+            <dd><%= @work_order.responsible %></dd>
+            <dt><%= WorkOrder.human_attribute_name('work_order_status') %></dt>
+            <dd><%= @work_order.work_order_status %></dd>
+            <dt><%= WorkOrder.human_attribute_name('organisation') %></dt>
+            <dd><%= @work_order.organisation %></dd>
+          </dl>
+        </div>
+      </div><!-- /.panel -->
+
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-toolbox">
+          <h3 class="panel-title">Assets</h3>
+          <div class="panel-toolbar"></div>
+        </div>
+        <!-- <div class="panel-body">
+        </div> -->
+        <!-- /.panel-body -->
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-default">
+            <span class="badge"><%= @work_order.samples.length %></span>
+            <%= Sample.model_name.human(count: 2) %>
+          </li>
+          <a href="<%= work_order_samples_path(@work_order) %>" class="list-group-item">
+            <%= t('view_resources', scope: :crud_views, resources: Sample.model_name.human(count: 2)) %>
+            <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
+          </a>
+          <a href="<%= new_work_order_sample_path(@work_order) %>" class="list-group-item">
+            <%= t('new_resource_fem', scope: :crud_views, resource: Sample.model_name.human) %>
+            <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
+          </a>
+          <li class="list-group-item list-group-item-default">
+            <span class="badge"><%= @work_order.specimens.length %></span>
+            <%= Specimen.model_name.human(count: 2) %>
+          </li>
+          <a href="<%= work_order_specimens_path(@work_order) %>" class="list-group-item">
+            <%= t('view_resources', scope: :crud_views, resources: Specimen.model_name.human(count: 2)) %>
+            <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
+          </a>
+          <a href="<%= new_work_order_specimen_path(@work_order) %>" class="list-group-item">
+            <%= t('new_resource', scope: :crud_views, resource: Specimen.model_name.human) %>
+            <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
+          </a>
+          <li class="list-group-item list-group-item-default">
+            <span class="badge"><%= @work_order.lab_tests.length %></span>
+            <%= LabTest.model_name.human(count: 2) %>
+          </li>
+          <a href="<%= work_order_lab_tests_path(@work_order) %>" class="list-group-item">
+            <%= t('view_resources', scope: :crud_views, resources: LabTest.model_name.human(count: 2)) %>
+            <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
+          </a>
+          <a href="<%= new_work_order_lab_test_path(@work_order) %>" class="list-group-item">
+            <%= t('new_resource', scope: :crud_views, resource: LabTest.model_name.human) %>
+            <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
+          </a>
+        </ul>
+      </div><!-- /.panel -->
+    </div><!-- /.col-md-4 -->
+
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-toolbox">
+          <h3 class="panel-title">Summary</h3>
+          <div class="panel-toolbar"></div>
+        </div>
+
+
+        <table class="table table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th class="rotated-parent">
+                  <span class="hidden-xs"><%= Sample.model_name.human %></span>
+                  <span class="visible-xs rotated"><%= Sample.model_name.human %></span>
+                </th>
+                <th class="rotated-parent">
+                  <span class="hidden-xs"><%= Specimen.model_name.human %></span>
+                  <span class="visible-xs rotated"><%= Specimen.model_name.human %></span>
+                </th>
+                <th class="rotated-parent">
+                  <span class="hidden-xs"><%= LabTest.model_name.human(count: 2) %></span>
+                  <span class="visible-xs rotated"><%= LabTest.model_name.human(count: 2) %></span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @work_order.samples.each_with_index do |sample, index_sa| %>
+
+                <%# There is no specimens? %>
+                <% if sample.specimens.length < 1 %>
+                  <tr>
+                    <td class="rotated-parent" rowspan="1">
+                      <span class="hidden-xs"><%= link_to sample, work_order_sample_path(@work_order, sample) %></span>
+                      <span class="visible-xs rotated"><%= link_to sample, work_order_sample_path(@work_order, sample) %></span>
+                    </td>
+                    <td class="rotated-parent" rowspan="1">
+                      <span class="hidden-xs">No Specimens</span>
+                      <span class="visible-xs rotated">No Specimens</span>
+                    </td>
+                    <td class="icon-cell">
+                      No Tests
+                    </td>
+                  </tr>
+                <% end %>
+
+                <%# Yield specimens for sample %>
+                <% sample.specimens.each_with_index do |specimen, index_sp| %>
+
+                  <%# There is no tests for specimen? %>
+                  <% if specimen.lab_tests.length < 1 %>
+                    <tr>
+                      <td class="rotated-parent" rowspan="<%= sample.specimens.length + sample.specimens.length %>">
+                        <span class="hidden-xs"><%= link_to sample, work_order_sample_path(@work_order, sample) %></span>
+                        <span class="visible-xs rotated"><%= link_to sample, work_order_sample_path(@work_order, sample) %></span>
+                      </td>
+                      <td class="rotated-parent" rowspan="2">
+                        <span class="hidden-xs"><%= link_to specimen, work_order_specimen_path(@work_order, specimen) %></span>
+                        <span class="visible-xs rotated"><%= link_to specimen, work_order_specimen_path(@work_order, specimen) %></span>
+                      </td>
+                      <td style="vertical-align:middle" class="icon-cell">
+                        No Tests
+                      </td>
+                    </tr>
+                  <% end %>
+
+                  <%# Yield tests for specimen %>
+                  <% specimen.lab_tests.each_with_index do |lab_test, index_lt| %>
+                    <tr>
+                      <% if index_sp == 0 and index_lt == 0 %>
+                        <td class="rotated-parent" rowspan="<%= sample.lab_tests.length + sample.specimens.length %>">
+                          <span class="hidden-xs"><%= link_to sample, work_order_sample_path(@work_order, sample) %></span>
+                          <span class="visible-xs rotated"><%= link_to sample, work_order_sample_path(@work_order, sample) %></span>
+                        </td>
+                      <% end %>
+                      <% if index_lt == 0 %>
+                        <td class="rotated-parent" rowspan="<%= specimen.lab_tests.length %>">
+                          <span class="hidden-xs"><%= link_to specimen, work_order_specimen_path(@work_order, specimen) %></span>
+                          <span class="visible-xs rotated"><%= link_to specimen, work_order_specimen_path(@work_order, specimen) %></span>
+                        </td>
+                      <% end %>
+                      <td class="icon-cell">
+                        <%= link_to lab_test.test_type, work_order_lab_test_path(@work_order, lab_test) %> <i class="fa fa-check text-muted pull-right"></i>
+                      </td>
+                    </tr>
+                  <% end %>
+
+                  <%# "New test" button below specimen %>
+                  <tr>
+                    <td style="vertical-align:middle" colspan="2" class="striped text-center">
+                      <%= link_to t('new_resource', scope: :crud_views, resource: LabTest.model_name.human), new_work_order_lab_test_path(@work_order) %>
+                      <!-- <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span> -->
+                    </td>
+                  </tr>
+                <% end %>
+
+                <%# "New specimen" button below sample %>
+                <tr>
+                  <td colspan="3" class="striped text-center icon-cell">
+                    <%= link_to t('new_resource', scope: :crud_views, resource: Specimen.model_name.human), new_work_order_specimen_path(@work_order) %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+
+      </div><!-- /.panel -->
+    </div><!-- /.col-md-8 -->
+
+  </div><!-- /.row -->
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'work_order',
+      'plural_name': 'work_orders',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for work_orders show view -->
+<% end %>

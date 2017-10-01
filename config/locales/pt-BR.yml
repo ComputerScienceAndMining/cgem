@@ -1,7 +1,7 @@
 ---
 pt-BR:
   header:
-    html_title: 'App Rails'
+    html_title: 'CGEM | DIMIN | Universidade de Santiago do Chile'
     no_javascript: 'Para completa funcionalidade deste site é necessário habilitar o JavaScript no seu navegador.'
     activate_javascript: '¿Cómo habilitar Javascript?'
     title: 'Olá mundo'
@@ -17,6 +17,7 @@ pt-BR:
     new_resource_fem: 'Nova %{resource}'
     export: 'Exportar'
     export_resources: 'Exportar %{resources}'
+    view_resources: 'Ver %{resources}'
     actions: 'Ações'
     edit_resource: 'Editar %{resource}'
     delete_resource: 'Eliminar %{resource}'

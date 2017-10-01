@@ -1,64 +1,47 @@
 <div class="main container">
-  <%%= form_for @<%= singular_table_name %>, html: { class: "form-horizontal", role: "form" } do |f| %>
+  <%%= form_for @<%= singular_table_name %>, html: { class: "crud-form", role: "form" } do |f| %>
   <div class="panel panel-default">
     <div class="panel-heading panel-heading-toolbox">
-      <h3 class="panel-title"><%%= @<%= singular_table_name %>.new_record? ? 'New <%= singular_table_name.humanize %>' : @<%= singular_table_name %>.to_s %></h3>
+      <h3 class="panel-title"><%%= @<%= singular_table_name %>.new_record? ? t('new_resource', scope: :crud_views, resource: <%= class_name %>.model_name.human) : @<%= singular_table_name %>.to_s %></h3>
       <div class="panel-toolbar">
         <%% if action_name == 'edit' or action_name == 'update' %>
-          <%%= link_to @<%= singular_table_name %>, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-default", title: t('delete_resource', scope: :crud_views, resource: <%= class_name %>.model_name.human) do %>
+          <%%= link_to @<%= singular_table_name %>, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: <%= class_name %>.model_name.human) do %>
             <%%= icon 'trash' %>
           <%% end %>
         <%% end %>
       </div>
     </div>
     <div class="panel-body">
-      <div class="row-fluid">
-        <div class="col-md-2">
-          <i class="fa fa-file-text-o" style="font-size: 100px"></i>
-        </div>
-        <div class="col-md-10">
-          <div class="well">
 <% attributes.each do |attribute| -%>
-            <div class="form-group">
+      <div class="form-group">
 <% if attribute.password_digest? -%>
-              <%%= f.label :password, class: "col-sm-2 control-label" %>
-              <div class="col-sm-10">
-                <%%= f.password_field :password, class: "form-control", placeholder: "Password" %>
-              </div>
-            </div>
-            <div class="form-group">
-              <%%= f.label :password_confirmation, class: "col-sm-2 control-label" %>
-              <div class="col-sm-10">
-                <%%= f.password_field :password_confirmation, class: "form-control", placeholder: "Password confirmation" %>
-              </div>
+        <%%= f.label :password, class: "control-label" %>
+        <%%= f.password_field :password, class: "form-control", placeholder: "Password" %>
+      </div>
+      <div class="form-group">
+        <%%= f.label :password_confirmation, class: "control-label" %>
+        <%%= f.password_field :password_confirmation, class: "form-control", placeholder: "Password confirmation" %>
 <% else -%>
 <%- if attribute.reference? -%>
-              <%%= f.label :<%= attribute.column_name %>, class: "col-sm-2 control-label" %>
-              <div class="col-sm-10">
-                <%%= f.collection_select :<%= attribute.column_name %>, <%= attribute.name.camelize %>.all, :id, :to_s, { prompt: true} , { class: 'form-control' }  %>
-              </div>
+        <%%= f.label :<%= attribute.column_name %>, class: "control-label" %>
+        <%%= f.collection_select :<%= attribute.column_name %>, <%= attribute.name.camelize %>.all, :id, :to_s, { prompt: true} , { class: 'form-control' }  %>
 <%- else -%>
-              <%%= f.label :<%= attribute.name %>, class: "col-sm-2 control-label" %>
-              <div class="col-sm-10">
+        <%%= f.label :<%= attribute.name %>, class: "control-label" %>
 <%- if attribute.field_type.to_s == "datetime_select" -%>
-                <%%= f.datetime_local_field :<%= attribute.name %>, class: "form-control" %>
+        <%%= f.datetime_local_field :<%= attribute.name %>, class: "form-control" %>
 <%- elsif attribute.field_type.to_s == "date_select" -%>
-                <%%= f.date_field :<%= attribute.name %>, class: "form-control" %>
+        <%%= f.date_field :<%= attribute.name %>, class: "form-control" %>
 <%- elsif attribute.field_type.to_s == "time_select" -%>
-                <%%= f.time_field :<%= attribute.name %>, class: "form-control" %>
+        <%%= f.time_field :<%= attribute.name %>, class: "form-control" %>
 <%- elsif attribute.field_type.to_s == "check_box" -%>
-                <%%= f.check_box :<%= attribute.name %> %>
+        <%%= f.check_box :<%= attribute.name %> %>
 <%- else -%>
-                <%%= f.<%= attribute.field_type %> :<%= attribute.name %>, class: "form-control", placeholder: "<%= attribute.human_name %>" %>
+        <%%= f.<%= attribute.field_type %> :<%= attribute.name %>, class: "form-control", placeholder: <%= class_name %>.human_attribute_name('<%= attribute.name %>') %>
 <%- end -%>
-              </div>
 <%- end -%>
 <% end -%>
-            </div><!-- /.form-group -->
+      </div><!-- /.form-group -->
 <% end -%>
-          </div><!-- /.well -->
-        </div><!-- /.col -->
-      </div><!-- /.row -->
     </div><!-- /.panel-body -->
     <div class="panel-footer panel-footer-toolbox">
       <div class="panel-toolbar pull-right">

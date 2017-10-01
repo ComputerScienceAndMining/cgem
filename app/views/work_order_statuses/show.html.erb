@@ -1,0 +1,60 @@
+<%= show_error_messages!(@work_order_status) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(WorkOrderStatus).index? %>
+        <%= link_to WorkOrderStatus.model_name.human(count: 2), work_order_statuses_path %>
+      <% else %>
+        <%= WorkOrderStatus.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @work_order_status.to_s, work_order_status_path(@work_order_status) %></li>
+    <li class="active"><%= t('details', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="container" ng-controller="WorkOrderStatusesShowCtrl as showCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= @work_order_status %></h3>
+      <div class="panel-toolbar">
+        <%= link_to edit_work_order_status_path(@work_order_status), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: WorkOrderStatus.model_name.human) do %>
+          <%= icon 'pencil' %>
+        <% end %>
+
+        <%= link_to @work_order_status, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: WorkOrderStatus.model_name.human) do %>
+          <%= icon 'trash' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal dl-show-item">
+        <dt><%= WorkOrderStatus.human_attribute_name('name') %></dt>
+        <dd><%= @work_order_status.name %></dd>
+      </dl>
+    </div>
+    <div class="panel-footer panel-footer-toolbox">
+      <div class="panel-toolbar">
+        <%= link_to t('back', scope: :crud_views), work_order_statuses_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'work_order_status',
+      'plural_name': 'work_order_statuses',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for work_order_statuses show view -->
+<% end %>

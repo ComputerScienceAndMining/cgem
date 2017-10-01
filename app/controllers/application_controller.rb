@@ -10,14 +10,12 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
   before_filter :authenticate_user!
+  before_filter :set_locale
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  before_filter :set_locale
-
   def pundit_user
-    # current_user
-    nil
+    current_user
   end
 
   private

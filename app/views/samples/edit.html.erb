@@ -1,0 +1,32 @@
+<%= show_error_messages!(@sample) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(WorkOrder).index? %>
+        <%= link_to WorkOrder.model_name.human(count: 2), work_orders_path %>
+      <% else %>
+        <%= WorkOrder.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @work_order.to_s, work_order_path(@work_order) %></li>
+    <li>
+      <% if policy(Sample).index? %>
+        <%= link_to Sample.model_name.human(count: 2), samples_path %>
+      <% else %>
+        <%= Sample.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li>
+      <% if policy(@sample).show? %>
+        <%= link_to @sample.to_s, sample_path(@sample) %></li>
+      <% else %>
+        <%= @sample.to_s %></li>
+      <% end -%>
+    <li class="active"><%= t('edit', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="SamplesEditCtrl as formCtrl">
+  <%= render 'form' %>
+</div>

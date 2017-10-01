@@ -1,0 +1,16 @@
+;(function(){
+  'use strict'
+
+  angular
+    .module('app.components.dynamic-creator.component', [])
+    .component('dynamicCreator', {
+      bindings: {
+        name: '@',
+        value: '@',
+      },
+      templateUrl: "<%= asset_path('ng/components/dynamic-creator/dynamic-creator.template.html') %>",
+      controller: 'DynamicCreatorController',
+      controllerAs: 'dynamicCreator'
+    })
+
+})();

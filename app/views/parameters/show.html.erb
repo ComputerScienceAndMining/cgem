@@ -1,0 +1,62 @@
+<%= show_error_messages!(@parameter) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(Parameter).index? %>
+        <%= link_to Parameter.model_name.human(count: 2), parameters_path %>
+      <% else %>
+        <%= Parameter.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @parameter.to_s, parameter_path(@parameter) %></li>
+    <li class="active"><%= t('details', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="container" ng-controller="ParametersShowCtrl as showCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= @parameter %></h3>
+      <div class="panel-toolbar">
+        <%= link_to edit_parameter_path(@parameter), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: Parameter.model_name.human) do %>
+          <%= icon 'pencil' %>
+        <% end %>
+
+        <%= link_to @parameter, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: Parameter.model_name.human) do %>
+          <%= icon 'trash' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal dl-show-item">
+        <dt><%= Parameter.human_attribute_name('key') %></dt>
+        <dd><%= @parameter.key %></dd>
+        <dt><%= Parameter.human_attribute_name('value') %></dt>
+        <dd><%= @parameter.value %></dd>
+      </dl>
+    </div>
+    <div class="panel-footer panel-footer-toolbox">
+      <div class="panel-toolbar">
+        <%= link_to t('back', scope: :crud_views), parameters_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'parameter',
+      'plural_name': 'parameters',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for parameters show view -->
+<% end %>

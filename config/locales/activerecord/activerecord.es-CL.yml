@@ -1,27 +1,141 @@
 es-CL:
   activerecord:
     models:
+      organisation:
+        one: Organización
+        other: Organizaciones
       user:
         one: Usuario
         other: Usuarios
-      country:
-        one: País
-        other: Países
+      work_order_status:
+        one: Status de Orden de Trabajo
+        other: Status de Órdenes de Trabajo
+      work_order:
+        one: Orden de Trabajo
+        other: Órdenes de Trabajo
+      sample_type:
+        one: Tipo de Muestra
+        other: Tipos de Muestra
+      sample_type_version:
+        one: Versión de Tipo de Muestra
+        other: Versiones de Tipo de Muestra
+      sample:
+        one: Muestra
+        other: Muestras
+      specimen_type:
+        one: Tipo de Espécimen
+        other: Tipos de Espécimen
+      specimen_type_version:
+        one: Versión de Tipo de Espécimen
+        other: Versiones de Tipo de Espécimen
+      specimen:
+        one: Espécimen
+        other: Especímenes
+      specimen_group:
+        one: Grupo de Especímenes
+        other: Grupos de Especímenes
+      specimen_group_relationship:
+        one: Relación de Grupos de Especímenes
+        other: Relaciones de Grupos de Especímenes
+      test_type:
+        one: Tipo de Ensayo
+        other: Tipos de Ensayos
+      test_type_version:
+        one: Versión de Tipo de Ensayo
+        other: Versiones de Tipo de Ensayo
+      test_status:
+        one: Status de Ensayo
+        other: Statuses de Ensayo
+      lab_test:
+        one: Ensayo
+        other: Ensayos
       parameter:
         one: Parámetro
         other: Parámetros
     attributes:
+      organisation:
+        name: Nombre
       user:
-        firstname: Primer nombre
-        lastname: Apellido
+        first_name: Nombre
+        last_name: Apellido
         name: Nombre
         role: Rol
         role_name: Rol
         enabled: Habilitado
         enabled_user: Habilitado
-        country_id: País
-      country:
+      work_order_status:
         name: Nombre
+      work_order:
+        name: Nombre
+        description: Descripción
+        due_date: Fecha de entrega
+        responsible: Responsable
+        responsible_id: Responsable
+        work_order_status: Status
+        organisation: Organización
+      sample_type:
+        name: Nombre
+        data: Datos
+      sample_type_version:
+        sample_type: Sample Type
+        name: Nombre
+        data: Datos
+      sample:
+        samples: Muestras #https://stackoverflow.com/a/25385812
+        code: Código
+        remarks: Observaciones
+        sample_type: Tipo de Muestra
+        sample_type_version: Versión de Tipo de Muestra
+        work_order: Orden de Trabajo
+        data: Datos
+      specimen_type:
+        name: Nombre
+        data: Datos
+      specimen_type_version:
+        specimen_type: Tipo de Espécimen
+        name: Nombre
+        data: Datos
+      specimen:
+        specimens: Especímenes #https://stackoverflow.com/a/25385812
+        code: Código
+        remarks: Observaciones
+        sample: Muestra
+        specimen_type: Tipo de Espécimen
+        specimen_type_version: Versión de Tipo de Espécimen
+        prepared_by: Preparado por
+        prepared_by_id: Preparado por
+        data: Datos
+      specimen_group:
+        work_order: Orden de Trabajo
+        name: Nombre
+        description: Descripción
+      specimen_group_relationship:
+        specimen: Espécimen
+        specimen_group: Grupo de Especímenes
+      test_type:
+        name: Nombre
+        description: Descripción
+        data: Datos
+      test_type_version:
+        name: Nombre
+        description: Descripción
+        data: Datos
+        test_type: Tipo de Ensayo
+      test_status:
+        name: Nombre
+      lab_test:
+        lab_tests: Ensayos #https://stackoverflow.com/a/25385812
+        name: Nombre
+        description: Descripción
+        date_tested: Fecha de Ensayo
+        work_order: Orden de Trabajo
+        test_status: Status del Ensayo
+        test_type: Tipo de Ensayo
+        test_type_version: Versión de Tipo de Ensayo
+        specimen: Espécimen
+        tested_by: Ensayado por
+        tested_by_id: Ensayado por
+        data: Datos
       parameter:
         key: Clave
         value: Valor
@@ -29,5 +143,5 @@ es-CL:
       id: Id
       created_at: Creado
       updated_at: Actualizado
-      boolean_true: "Si"
+      boolean_true: "Sí"
       boolean_false: "No"

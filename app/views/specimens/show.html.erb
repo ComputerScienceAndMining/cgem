@@ -1,0 +1,113 @@
+<%= show_error_messages!(@specimen) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(WorkOrder).index? %>
+        <%= link_to WorkOrder.model_name.human(count: 2), work_orders_path %>
+      <% else %>
+        <%= WorkOrder.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @work_order.to_s, work_order_path(@work_order) %></li>
+    <li>
+      <% if policy(Specimen).index? %>
+        <%= link_to Specimen.model_name.human(count: 2), specimens_path %>
+      <% else %>
+        <%= Specimen.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @specimen.to_s, specimen_path(@specimen) %></li>
+    <li class="active"><%= t('details', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="container" ng-controller="SpecimensShowCtrl as showCtrl">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-toolbox">
+          <h3 class="panel-title"><%= @specimen %></h3>
+          <div class="panel-toolbar">
+            <%= link_to edit_specimen_path(@specimen), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: Specimen.model_name.human) do %>
+              <%= icon 'pencil' %>
+            <% end %>
+
+            <%= link_to @specimen, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: Specimen.model_name.human) do %>
+              <%= icon 'trash' %>
+            <% end %>
+          </div>
+        </div>
+        <div class="panel-body">
+          <dl class="dl-show-item">
+            <dt><%= Specimen.human_attribute_name('code') %></dt>
+            <dd><%= @specimen.code %></dd>
+            <dt><%= Specimen.human_attribute_name('remarks') %></dt>
+            <dd><%= @specimen.remarks %></dd>
+            <dt><%= Specimen.human_attribute_name('sample') %></dt>
+            <dd><%= @specimen.sample %></dd>
+            <dt><%= Specimen.human_attribute_name('specimen_type') %></dt>
+            <dd><%= @specimen.specimen_type %></dd>
+            <dt><%= Specimen.human_attribute_name('specimen_type_version') %></dt>
+            <dd><%= @specimen.specimen_type_version %></dd>
+            <dt><%= Specimen.human_attribute_name('prepared_by') %></dt>
+            <dd><%= @specimen.prepared_by %></dd>
+            <dt><%= Specimen.human_attribute_name('data') %></dt>
+            <dd><%= @specimen.data %></dd>
+          </dl>
+        </div>
+        <div class="panel-footer panel-footer-toolbox">
+          <div class="panel-toolbar">
+            <%= link_to t('back', scope: :crud_views), specimens_path, class: "btn btn-default" %>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.col-md-4 -->
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-toolbox">
+          <h3 class="panel-title">Summary</h3>
+          <div class="panel-toolbar"></div>
+        </div>
+
+
+        <table class="table table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th class="rotated-parent">
+                  <span class="hidden-xs"><%= LabTest.model_name.human(count: 2) %></span>
+                  <span class="visible-xs rotated"><%= LabTest.model_name.human(count: 2) %></span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <%# Yield tests for specimen %>
+              <% @specimen.lab_tests.each_with_index do |lab_test, index_lt| %>
+                  <td class="icon-cell">
+                    <%= link_to lab_test.test_type, work_order_lab_test_path(@work_order, lab_test) %> <i class="fa fa-check text-muted pull-right"></i>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+      </div><!-- /.panel -->
+    </div><!-- /.col-md-8 -->
+  </div><!-- /.row -->
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'specimen',
+      'plural_name': 'specimens',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for specimens show view -->
+<% end %>

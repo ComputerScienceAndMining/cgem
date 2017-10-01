@@ -1,0 +1,24 @@
+<%= show_error_messages!(@user) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(User).index? %>
+        <%= link_to User.model_name.human(count: 2), users_path %>
+      <% else %>
+        <%= User.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li>
+      <% if policy(@user).show? %>
+        <%= link_to @user.to_s, user_path(@user) %></li>
+      <% else %>
+        <%= @user.to_s %></li>
+      <% end -%>
+    <li class="active"><%= t('edit', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="UsersEditCtrl as editCtrl">
+  <%= render 'form' %>
+</div>

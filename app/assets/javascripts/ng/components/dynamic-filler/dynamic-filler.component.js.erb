@@ -1,0 +1,17 @@
+;(function(){
+  'use strict'
+
+  angular
+    .module('app.components.dynamic-filler.component', [])
+    .component('dynamicFiller', {
+      bindings: {
+        name: '@',
+        value: '@',
+        template: '=',
+      },
+      templateUrl: "<%= asset_path('ng/components/dynamic-filler/dynamic-filler.template.html') %>",
+      controller: 'DynamicFillerController',
+      controllerAs: 'dynamicFiller'
+    })
+
+})();

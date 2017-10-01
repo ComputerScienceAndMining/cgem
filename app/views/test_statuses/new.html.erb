@@ -1,0 +1,18 @@
+<%= show_error_messages!(@test_status) %>
+
+<div class="container"<%# ng-controller="test_statusesNewCtrl" %>>
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(TestStatus).index? %>
+        <%= link_to TestStatus.model_name.human(count: 2), test_statuses_path %>
+      <% else %>
+        <%= TestStatus.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li class="active"><%= t('new', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="TestStatusesNewCtrl as newCtrl">
+  <%= render 'form' %>
+</div>

@@ -1,0 +1,60 @@
+<%= show_error_messages!(@organisation) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(Organisation).index? %>
+        <%= link_to Organisation.model_name.human(count: 2), organisations_path %>
+      <% else %>
+        <%= Organisation.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @organisation.to_s, organisation_path(@organisation) %></li>
+    <li class="active"><%= t('details', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="container" ng-controller="OrganisationsShowCtrl as showCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= @organisation %></h3>
+      <div class="panel-toolbar">
+        <%= link_to edit_organisation_path(@organisation), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: Organisation.model_name.human) do %>
+          <%= icon 'pencil' %>
+        <% end %>
+
+        <%= link_to @organisation, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: Organisation.model_name.human) do %>
+          <%= icon 'trash' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal dl-show-item">
+        <dt><%= Organisation.human_attribute_name('name') %></dt>
+        <dd><%= @organisation.name %></dd>
+      </dl>
+    </div>
+    <div class="panel-footer panel-footer-toolbox">
+      <div class="panel-toolbar">
+        <%= link_to t('back', scope: :crud_views), organisations_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'organisation',
+      'plural_name': 'organisations',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for organisations show view -->
+<% end %>

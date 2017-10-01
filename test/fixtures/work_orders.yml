@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  due_date: 2017-09-17
+  responsible_id: 
+  work_order_status_id:
+  organisation_id:
+
+two:
+  name: MyString
+  description: MyText
+  due_date: 2017-09-17
+  responsible_id: 
+  work_order_status_id:
+  organisation_id:

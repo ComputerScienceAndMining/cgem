@@ -17,6 +17,10 @@
       width: auto;
       vertical-align: middle;
     }
+
+    > .form-inline {
+      margin-bottom: 0;
+    }
   }
 
   form.form-inline {

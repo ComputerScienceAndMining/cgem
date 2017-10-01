@@ -25,7 +25,7 @@ clean_db:
 
 # Models
 scaffold_models:
-	$(RAILS_CMD) g scaffold Country \
+	$(RAILS_CMD) g scaffold Organisation \
 		name:string{255};
 
 	$(RAILS_CMD) g scaffold User \
@@ -34,14 +34,108 @@ scaffold_models:
 		enabled:boolean \
 		role:integer{4};
 
+	$(RAILS_CMD) g scaffold WorkOrderStatus \
+		name:string{255};
+
+	$(RAILS_CMD) g scaffold WorkOrder \
+		name:string{255} \
+		description:text \
+		due_date:date \
+		user:references \
+		work_order_status:references \
+		organisation:references;
+
+	$(RAILS_CMD) g scaffold SampleType \
+		name:string{255} \
+		data:jsonb; # Attributes related to sample type
+
+	$(RAILS_CMD) g scaffold SampleTypeVersion \
+		sample_type:references \
+		name:string{255} \
+		data:jsonb; # Attributes related to sample type
+
+	$(RAILS_CMD) g scaffold Sample \
+		code:string{255} \
+		remarks:text \
+		sample_type:references \
+		sample_type_version:references \
+		work_order:references \
+		data:jsonb; # Attributes related to sample type;
+
+	$(RAILS_CMD) g scaffold SpecimenType \
+		name:string{255} \
+		data:jsonb;
+
+	$(RAILS_CMD) g scaffold SpecimenTypeVersion \
+		specimen_type:references \
+		name:string{255} \
+		data:jsonb;
+
+	$(RAILS_CMD) g scaffold Specimen \
+		code:string{255} \
+		remarks:text \
+		sample:references \
+		specimen_type:references \
+		specimen_type_version:references \
+		user:references \
+		data:jsonb;
+
+	$(RAILS_CMD) g scaffold SpecimenGroup \
+		work_order:references \
+		name:string{255} \
+		description:text;
+
+	$(RAILS_CMD) g scaffold SpecimenGroupRelationship \
+		specimen:references \
+		specimen_group:references;
+
+	$(RAILS_CMD) g scaffold TestType \
+		name:string{255} \
+		description:text \
+		data:jsonb; # Attributes related to test type
+
+	$(RAILS_CMD) g scaffold TestTypeVersion \
+		name:string{255} \
+		description:string{255} \
+		data:jsonb \
+		test_type:references;
+
+	$(RAILS_CMD) g scaffold TestStatus \
+		name:string{255};
+
+	$(RAILS_CMD) g scaffold LabTest \
+		started_at:timestamp \
+		ended_at:timestamp \
+		work_order:references \
+		test_status:references \
+		test_type:references \
+		test_type_version:references \
+		specimen:references \
+		user:references \
+		data:jsonb; # Attributes related to test with their results
+
 	$(RAILS_CMD) g scaffold Parameter \
 		key:string{255} \
 		value:string{255};
 
 destroy_models:
-	$(RAILS_CMD) d scaffold Country;
-	$(RAILS_CMD) d scaffold User;
-	$(RAILS_CMD) d scaffold Parameter;
+	$(RAILS_CMD) d scaffold Organisation
+	$(RAILS_CMD) d scaffold User
+	$(RAILS_CMD) d scaffold WorkOrderStatus
+	$(RAILS_CMD) d scaffold WorkOrder
+	$(RAILS_CMD) d scaffold SampleType
+	$(RAILS_CMD) d scaffold SampleTypeVersion
+	$(RAILS_CMD) d scaffold Sample
+	$(RAILS_CMD) d scaffold SpecimenType
+	$(RAILS_CMD) d scaffold SpecimenTypeVersion
+	$(RAILS_CMD) d scaffold Specimen
+	$(RAILS_CMD) d scaffold SpecimenGroup
+	$(RAILS_CMD) d scaffold SpecimenGroupRelationship
+	$(RAILS_CMD) d scaffold TestType
+	$(RAILS_CMD) d scaffold TestTypeVersion
+	$(RAILS_CMD) d scaffold TestStatus
+	$(RAILS_CMD) d scaffold LabTest
+	$(RAILS_CMD) d scaffold Parameter
 
 # Devise
 enable_devise:
@@ -54,14 +148,43 @@ disable_devise:
 
 # Policies
 scaffold_policies:
-	$(RAILS_CMD) g pundit:policy country;
-	$(RAILS_CMD) g pundit:policy user;
-	$(RAILS_CMD) g pundit:policy parameter;
+
+	$(RAILS_CMD) g pundit:policy organisation
+	$(RAILS_CMD) g pundit:policy user
+	$(RAILS_CMD) g pundit:policy work_order_status
+	$(RAILS_CMD) g pundit:policy work_order
+	$(RAILS_CMD) g pundit:policy sample_type
+	$(RAILS_CMD) g pundit:policy sample_type_version
+	$(RAILS_CMD) g pundit:policy sample
+	$(RAILS_CMD) g pundit:policy specimen_type
+	$(RAILS_CMD) g pundit:policy specimen_type_version
+	$(RAILS_CMD) g pundit:policy specimen
+	$(RAILS_CMD) g pundit:policy specimen_group
+	$(RAILS_CMD) g pundit:policy specimen_group_relationship
+	$(RAILS_CMD) g pundit:policy test_type
+	$(RAILS_CMD) g pundit:policy test_type_version
+	$(RAILS_CMD) g pundit:policy test_status
+	$(RAILS_CMD) g pundit:policy lab_test
+	$(RAILS_CMD) g pundit:policy parameter
 
 destroy_policies:
-	$(RAILS_CMD) d pundit:policy country;
-	$(RAILS_CMD) d pundit:policy user;
-	$(RAILS_CMD) d pundit:policy parameter;
+	$(RAILS_CMD) d pundit:policy organisation
+	$(RAILS_CMD) d pundit:policy user
+	$(RAILS_CMD) d pundit:policy work_order_status
+	$(RAILS_CMD) d pundit:policy work_order
+	$(RAILS_CMD) d pundit:policy sample_type
+	$(RAILS_CMD) d pundit:policy sample_type_version
+	$(RAILS_CMD) d pundit:policy sample
+	$(RAILS_CMD) d pundit:policy specimen_type
+	$(RAILS_CMD) d pundit:policy specimen_type_version
+	$(RAILS_CMD) d pundit:policy specimen
+	$(RAILS_CMD) d pundit:policy specimen_group
+	$(RAILS_CMD) d pundit:policy specimen_group_relationship
+	$(RAILS_CMD) d pundit:policy test_type
+	$(RAILS_CMD) d pundit:policy test_type_version
+	$(RAILS_CMD) d pundit:policy test_status
+	$(RAILS_CMD) d pundit:policy lab_test
+	$(RAILS_CMD) d pundit:policy parameter
 
 # Database
 create:

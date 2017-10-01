@@ -1,0 +1,24 @@
+<%= show_error_messages!(@test_type_version) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(TestTypeVersion).index? %>
+        <%= link_to TestTypeVersion.model_name.human(count: 2), test_type_versions_path %>
+      <% else %>
+        <%= TestTypeVersion.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li>
+      <% if policy(@test_type_version).show? %>
+        <%= link_to @test_type_version.to_s, test_type_version_path(@test_type_version) %></li>
+      <% else %>
+        <%= @test_type_version.to_s %></li>
+      <% end -%>
+    <li class="active"><%= t('edit', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="TestTypeVersionsEditCtrl as editCtrl">
+  <%= render 'form' %>
+</div>

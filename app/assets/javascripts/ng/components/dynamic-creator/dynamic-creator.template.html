@@ -1,0 +1,140 @@
+<div style="display:none">
+  <input type="text" name="{{dynamicCreator.name}}" value="{{dynamicCreator.data}}">
+</div>
+
+<div class="row">
+  <div class="col-xs-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">Edición de campos</div>
+      <div class="panel-body dynamic-editor">
+        <div class="dynamic-fields">
+          <div class="dynamic-titles">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-xs-3">
+
+                </div><!-- .col-xs-3 -->
+                <div class="col-xs-3">
+                  <strong>Campo</strong>
+                </div><!-- .col-xs-3 -->
+                <div class="col-xs-1 text-center">
+                  <strong>*</strong>
+                </div><!-- .col-xs-1 -->
+                <div class="col-xs-2">
+                  <strong>Tipo</strong>
+                </div><!-- .col-xs-2 -->
+                <div class="col-xs-3">
+                  <strong>Alternativas</strong>
+                </div><!-- .col-xs-3 -->
+              </div><!-- .row -->
+            </div><!-- .container-fluid -->
+          </div><!-- .dynamic-titles -->
+
+          <div class="dynamic-field" ng-repeat="field in dynamicCreator.data.fields">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-xs-3">
+                  <button type="button" ng-click="dynamicCreator.removeField($index)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                  <button type="button" ng-click="dynamicCreator.moveFieldUp($index)" class="btn btn-default"><i class="fa fa-arrow-up"></i></button>
+                  <button type="button" ng-click="dynamicCreator.moveFieldDown($index)" class="btn btn-default"><i class="fa fa-arrow-down"></i></button>
+                </div><!-- .col-xs-3 -->
+                <div class="col-xs-3">
+                  <input class="form-control" type="text" value="{{field.name}}" ng-model="field.name">
+                </div><!-- .col-xs-3 -->
+                <div class="col-xs-1 text-center">
+                  <input type="checkbox" name="mandatory" ng-model="field.mandatory">
+                </div><!-- .col-xs-1 -->
+                <div class="col-xs-2">
+                  <select class="form-control" ng-model="field.type">
+                    <option value="number">Número</option>
+                    <option value="text">Texto</option>
+                    <option value="textarea">Texto largo</option>
+                    <option value="date">Fecha</option>
+                    <option value="pictures">Fotografías</option>
+                    <option value="video">Video</option>
+                    <option value="audio">Audio</option>
+                    <option value="radio">Selección única</option>
+                    <option value="checkbox">Selección múltiple</option>
+                    <option value="color">Color</option>
+                    <option value="composed">Compuesto</option>
+                  </select>
+                </div><!-- .col-xs-2 -->
+
+                <div class="col-xs-3">
+                  <div ng-show="dynamicCreator.fieldHasMultiple[field.type]">
+                    <div class="dynamic-alternative" ng-repeat="alternative in field.alternatives">
+                      <div class="input-group">
+                        <input class="form-control" type="text" value="{{alternative.name}}" ng-model="alternative.name">
+                        <span class="input-group-btn">
+                          <button type="button" ng-click="dynamicCreator.removeAlternative($parent.$index, $index)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                        </span>
+                      </div>
+                    </div>
+
+                    <button class="btn btn-default" type="button" ng-click="dynamicCreator.addAlternative($index)">Agregar alternativa</button>
+                  </div>
+                  <div ng-show="!dynamicCreator.fieldHasMultiple[field.type]">
+                    <button class="btn btn-default" type="button" disabled>Agregar alternativa</button>
+                  </div>
+                </div><!-- .col-xs-3 -->
+
+              </div><!-- .row -->
+            </div><!-- /.container-fluid -->
+
+          </div><!-- /.dynamic-field -->
+
+          <div class="dynamic-toolbar">
+            <button class="btn btn-default" type="button" ng-click="dynamicCreator.addField()">Nuevo campo</button>
+          </div><!--/.dynamic-toolbar -->
+        </div>
+      </div><!-- /.panel-body -->
+    </div><!-- /.panel -->
+  </div><!-- /.col-xs-8 -->
+
+  <div class="col-xs-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Previsualización</div>
+      <div class="panel-body dynamic-filler">
+
+        <div class="dynamic-fields">
+          <div class="dynamic-field" ng-repeat="field in dynamicCreator.data.fields">
+
+            <div class="form-group" ng-switch="field.type">
+              <label class="control-label">{{field.name}}</label>
+              <textarea ng-switch-when="textarea" class="form-control" rows="3"></textarea>
+              <input ng-switch-when="color" class="form-control" type="{{field.type}}" value="">
+              <input ng-switch-when="number" class="form-control" type="{{field.type}}" value="">
+              <input ng-switch-when="text" class="form-control" type="{{field.type}}" value="">
+              <input ng-switch-when="date" class="form-control" type="{{field.type}}" value="">
+              <input ng-switch-when="email" class="form-control" type="{{field.type}}" value="">
+              <input ng-switch-when="pictures" class="form-control" type="file" accept="image/*" capture="camera" multiple="multiple">
+              <input ng-switch-when="video" class="form-control" type="file" accept="video/*" capture="camcorder">
+              <input ng-switch-when="audio" class="form-control" type="file" accept="audio/*" capture="microphone">
+
+
+              <div class="dynamic-toggle-input" data-toggle="buttons">
+                <div ng-switch-when="checkbox" ng-repeat="alternative in field.alternatives">
+                  <label ng-click="dynamicCreator.toggleCheckbox(field, alternative)" class="btn btn-default btn-block">
+                    <input name="{{alternative.name}}" type="{{field.type}}"> {{alternative.name}}
+                    <i ng-show="alternative.selected" class="fa fa-check"></i>
+                  </label>
+                </div>
+
+                <div ng-switch-when="radio" ng-repeat="alternative in field.alternatives">
+                  <label ng-click="dynamicCreator.changeRadioButton(field, alternative)" class="btn btn-default btn-block">
+                    <input name="{{alternative.name}}" type="{{field.type}}"> {{alternative.name}}
+                    <i ng-show="field.value == alternative.name" class="fa fa-check"></i>
+                  </label>
+                </div>
+              </div>
+            </div><!-- /.form-group -->
+          </div>
+        </div>
+      </div>
+    </div><!-- /.panel -->
+
+    <div ng-show="dynamicCreator.showJson" class="well">
+      {{dynamicCreator.data.fields|json}}
+    </div><!-- /.well -->
+  </div><!-- /.col-xs-4 -->
+</div><!-- /.row -->

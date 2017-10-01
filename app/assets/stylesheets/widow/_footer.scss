@@ -1,0 +1,38 @@
+footer {
+  width: 100%;
+  // height: 40px;
+  bottom: 0px;
+  left: 0px;
+  background-color: $color-cgem-deep-blue;
+  padding-top: 15px;
+
+  color: #fff;
+
+  a {
+    color: lighten($color-cgem-deep-blue, 80%);
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    color: #fff;
+  }
+
+  img.brand {
+    margin: 15px 0px;
+  }
+
+  ul {
+    padding-left: 17px;
+  }
+
+  .credits {
+    background-color: #222;
+    padding: 10px;
+    color: lighten(#222, 80%);
+    margin-top: 15px;
+    border-bottom: 5px solid #fff;
+
+    a {
+      color: #0052CC;
+    }
+  }
+}

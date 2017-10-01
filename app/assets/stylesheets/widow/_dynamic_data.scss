@@ -1,0 +1,37 @@
+.dynamic-editor {
+  .dynamic-fields {
+
+    .dynamic-titles {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #dadada;
+    }
+
+    .dynamic-field {
+      padding: 10px 0;
+      border-bottom: 1px solid #dadada;
+
+      .dynamic-alternative {
+        margin-bottom: 5px;
+      }
+    }
+
+    .dynamic-toolbar {
+      padding-top: 10px;
+    }
+  }
+}
+
+.dynamic-filler {
+  .dynamic-toggle-input {
+    label.btn {
+      margin-bottom: 5px;
+    }
+    input {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+      -o-appearance: none;
+      appearance: none;
+    }
+  }
+}

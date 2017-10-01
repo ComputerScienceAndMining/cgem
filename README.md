@@ -1,4 +1,4 @@
-# Rails Seed
+# CGEM App
 
 ## Instalación y ejecución para desarrollo en OS X
 

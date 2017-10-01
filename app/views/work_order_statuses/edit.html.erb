@@ -1,0 +1,24 @@
+<%= show_error_messages!(@work_order_status) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(WorkOrderStatus).index? %>
+        <%= link_to WorkOrderStatus.model_name.human(count: 2), work_order_statuses_path %>
+      <% else %>
+        <%= WorkOrderStatus.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li>
+      <% if policy(@work_order_status).show? %>
+        <%= link_to @work_order_status.to_s, work_order_status_path(@work_order_status) %></li>
+      <% else %>
+        <%= @work_order_status.to_s %></li>
+      <% end -%>
+    <li class="active"><%= t('edit', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="WorkOrderStatusesEditCtrl as editCtrl">
+  <%= render 'form' %>
+</div>

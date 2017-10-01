@@ -1,0 +1,84 @@
+<%= show_error_messages!(@lab_test) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(WorkOrder).index? %>
+        <%= link_to WorkOrder.model_name.human(count: 2), work_orders_path %>
+      <% else %>
+        <%= WorkOrder.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @work_order.to_s, work_order_path(@work_order) %></li>
+    <li>
+      <% if policy(LabTest).index? %>
+        <%= link_to LabTest.model_name.human(count: 2), lab_tests_path %>
+      <% else %>
+        <%= LabTest.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @lab_test.to_s, lab_test_path(@lab_test) %></li>
+    <li class="active"><%= t('details', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="container" ng-controller="LabTestsShowCtrl as showCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= @lab_test %></h3>
+      <div class="panel-toolbar">
+        <%= link_to edit_lab_test_path(@lab_test), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: LabTest.model_name.human) do %>
+          <%= icon 'pencil' %>
+        <% end %>
+
+        <%= link_to @lab_test, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: LabTest.model_name.human) do %>
+          <%= icon 'trash' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal dl-show-item">
+        <dt><%= LabTest.human_attribute_name('started_at') %></dt>
+        <dd><%= @lab_test.started_at %></dd>
+        <dt><%= LabTest.human_attribute_name('ended_at') %></dt>
+        <dd><%= @lab_test.ended_at %></dd>
+        <dt><%= LabTest.human_attribute_name('work_order') %></dt>
+        <dd><%= @lab_test.work_order %></dd>
+        <dt><%= LabTest.human_attribute_name('test_status') %></dt>
+        <dd><%= @lab_test.test_status %></dd>
+        <dt><%= LabTest.human_attribute_name('test_type') %></dt>
+        <dd><%= @lab_test.test_type %></dd>
+        <dt><%= LabTest.human_attribute_name('test_type_version') %></dt>
+        <dd><%= @lab_test.test_type_version %></dd>
+        <dt><%= LabTest.human_attribute_name('specimen') %></dt>
+        <dd><%= @lab_test.specimen %></dd>
+        <dt><%= LabTest.human_attribute_name('tested_by') %></dt>
+        <dd><%= @lab_test.tested_by %></dd>
+        <dt><%= LabTest.human_attribute_name('data') %></dt>
+        <dd><%= @lab_test.data %></dd>
+      </dl>
+    </div>
+    <div class="panel-footer panel-footer-toolbox">
+      <div class="panel-toolbar">
+        <%= link_to t('back', scope: :crud_views), lab_tests_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'lab_test',
+      'plural_name': 'lab_tests',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for lab_tests show view -->
+<% end %>

@@ -1,0 +1,60 @@
+<%= show_error_messages!(@test_status) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(TestStatus).index? %>
+        <%= link_to TestStatus.model_name.human(count: 2), test_statuses_path %>
+      <% else %>
+        <%= TestStatus.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @test_status.to_s, test_status_path(@test_status) %></li>
+    <li class="active"><%= t('details', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="container" ng-controller="TestStatusesShowCtrl as showCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= @test_status %></h3>
+      <div class="panel-toolbar">
+        <%= link_to edit_test_status_path(@test_status), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: TestStatus.model_name.human) do %>
+          <%= icon 'pencil' %>
+        <% end %>
+
+        <%= link_to @test_status, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: TestStatus.model_name.human) do %>
+          <%= icon 'trash' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal dl-show-item">
+        <dt><%= TestStatus.human_attribute_name('name') %></dt>
+        <dd><%= @test_status.name %></dd>
+      </dl>
+    </div>
+    <div class="panel-footer panel-footer-toolbox">
+      <div class="panel-toolbar">
+        <%= link_to t('back', scope: :crud_views), test_statuses_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'test_status',
+      'plural_name': 'test_statuses',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for test_statuses show view -->
+<% end %>

@@ -1,0 +1,66 @@
+<%= show_error_messages!(@user) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(User).index? %>
+        <%= link_to User.model_name.human(count: 2), users_path %>
+      <% else %>
+        <%= User.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @user.to_s, user_path(@user) %></li>
+    <li class="active"><%= t('details', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="container" ng-controller="UsersShowCtrl as showCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= @user %></h3>
+      <div class="panel-toolbar">
+        <%= link_to edit_user_path(@user), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: User.model_name.human) do %>
+          <%= icon 'pencil' %>
+        <% end %>
+
+        <%= link_to @user, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: User.model_name.human) do %>
+          <%= icon 'trash' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal dl-show-item">
+        <dt><%= User.human_attribute_name('first_name') %></dt>
+        <dd><%= @user.first_name %></dd>
+        <dt><%= User.human_attribute_name('last_name') %></dt>
+        <dd><%= @user.last_name %></dd>
+        <dt><%= User.human_attribute_name('enabled') %></dt>
+        <dd><%= @user.enabled %></dd>
+        <dt><%= User.human_attribute_name('role') %></dt>
+        <dd><%= @user.role %></dd>
+      </dl>
+    </div>
+    <div class="panel-footer panel-footer-toolbox">
+      <div class="panel-toolbar">
+        <%= link_to t('back', scope: :crud_views), users_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'user',
+      'plural_name': 'users',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for users show view -->
+<% end %>

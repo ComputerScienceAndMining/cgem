@@ -1,27 +1,141 @@
 en:
   activerecord:
     models:
+      organisation:
+        one: Organisation
+        other: Organisations
       user:
         one: User
         other: Users
-      country:
-        one: Country
-        other: Countries
+      work_order_status:
+        one: Work Order Status
+        other: Work Order Statuses
+      work_order:
+        one: Work Order
+        other: Work Orders
+      sample_type:
+        one: Sample Type
+        other: Sample Types
+      sample_type_version:
+        one: Sample Type Version
+        other: Sample Type Versions
+      sample:
+        one: Sample
+        other: Samples
+      specimen_type:
+        one: Specimen Type
+        other: Specimen Types
+      specimen_type_version:
+        one: Specimen Type Version
+        other: Specimen Type Versions
+      specimen:
+        one: Specimen
+        other: Specimens
+      specimen_group:
+        one: Specimen Group
+        other: Specimen Groups
+      specimen_group_relationship:
+        one: Specimen Group Relationship
+        other: Specimen Group Relationships
+      test_type:
+        one: Test Type
+        other: Test Types
+      test_type_version:
+        one: Test Type Version
+        other: Test Type Versions
+      test_status:
+        one: Test Status
+        other: Test Statuses
+      lab_test:
+        one: Test
+        other: Tests
       parameter:
         one: Parameter
         other: Parameters
     attributes:
+      organisation:
+        name: Name
       user:
-        firstname: Firstname
-        lastname: Lastname
+        first_name: First name
+        last_name: Last name
         name: Name
         role: Role
         role_name: Role
         enabled: Enabled
         enabled_user: Enabled
-        country_id: Country
-      country:
+      work_order_status:
         name: Name
+      work_order:
+        name: Name
+        description: Description
+        due_date: Due Date
+        responsible: Responsible
+        responsible_id: Responsible
+        work_order_status: Work Order Status
+        organisation: Organisation
+      sample_type:
+        name: Name
+        data: Data
+      sample_type_version:
+        sample_type: Sample Type
+        name: Name
+        data: Data
+      sample:
+        samples: Samples #https://stackoverflow.com/a/25385812
+        code: Code
+        remarks: Remarks
+        sample_type: Sample Type
+        sample_type_version: Sample Type Version
+        work_order: Work Order
+        data: Data
+      specimen_type:
+        name: Name
+        data: Data
+      specimen_type_version:
+        specimen_type: Specimen Type
+        name: Name
+        data: Data
+      specimen:
+        specimens: Specimens #https://stackoverflow.com/a/25385812
+        code: code
+        remarks: remarks
+        sample: sample
+        specimen_type: Specimen Type
+        specimen_type_version: Specimen Type Version
+        prepared_by: Prepared by
+        prepared_by_id: Prepared by
+        data: Data
+      specimen_group:
+        work_order: Work Order
+        name: Name
+        description: Description
+      specimen_group_relationship:
+        specimen: Specimen
+        specimen_group: Specimen Group
+      test_type:
+        name: Name
+        description: Description
+        data: Data
+      test_type_version:
+        name: Name
+        description: Description
+        data: Data
+        test_type: Test Type
+      test_status:
+        name: Name
+      lab_test:
+        lab_tests: Tests #https://stackoverflow.com/a/25385812
+        name: Name
+        description: Description
+        date_tested: date_tested
+        work_order: Work Order
+        test_status: test_status
+        test_type: Test Type
+        test_type_version: Test Type Version
+        specimen: Specimen
+        tested_by: Tested by
+        tested_by_id: Tested by
+        data: Data
       parameter:
         key: Key
         value: Value

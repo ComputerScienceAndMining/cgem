@@ -1,0 +1,25 @@
+tr.striped, td.striped {
+  background-color: $table-bg-accent;
+}
+
+table.table > thead > tr > th.rotated-parent,
+table.table > tbody > tr > td.rotated-parent {
+  vertical-align: middle;
+  white-space: nowrap;
+  text-align: center;
+  
+  span.rotated {
+    min-width: 1em;
+    text-align: center;
+    writing-mode: vertical-lr;
+    -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    -o-transform: rotate(-180deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  }
+}
+
+td.icon-cell {
+  i {margin-top: 0.3em;}
+}

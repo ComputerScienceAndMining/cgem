@@ -1,0 +1,106 @@
+<div class="container">
+  <ol class="breadcrumb">
+    <li><%= link_to Parameter.model_name.human(count: 2), parameters_path %></li>
+    <li class="active"><%= t('index', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="main container" ng-controller="ParametersIndexCtrl as indexCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= Parameter.model_name.human(count: 2) %></h3>
+      <div class="panel-toolbar">
+        <%= form_tag parameters_path, {method: :get, class: "form-inline", "role" => "form"} do %>
+          <div class="input-group">
+            <%= text_field_tag :q, nil, placeholder: t('search', scope: :crud_views), class: 'form-control' %>
+            <span class="input-group-btn">
+              <%= button_tag type: 'submit', class: 'btn btn-default btn-panel-toolbar', title: t('search_resources', scope: :crud_views, resources: Parameter.model_name.human(count: 2)) , name: '' do %>
+                <%= icon 'search' %>
+              <% end -%>
+            </span>
+          </div>
+        <% end %>
+        
+        <% if policy(Parameter).new? %>
+          <%= link_to new_parameter_path, class: "btn btn-primary btn-panel-toolbar", data: { tooltip: 'tooltip' }, title: t('new_resource', scope: :crud_views, resource: Parameter.model_name.human) do %>
+            <%= icon 'plus' %>
+          <% end %>
+        <% end -%>
+      </div>
+    </div>
+    <% unless @parameters.empty? %>
+    <div class="table-responsive">
+      <table class="table table-striped pretty">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th><%= Parameter.human_attribute_name('key') %></th>
+            <th><%= Parameter.human_attribute_name('value') %></th>
+            <th><%= t('actions', scope: :crud_views) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @parameters.each_with_index do |parameter, index| %>
+          <tr>
+            <td><%= "#{index + 1}" %></td>
+            <td><%= parameter.key %></td>
+            <td><%= parameter.value %></td>
+            <td>
+              <div class="btn-group" role="group">
+                <% if policy(parameter).show? %>
+                  <%= link_to parameter_path(parameter), class: "btn btn-sm btn-default", data: { tooltip: 'tooltip', title: t('details', scope: :crud_views, resource: Parameter.model_name.human) } do %>
+                    <%= icon 'eye'  %>
+                  <% end -%>
+                <% end -%>
+
+                <% if policy(parameter).edit? %>
+                  <%= link_to edit_parameter_path(parameter), class: "btn btn-sm btn-primary", data: { tooltip: 'tooltip', title: t('edit', scope: :crud_views, resource: Parameter.model_name.human) } do %>
+                    <%= icon 'pencil'  %>
+                  <% end -%>
+                <% end -%>
+
+                <% if policy(parameter).destroy? %>
+                  <%= link_to parameter_path(parameter), class: "btn btn-sm btn-danger", data: { tooltip: 'tooltip', title: t('delete', scope: :crud_views, resource: Parameter.model_name.human), confirm: t('are_you_sure', scope: :crud_views) }, method: :delete do %>
+                    <%= icon 'trash'  %>
+                  <% end -%>
+                <% end -%>
+              </div>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div><!-- /.table-responsive -->
+    <% else %>
+      <div class="panel-body">
+        <div class="no-resources-found text-center text-muted">
+          <h3><%= icon 'exclamation-triangle' %> <%= t('no_resources_found', scope: :crud_views, resources: Parameter.model_name.human(count: 2)) %>.</h3>
+        </div>
+      </div><!--/.panel-body-->
+    <% end %>
+    <% if @parameters_filtered.size > @per_page %>
+      <div class="panel-footer panel-footer-toolbox">
+        <div class="pull-right">
+          <%= will_paginate @parameters, renderer: BootstrapPagination::Rails, inner_window: 2, outer_window: 0 %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'parameter',
+      'plural_name': 'parameters',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for parameters index view -->
+<% end %>

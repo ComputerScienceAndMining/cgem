@@ -1,5 +1,5 @@
 module ApplicationHelper
-  
+
   def show_error_messages!(resource)
     return '' if resource.errors.empty?
 

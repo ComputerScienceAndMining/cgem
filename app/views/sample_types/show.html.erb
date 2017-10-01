@@ -1,0 +1,68 @@
+<%= show_error_messages!(@sample_type) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(SampleType).index? %>
+        <%= link_to SampleType.model_name.human(count: 2), sample_types_path %>
+      <% else %>
+        <%= SampleType.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @sample_type.to_s, sample_type_path(@sample_type) %></li>
+    <li class="active"><%= t('details', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="container" ng-controller="SampleTypesShowCtrl as showCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= @sample_type %></h3>
+      <div class="panel-toolbar">
+        <%= link_to edit_sample_type_path(@sample_type), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: SampleType.model_name.human) do %>
+          <%= icon 'pencil' %>
+        <% end %>
+
+        <%= link_to @sample_type, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: SampleType.model_name.human) do %>
+          <%= icon 'trash' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal dl-show-item">
+        <dt><%= SampleType.human_attribute_name('name') %></dt>
+        <dd><%= @sample_type.name %></dd>
+        <dt><%= SampleType.human_attribute_name('data') %></dt>
+        <dd>
+          <% @sample_type.data['fields'].each do |field| %>
+            <p>
+              <%= field['name'] %>: <%= field['type'] %>
+            </p>
+          <% end %>
+        </dd>
+      </dl>
+    </div>
+    <div class="panel-footer panel-footer-toolbox">
+      <div class="panel-toolbar">
+        <%= link_to t('back', scope: :crud_views), sample_types_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'sample_type',
+      'plural_name': 'sample_types',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for sample_types show view -->
+<% end %>

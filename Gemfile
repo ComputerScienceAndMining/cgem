@@ -71,20 +71,20 @@ group :development do
   gem 'quiet_assets', '1.1.0'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', '9.0.6'
+  gem 'byebug', '9.1.0'
 
   # Pry is a powerful alternative to the standard IRB shell for Ruby
-  gem 'pry', '0.10.4'
+  gem 'pry', '0.11.1'
 
   # Replace rails console with pry
-  # gem 'pry-rails', '0.3.4'
+  gem 'pry-rails', '0.3.6'
 
   # Step-by-step debugging and stack navigation in Pry
-  gem 'pry-byebug', '3.4.0'
+  gem 'pry-byebug', '3.5.0'
 
   # RubyMine Debug dependencies
-  gem 'ruby-debug-ide', '0.6.0'
-  gem 'debase', '0.2.2.beta8'
+  # gem 'ruby-debug-ide', '0.6.0'
+  # gem 'debase', '0.2.2.beta8'
 end
 
 # Authentication solution for Rails based on Warden
@@ -108,3 +108,9 @@ gem 'rack-cors', '0.4.0', :require => 'rack/cors'
 # Notifications
 gem 'exception_notification', "4.2.1"
 gem 'slack-notifier', '1.5.1'
+
+# File uploads
+gem "paperclip", "5.0.0"
+
+# Amazon S3
+gem 'aws-sdk', '~> 2.3'

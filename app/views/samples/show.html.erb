@@ -1,0 +1,150 @@
+<%= show_error_messages!(@sample) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(WorkOrder).index? %>
+        <%= link_to WorkOrder.model_name.human(count: 2), work_orders_path %>
+      <% else %>
+        <%= WorkOrder.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @work_order.to_s, work_order_path(@work_order) %></li>
+    <li>
+      <% if policy(Sample).index? %>
+        <%= link_to Sample.model_name.human(count: 2), work_order_samples_path(@work_order) %>
+      <% else %>
+        <%= Sample.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @sample.to_s, sample_path(@sample) %></li>
+    <li class="active"><%= t('details', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="container" ng-controller="SamplesShowCtrl as showCtrl">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-toolbox">
+          <h3 class="panel-title"><%= @sample %></h3>
+          <div class="panel-toolbar">
+            <%= link_to edit_work_order_sample_path(@work_order, @sample), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: Sample.model_name.human) do %>
+              <%= icon 'pencil' %>
+            <% end %>
+
+            <%= link_to work_order_sample_path(@work_order, @sample), method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: Sample.model_name.human) do %>
+              <%= icon 'trash' %>
+            <% end %>
+          </div>
+        </div>
+        <div class="panel-body">
+          <dl class="dl-show-item">
+            <dt><%= Sample.human_attribute_name('code') %></dt>
+            <dd><%= @sample.code %></dd>
+            <dt><%= Sample.human_attribute_name('remarks') %></dt>
+            <dd><%= @sample.remarks %></dd>
+            <dt><%= Sample.human_attribute_name('sample_type') %></dt>
+            <dd><%= @sample.sample_type %></dd>
+            <dt><%= Sample.human_attribute_name('sample_type_version') %></dt>
+            <dd><%= @sample.sample_type_version %></dd>
+            <dt><%= Sample.human_attribute_name('work_order') %></dt>
+            <dd><%= @sample.work_order %></dd>
+            <dt><%= Sample.human_attribute_name('data') %></dt>
+            <dd><%= @sample.data %></dd>
+          </dl>
+        </div>
+        <div class="panel-footer panel-footer-toolbox">
+          <div class="panel-toolbar">
+            <%= link_to t('back', scope: :crud_views), samples_path, class: "btn btn-default" %>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.col-md-4 -->
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-toolbox">
+          <h3 class="panel-title">Summary</h3>
+          <div class="panel-toolbar"></div>
+        </div>
+
+
+        <table class="table table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th class="rotated-parent">
+                  <span class="hidden-xs"><%= Specimen.model_name.human %></span>
+                  <span class="visible-xs rotated"><%= Specimen.model_name.human %></span>
+                </th>
+                <th class="rotated-parent">
+                  <span class="hidden-xs"><%= LabTest.model_name.human(count: 2) %></span>
+                  <span class="visible-xs rotated"><%= LabTest.model_name.human(count: 2) %></span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <%# There is no specimens? %>
+
+
+              <%# Yield specimens for sample %>
+              <% @sample.specimens.each_with_index do |specimen, index_sp| %>
+
+                <%# There is no tests for specimen? %>
+                <% if specimen.lab_tests.length < 1 %>
+                  <tr>
+                    <td class="rotated-parent" rowspan="2">
+                      <span class="hidden-xs"><%= link_to specimen, work_order_specimen_path(@work_order, specimen) %></span>
+                      <span class="visible-xs rotated"><%= link_to specimen, work_order_specimen_path(@work_order, specimen) %></span>
+                    </td>
+                    <td style="vertical-align:middle" class="icon-cell">
+                      No Tests
+                    </td>
+                  </tr>
+                <% end %>
+
+                <%# Yield tests for specimen %>
+                <% specimen.lab_tests.each_with_index do |lab_test, index_lt| %>
+                  <tr>
+                    <% if index_lt == 0 %>
+                      <td class="rotated-parent" rowspan="<%= specimen.lab_tests.length %>">
+                        <span class="hidden-xs"><%= link_to specimen, work_order_specimen_path(@work_order, specimen) %></span>
+                        <span class="visible-xs rotated"><%= link_to specimen, work_order_specimen_path(@work_order, specimen) %></span>
+                      </td>
+                    <% end %>
+                    <td class="icon-cell">
+                      <%= link_to lab_test.test_type, work_order_lab_test_path(@work_order, lab_test) %> <i class="fa fa-check text-muted pull-right"></i>
+                    </td>
+                  </tr>
+                <% end %>
+
+                <%# "New test" button below specimen %>
+                <tr>
+                  <td style="vertical-align:middle" colspan="2" class="striped text-center">
+                    <%= link_to t('new_resource', scope: :crud_views, resource: LabTest.model_name.human), new_work_order_lab_test_path(@work_order) %>
+                    <!-- <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span> -->
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+      </div><!-- /.panel -->
+    </div><!-- /.col-md-8 -->
+  </div><!-- /.row -->
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'sample',
+      'plural_name': 'samples',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for samples show view -->
+<% end %>

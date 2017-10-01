@@ -1,0 +1,24 @@
+<%= show_error_messages!(@test_status) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(TestStatus).index? %>
+        <%= link_to TestStatus.model_name.human(count: 2), test_statuses_path %>
+      <% else %>
+        <%= TestStatus.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li>
+      <% if policy(@test_status).show? %>
+        <%= link_to @test_status.to_s, test_status_path(@test_status) %></li>
+      <% else %>
+        <%= @test_status.to_s %></li>
+      <% end -%>
+    <li class="active"><%= t('edit', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="TestStatusesEditCtrl as editCtrl">
+  <%= render 'form' %>
+</div>

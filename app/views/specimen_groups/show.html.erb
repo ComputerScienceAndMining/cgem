@@ -1,0 +1,64 @@
+<%= show_error_messages!(@specimen_group) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(SpecimenGroup).index? %>
+        <%= link_to SpecimenGroup.model_name.human(count: 2), specimen_groups_path %>
+      <% else %>
+        <%= SpecimenGroup.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @specimen_group.to_s, specimen_group_path(@specimen_group) %></li>
+    <li class="active"><%= t('details', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="container" ng-controller="SpecimenGroupsShowCtrl as showCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= @specimen_group %></h3>
+      <div class="panel-toolbar">
+        <%= link_to edit_specimen_group_path(@specimen_group), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: SpecimenGroup.model_name.human) do %>
+          <%= icon 'pencil' %>
+        <% end %>
+
+        <%= link_to @specimen_group, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: SpecimenGroup.model_name.human) do %>
+          <%= icon 'trash' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal dl-show-item">
+        <dt><%= SpecimenGroup.human_attribute_name('work_order') %></dt>
+        <dd><%= @specimen_group.work_order %></dd>
+        <dt><%= SpecimenGroup.human_attribute_name('name') %></dt>
+        <dd><%= @specimen_group.name %></dd>
+        <dt><%= SpecimenGroup.human_attribute_name('description') %></dt>
+        <dd><%= @specimen_group.description %></dd>
+      </dl>
+    </div>
+    <div class="panel-footer panel-footer-toolbox">
+      <div class="panel-toolbar">
+        <%= link_to t('back', scope: :crud_views), specimen_groups_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'specimen_group',
+      'plural_name': 'specimen_groups',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for specimen_groups show view -->
+<% end %>

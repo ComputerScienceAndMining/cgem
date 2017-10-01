@@ -1,0 +1,18 @@
+<%= show_error_messages!(@parameter) %>
+
+<div class="container"<%# ng-controller="parametersNewCtrl" %>>
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(Parameter).index? %>
+        <%= link_to Parameter.model_name.human(count: 2), parameters_path %>
+      <% else %>
+        <%= Parameter.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li class="active"><%= t('new', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="ParametersNewCtrl as newCtrl">
+  <%= render 'form' %>
+</div>

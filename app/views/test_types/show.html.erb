@@ -1,0 +1,64 @@
+<%= show_error_messages!(@test_type) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(TestType).index? %>
+        <%= link_to TestType.model_name.human(count: 2), test_types_path %>
+      <% else %>
+        <%= TestType.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @test_type.to_s, test_type_path(@test_type) %></li>
+    <li class="active"><%= t('details', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="container" ng-controller="TestTypesShowCtrl as showCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= @test_type %></h3>
+      <div class="panel-toolbar">
+        <%= link_to edit_test_type_path(@test_type), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: TestType.model_name.human) do %>
+          <%= icon 'pencil' %>
+        <% end %>
+
+        <%= link_to @test_type, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: TestType.model_name.human) do %>
+          <%= icon 'trash' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal dl-show-item">
+        <dt><%= TestType.human_attribute_name('name') %></dt>
+        <dd><%= @test_type.name %></dd>
+        <dt><%= TestType.human_attribute_name('description') %></dt>
+        <dd><%= @test_type.description %></dd>
+        <dt><%= TestType.human_attribute_name('data') %></dt>
+        <dd><%= @test_type.data %></dd>
+      </dl>
+    </div>
+    <div class="panel-footer panel-footer-toolbox">
+      <div class="panel-toolbar">
+        <%= link_to t('back', scope: :crud_views), test_types_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'test_type',
+      'plural_name': 'test_types',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for test_types show view -->
+<% end %>

@@ -1,0 +1,104 @@
+<div class="container">
+  <ol class="breadcrumb">
+    <li><%= link_to Organisation.model_name.human(count: 2), organisations_path %></li>
+    <li class="active"><%= t('index', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="main container" ng-controller="OrganisationsIndexCtrl as indexCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= Organisation.model_name.human(count: 2) %></h3>
+      <div class="panel-toolbar">
+        <%= form_tag organisations_path, {method: :get, class: "form-inline", "role" => "form"} do %>
+          <div class="input-group">
+            <%= text_field_tag :q, nil, placeholder: t('search', scope: :crud_views), class: 'form-control' %>
+            <span class="input-group-btn">
+              <%= button_tag type: 'submit', class: 'btn btn-default btn-panel-toolbar', title: t('search_resources', scope: :crud_views, resources: Organisation.model_name.human(count: 2)) , name: '' do %>
+                <%= icon 'search' %>
+              <% end -%>
+            </span>
+          </div>
+        <% end %>
+        
+        <% if policy(Organisation).new? %>
+          <%= link_to new_organisation_path, class: "btn btn-primary btn-panel-toolbar", data: { tooltip: 'tooltip' }, title: t('new_resource', scope: :crud_views, resource: Organisation.model_name.human) do %>
+            <%= icon 'plus' %>
+          <% end %>
+        <% end -%>
+      </div>
+    </div>
+    <% unless @organisations.empty? %>
+    <div class="table-responsive">
+      <table class="table table-striped pretty">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th><%= Organisation.human_attribute_name('name') %></th>
+            <th><%= t('actions', scope: :crud_views) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @organisations.each_with_index do |organisation, index| %>
+          <tr>
+            <td><%= "#{index + 1}" %></td>
+            <td><%= link_to organisation, organisation_path(organisation) %></td>
+            <td>
+              <div class="btn-group" role="group">
+                <% if policy(organisation).show? %>
+                  <%= link_to organisation_path(organisation), class: "btn btn-sm btn-default", data: { tooltip: 'tooltip', title: t('details', scope: :crud_views, resource: Organisation.model_name.human) } do %>
+                    <%= icon 'eye'  %>
+                  <% end -%>
+                <% end -%>
+
+                <% if policy(organisation).edit? %>
+                  <%= link_to edit_organisation_path(organisation), class: "btn btn-sm btn-primary", data: { tooltip: 'tooltip', title: t('edit', scope: :crud_views, resource: Organisation.model_name.human) } do %>
+                    <%= icon 'pencil'  %>
+                  <% end -%>
+                <% end -%>
+
+                <% if policy(organisation).destroy? %>
+                  <%= link_to organisation_path(organisation), class: "btn btn-sm btn-danger", data: { tooltip: 'tooltip', title: t('delete', scope: :crud_views, resource: Organisation.model_name.human), confirm: t('are_you_sure', scope: :crud_views) }, method: :delete do %>
+                    <%= icon 'trash'  %>
+                  <% end -%>
+                <% end -%>
+              </div>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div><!-- /.table-responsive -->
+    <% else %>
+      <div class="panel-body">
+        <div class="no-resources-found text-center text-muted">
+          <h3><%= icon 'exclamation-triangle' %> <%= t('no_resources_found', scope: :crud_views, resources: Organisation.model_name.human(count: 2)) %>.</h3>
+        </div>
+      </div><!--/.panel-body-->
+    <% end %>
+    <% if @organisations_filtered.size > @per_page %>
+      <div class="panel-footer panel-footer-toolbox">
+        <div class="pull-right">
+          <%= will_paginate @organisations, renderer: BootstrapPagination::Rails, inner_window: 2, outer_window: 0 %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'organisation',
+      'plural_name': 'organisations',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for organisations index view -->
+<% end %>

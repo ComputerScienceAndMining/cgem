@@ -1,0 +1,62 @@
+<%= show_error_messages!(@specimen_group_relationship) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(SpecimenGroupRelationship).index? %>
+        <%= link_to SpecimenGroupRelationship.model_name.human(count: 2), specimen_group_relationships_path %>
+      <% else %>
+        <%= SpecimenGroupRelationship.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li><%= link_to @specimen_group_relationship.to_s, specimen_group_relationship_path(@specimen_group_relationship) %></li>
+    <li class="active"><%= t('details', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="container" ng-controller="SpecimenGroupRelationshipsShowCtrl as showCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= @specimen_group_relationship %></h3>
+      <div class="panel-toolbar">
+        <%= link_to edit_specimen_group_relationship_path(@specimen_group_relationship), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: SpecimenGroupRelationship.model_name.human) do %>
+          <%= icon 'pencil' %>
+        <% end %>
+
+        <%= link_to @specimen_group_relationship, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: SpecimenGroupRelationship.model_name.human) do %>
+          <%= icon 'trash' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal dl-show-item">
+        <dt><%= SpecimenGroupRelationship.human_attribute_name('specimen') %></dt>
+        <dd><%= @specimen_group_relationship.specimen %></dd>
+        <dt><%= SpecimenGroupRelationship.human_attribute_name('specimen_group') %></dt>
+        <dd><%= @specimen_group_relationship.specimen_group %></dd>
+      </dl>
+    </div>
+    <div class="panel-footer panel-footer-toolbox">
+      <div class="panel-toolbar">
+        <%= link_to t('back', scope: :crud_views), specimen_group_relationships_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js_rails_data do %>
+<script type="text/javascript">
+  <%# Data here will be passed to angular js %>
+  var rails_data = {
+    'resource': {
+      'singular_name': 'specimen_group_relationship',
+      'plural_name': 'specimen_group_relationships',
+    },
+    'action_name': '<%= action_name %>'
+  }
+</script>
+<% end %>
+
+<% content_for :script do %>
+  <!-- Put your script code specific for specimen_group_relationships show view -->
+<% end %>

@@ -28,7 +28,7 @@ install_ruby_gems () {
 install_bower () {
 
   echo "Installing bower packages..."
-  cd /home/app/webapp && bower install --allow-root
+  cd /home/app/webapp && bower install --allow-root --force
 }
 
 ##

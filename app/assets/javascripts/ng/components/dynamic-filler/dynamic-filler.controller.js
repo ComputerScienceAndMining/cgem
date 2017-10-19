@@ -21,7 +21,7 @@
     vm.$onInit = onInit
 
     function onInit () {
-
+    
     }
 
     function toggleCheckbox (field, alternative) {
@@ -40,7 +40,7 @@
       if (!field.pictures)
         field.pictures = []
       var fileId = _generateUUID()
-      field.pictures.push({id: fileId})
+      field.pictures.push({local_id: fileId})
 
       $timeout(function () {
         document.getElementById(fileId).click()

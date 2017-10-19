@@ -13,8 +13,8 @@
 
     // Variables
     vm.sampleTypes = JSON.parse(vm.sampleTypes)
-    vm.sampleTypeId = undefined
-    vm.dynamicTemplate = undefined
+    vm.sampleTypeId = vm.sampleTypeId || undefined
+    vm.dynamicTemplate = vm.dynamicTemplate || undefined
 
     // Functions
     vm.updateTemplate = updateTemplate

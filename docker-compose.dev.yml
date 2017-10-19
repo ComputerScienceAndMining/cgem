@@ -22,12 +22,12 @@ services:
       dockerfile: Dockerfile.dev
     # command: /sbin/my_init -- bundle exec rails s -b 0.0.0.0 -p 3000
     ports:
-     - "3000:3000"
-     - "3001:22" # ssh connections
+     - "3000:3000" # Rails server
+     - "3001:3001" # rdebug-ide
     volumes:
      - .:/home/app/webapp
-     - /var/lib/gems/2.2.0
-     - /home/app/webapp/vendor/assets
+    #  - /var/lib/gems/2.2.0
+    #  - /home/app/webapp/vendor/assets
     links:
       - database
       - redis

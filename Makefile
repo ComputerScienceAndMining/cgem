@@ -1,6 +1,7 @@
 # Include environment variables from .env
 include .env
 
+RDEBUG_CMD=bundle exec rdebug-ide
 RAILS_CMD=bin/rails
 RAKE_CMD=bin/rake
 
@@ -113,6 +114,12 @@ scaffold_models:
 		specimen:references \
 		user:references \
 		data:jsonb; # Attributes related to test with their results
+
+	$(RAILS_CMD) g scaffold Picture \
+		local_id:string{36} \
+		sample:references \
+		specimen:references \
+		lab_test:references;
 
 	$(RAILS_CMD) g scaffold Parameter \
 		key:string{255} \
@@ -266,4 +273,12 @@ ifeq ($(wildcard /.dockerenv),)
 	docker exec -it $(APP_CONTAINER_NAME) /bin/bash -l -c "make console";
 else
 	TRUSTED_IP=$(DOCKER_HOST_IP) RAILS_ENV=$(ENV) $(RAILS_CMD) c
+endif
+
+d:debug
+debug: start
+ifeq ($(wildcard /.dockerenv),)
+	docker exec -it $(APP_CONTAINER_NAME) /bin/bash -l -c "make debug";
+else
+	TRUSTED_IP=$(DOCKER_HOST_IP) RAILS_ENV=$(ENV) $(RDEBUG_CMD) --host 0.0.0.0 --port 3001 -- $(RAILS_CMD) s -b 0.0.0.0 -p 3000
 endif

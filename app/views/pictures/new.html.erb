@@ -1,0 +1,18 @@
+<%= show_error_messages!(@picture) %>
+
+<div class="container"<%# ng-controller="picturesNewCtrl" %>>
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(Picture).index? %>
+        <%= link_to Picture.model_name.human(count: 2), pictures_path %>
+      <% else %>
+        <%= Picture.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li class="active"><%= t('new', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="PicturesNewCtrl as newCtrl">
+  <%= render 'form' %>
+</div>

@@ -50,8 +50,11 @@
             <dd><%= @sample.sample_type_version %></dd>
             <dt><%= Sample.human_attribute_name('work_order') %></dt>
             <dd><%= @sample.work_order %></dd>
-            <dt><%= Sample.human_attribute_name('data') %></dt>
-            <dd><%= @sample.data %></dd>
+            <hr>
+            <% @sample.data["fields"].each do |field| %>
+              <dt><%= field_title @sample, field %></dt>
+              <dd><%= field_value @sample, field %></dd>
+            <% end %>
           </dl>
         </div>
         <div class="panel-footer panel-footer-toolbox">

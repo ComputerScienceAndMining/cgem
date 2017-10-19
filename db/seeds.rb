@@ -3,6 +3,7 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
 # Clean tables
+Picture.delete_all
 Parameter.delete_all
 LabTest.delete_all
 TestType.delete_all
@@ -17,6 +18,7 @@ User.delete_all
 Organisation.delete_all
 
 # Reset postgres auto increments
+Picture.connection.execute('ALTER SEQUENCE pictures_id_seq RESTART WITH 1')
 Organisation.connection.execute('ALTER SEQUENCE organisations_id_seq RESTART WITH 1')
 User.connection.execute('ALTER SEQUENCE users_id_seq RESTART WITH 1')
 Parameter.connection.execute('ALTER SEQUENCE parameters_id_seq RESTART WITH 1')
@@ -47,7 +49,7 @@ WorkOrderStatus.create! name: 'Entregada'
 wo_1 = WorkOrder.create! name: 'Pruebas Sondajes Sector Sur Teniente', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: teniente
 
 # SampleType type
-testigo = SampleType.create! name: 'Testigo', data: {
+testigo_data = {
   'fields': [
     {
       'name': 'Pozo',
@@ -70,7 +72,7 @@ testigo = SampleType.create! name: 'Testigo', data: {
       'mandatory': false,
     },
     {
-      'name': 'Porcentaje de recuperación [m]',
+      'name': 'Porcentaje de recuperación [%]',
       'type': 'number',
       'mandatory': false,
     },
@@ -92,13 +94,140 @@ testigo = SampleType.create! name: 'Testigo', data: {
   ]
 }
 
-probeta = SpecimenType.create! name: 'Probeta'
-disco = SpecimenType.create! name: 'Disco'
+testigo_data_filled = {
+  'fields': [
+    {
+      'name': 'Pozo',
+      'type': 'text',
+      'mandatory': false,
+      'value': 'Pozo 1'
+    },
+    {
+      'name': 'Caja',
+      'type': 'text',
+      'mandatory': false,
+      'value': 'Caja 1'
+    },
+    {
+      'name': 'Profundidad [m]',
+      'type': 'number',
+      'mandatory': false,
+      'value': 100
+    },
+    {
+      'name': 'Largo [m]',
+      'type': 'number',
+      'mandatory': false,
+      'value': 4
+    },
+    {
+      'name': 'Porcentaje de recuperación [%]',
+      'type': 'number',
+      'mandatory': false,
+      'value': 85
+    },
+    {
+      'name': 'Fecha de recepción',
+      'type': 'date',
+      'mandatory': true,
+      'value': "2016-11-30T03:00:00.000Z"
+    },
+    {
+      'name': 'Protección de muestra',
+      'type': 'radio',
+      'mandatory': true,
+      'alternatives': [
+        {'name': 'Cuidado de rutina'},
+        {'name': 'Cuidado especial'},
+        {'name': 'Cuidado crítico'}
+      ],
+      'value': 'Cuidado de rutina'
+    },
+  ]
+}
+
+# SampleType type
+cilindro_data = {
+  'fields': [
+    {
+      'name': 'Tipo de cilindro',
+      'type': 'radio',
+      'mandatory': true,
+      'alternatives': [
+        {'name': 'Probeta'},
+        {'name': 'Disco'},
+      ]
+    },
+    {
+      'name': 'Diámetro [mm]',
+      'type': 'number',
+      'mandatory': true,
+    },
+    {
+      'name': 'Altura [mm]',
+      'type': 'number',
+      'mandatory': true,
+    },
+    {
+      'name': 'Masa [g]',
+      'type': 'number',
+      'mandatory': false,
+    },
+    {
+      'name': 'Fecha de preparación',
+      'type': 'date',
+      'mandatory': false,
+    },
+  ]
+}
+
+cilindro_data_filled = {
+  'fields': [
+    {
+      'name': 'Tipo de cilindro',
+      'type': 'radio',
+      'mandatory': true,
+      'alternatives': [
+        {'name': 'Probeta'},
+        {'name': 'Disco'},
+      ],
+      'value': 'Probeta',
+    },
+    {
+      'name': 'Diámetro [mm]',
+      'type': 'number',
+      'mandatory': true,
+      'value': 100,
+    },
+    {
+      'name': 'Altura [mm]',
+      'type': 'number',
+      'mandatory': true,
+      'value': 200,
+    },
+    {
+      'name': 'Masa [g]',
+      'type': 'number',
+      'mandatory': false,
+      'value': 54,
+    },
+    {
+      'name': 'Fecha de preparación',
+      'type': 'date',
+      'mandatory': false,
+      'value': "2016-12-30T03:00:00.000Z"
+    },
+  ]
+}
+
+testigo = SampleType.create! name: 'Testigo', data: testigo_data
+
+cilindro = SpecimenType.create! name: 'Cilindro', data: cilindro_data
 bloque = SpecimenType.create! name: 'Bloque'
 
 samples = []
 (1..30).each do |num|
-  new_sample = Sample.create! code: "T1-S#{num}", remarks: 'Sin observaciones', sample_type: testigo, sample_type_version: nil, work_order: wo_1, data: nil
+  new_sample = Sample.create! code: "T1-S#{num}", remarks: 'Sin observaciones', sample_type: testigo, sample_type_version: nil, work_order: wo_1, data: testigo_data_filled
   samples.append new_sample
 end
 
@@ -106,7 +235,7 @@ end
 specimens = []
 samples.each do |sample|
   (1..4).each do |num|
-    new_specimen = Specimen.create! code: "#{sample.code}-S#{num}", remarks: 'Sin observaciones', sample: sample, specimen_type: probeta, specimen_type_version: nil, prepared_by: user_1, data: nil
+    new_specimen = Specimen.create! code: "#{sample.code}-S#{num}", remarks: 'Sin observaciones', sample: sample, specimen_type: cilindro, specimen_type_version: nil, prepared_by: user_1, data: cilindro_data_filled
     specimens.append new_specimen
   end
 end

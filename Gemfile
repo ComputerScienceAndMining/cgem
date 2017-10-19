@@ -71,20 +71,20 @@ group :development do
   gem 'quiet_assets', '1.1.0'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', '9.1.0'
+  # gem 'byebug', '9.1.0'
 
   # Pry is a powerful alternative to the standard IRB shell for Ruby
-  gem 'pry', '0.11.1'
+  # gem 'pry', '0.11.1'
 
   # Replace rails console with pry
-  gem 'pry-rails', '0.3.6'
+  # gem 'pry-rails', '0.3.6'
 
   # Step-by-step debugging and stack navigation in Pry
-  gem 'pry-byebug', '3.5.0'
+  # gem 'pry-byebug', '3.5.0'
 
   # RubyMine Debug dependencies
-  # gem 'ruby-debug-ide', '0.6.0'
-  # gem 'debase', '0.2.2.beta8'
+  gem 'ruby-debug-ide', '0.6.0'
+  gem 'debase', '0.2.2.beta8'
 end
 
 # Authentication solution for Rails based on Warden
@@ -100,7 +100,7 @@ gem "pundit", '1.0.1'
 gem 'sidekiq', '4.0.1'
 
 # Gem that provides the I18n translations on the Javascript
-gem "i18n-js", "3.0.0.rc11"
+gem "i18n-js", "3.0.1"
 
 # CORS
 gem 'rack-cors', '0.4.0', :require => 'rack/cors'

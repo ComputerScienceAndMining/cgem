@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  
+  <% @sheets.each do |sheet_name, data| %>
+  <Worksheet ss:Name="<%= sheet_name %>">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">code</Data></Cell>
+        <Cell><Data ss:Type="String">remarks</Data></Cell>
+        <Cell><Data ss:Type="String">specimen type</Data></Cell>
+
+        <Cell><Data ss:Type="String">created at</Data></Cell>
+        <Cell><Data ss:Type="String">updated at</Data></Cell>
+        <% data[:fields].each do |field| %>
+            <Cell><Data ss:Type="String"><%= field %></Data></Cell>
+        <% end %>
+      </Row>
+    <% data[:specimens].each do |specimen| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= specimen.code %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= specimen.remarks %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= specimen.specimen_type %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= specimen.created_at %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= specimen.updated_at %></Data></Cell>
+        <% specimen.data["fields"].each do |field| %>
+            <Cell><Data ss:Type="<%= xls_field_type specimen, field %>"><%= field["value"] %></Data></Cell>
+        <% end %>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+  <% end %>
+</Workbook>
+

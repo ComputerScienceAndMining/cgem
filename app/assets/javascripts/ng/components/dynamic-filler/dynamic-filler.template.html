@@ -3,7 +3,7 @@
 </div>
 
 <div ng-show="dynamicFiller.template" class="panel panel-primary">
-  <div class="panel-heading">Datos</div>
+  <div class="panel-heading">Data</div>
   <div class="panel-body dynamic-filler">
 
     <div class="dynamic-fields">
@@ -12,21 +12,24 @@
         <div class="form-group" ng-switch="field.type">
           <label class="control-label">{{field.name}}</label>
           <textarea ng-model="field.value" ng-switch-when="textarea" class="form-control" rows="3"></textarea>
-          <input ng-model="field.value" ng-switch-when="color" class="form-control" type="{{field.type}}" value="">
-          <input ng-model="field.value" ng-switch-when="number" class="form-control" type="{{field.type}}" value="">
-          <input ng-model="field.value" ng-switch-when="text" class="form-control" type="{{field.type}}" value="">
-          <input ng-model="field.value" ng-switch-when="date" class="form-control" type="{{field.type}}" value="">
-          <input ng-model="field.value" ng-switch-when="email" class="form-control" type="{{field.type}}" value="">
+          <input ng-model="field.value" ng-switch-when="color" class="form-control" type="{{field.type}}">
+          <input ng-model="field.value" ng-switch-when="number" class="form-control" type="{{field.type}}">
+          <input ng-model="field.value" ng-switch-when="text" class="form-control" type="{{field.type}}">
+          <input ng-model="field.value" ng-switch-when="date" class="form-control" type="{{field.type}}">
+          <input ng-model="field.value" ng-switch-when="email" class="form-control" type="{{field.type}}">
 
           <div ng-switch-when="pictures" class="dynamic-multiple-media">
             <label ng-repeat="picture in field.pictures">
-              <input id="{{picture.id}}" name="dynamic_files[pictures][{{picture.id}}]" class="form-control" type="file" accept="image/*" capture="camera">
+              <input style="display:none" type="text" name="sample[pictures_attributes][][id]" value="{{picture.id}}">
+              <input style="display:none" type="text" name="sample[pictures_attributes][][local_id]" value="picture.local_id">
+              <input id="{{picture.local_id}}" name="sample[pictures_attributes][][image]" class="form-control" type="file" accept="image/*" capture="camera">
             </label>
             <button class="btn btn-default btn-block" type="button" ng-click="dynamicFiller.addPicture(field)">New picture</button>
           </div><!-- /.dynamic-multiple-media -->
 
-          <input ng-switch-when="video" class="form-control" type="file" accept="video/*" capture="camcorder">
-          <input ng-switch-when="audio" class="form-control" type="file" accept="audio/*" capture="microphone">
+          <!-- <input ng-switch-when="video" class="form-control" type="file" accept="video/*" capture="camcorder"> -->
+
+          <!-- <input ng-switch-when="audio" class="form-control" type="file" accept="audio/*" capture="microphone"> -->
 
           <div class="dynamic-toggle-input" data-toggle="buttons">
             <div ng-switch-when="checkbox" ng-repeat="alternative in field.alternatives">

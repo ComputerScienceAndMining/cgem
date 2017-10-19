@@ -27,6 +27,17 @@ class Specimen < ActiveRecord::Base
   # Put here custom queries for Specimen
   scope :by_name, ->(name) { where("name ILIKE ?", "%#{name}%") } # Scope for search
 
+  def self.to_xls options = {}
+    all.group_by { |s| s.specimen_type.name }
+       .map {|st_name, specimens| [
+         st_name, 
+         {
+           fields: specimens[0].specimen_type.data["fields"].map {|f| f["name"] }, 
+           specimens: specimens
+          }
+       ]}.to_h
+  end
+
   # Instance methods
 
   # Override to_s method

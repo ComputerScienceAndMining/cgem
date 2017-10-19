@@ -1,0 +1,79 @@
+<div id="menu">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <%= button_tag class: 'navbar-toggle', data: { toggle: 'collapse', target: '#navbar-collapse' } do %>
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          <% end -%>
+          <%= link_to '#', class: 'navbar-brand' do %>
+            <%= image_tag "logo-usach-377x272.png", alt: 'USACH Logo', class: '' %>
+          <% end -%>
+
+          <div style="color:#fafafa;">
+            <h2 class="titulo-lay">CGEM</h2>
+            <h3 class="titulo-lay">Sistema de gestión de muestras, especímenes y ensayos de laboratorio</h3>
+            <!-- <p>CGEM</p> -->
+          </div>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <ul class="nav navbar-nav">
+          </ul>
+          <!-- Navbar Right Menu -->
+          <ul class="nav navbar-nav navbar-right">
+
+            <%# unless Rails.env.production? %>
+            <!-- LANGUAGE DROPDOWN SELECT -->
+            <li class="dropdown">
+              <%= link_to '#', data: { toggle: 'dropdown' } do %>
+                <% if params[:locale].present? %>
+                  <%= image_tag "flags/#{params[:locale]}.png", alt: "#{params[:locale]}", class: 'locale-flag' %>
+                <% else -%>
+                  <%= image_tag "flags/es-CL.png", alt: "es-CL", class: 'locale-flag' %>
+                <% end -%>
+
+                <b class="caret"></b>
+                <ul class="dropdown-menu">
+                  <% unless params[:locale] == "es-CL" %>
+                  <li>
+                    <%= link_to locale: 'es-CL' do %>
+                      <%= image_tag "flags/es-CL.png", alt: "es-CL", class: 'locale-flag' %> <%= t('es_cl', scope: [:top_menu, :languages]) %>
+                    <% end -%>
+                  </li>
+                  <% end -%>
+                  <% unless params[:locale] == "pt-BR" %>
+                  <li>
+                    <%= link_to locale: 'pt-BR' do %>
+                      <%= image_tag "flags/pt-BR.png", alt: "pt-BR", class: 'locale-flag' %> <%= t('pt_br', scope: [:top_menu, :languages]) %>
+                    <% end -%>
+                  </li>
+                  <% end -%>
+                  <% unless params[:locale] == "en" %>
+                  <li>
+                    <%= link_to locale: 'en' do %>
+                      <%= image_tag "flags/en.png", alt: "en", class: 'locale-flag' %> <%= t('en_us', scope: [:top_menu, :languages]) %>
+                    <% end -%>
+                  </li>
+                  <% end -%>
+                </ul>
+              <% end -%>
+            </li>
+
+            <!-- User Account Menu -->
+            <li class="dropdown">
+              <%= link_to '#', data: { toggle: 'dropdown' } do %>
+                <%= t('welcome', scope: :top_menu) %> <b class="caret"></b>
+              <% end %>
+            </li>
+            <%# end -%>
+          </ul>
+        </div><!-- /#navbar-collapse -->
+      </div>
+    </div><!-- /.container -->
+  </nav>
+</div>

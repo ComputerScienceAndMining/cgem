@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  local_id: MyString
+  sample_id: 
+  specimen_id: 
+  lab_test_id: 
+
+two:
+  local_id: MyString
+  sample_id: 
+  specimen_id: 
+  lab_test_id: 

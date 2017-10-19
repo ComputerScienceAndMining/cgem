@@ -1,0 +1,24 @@
+<%= show_error_messages!(@picture) %>
+
+<div class="container">
+  <ol class="breadcrumb">
+    <li>
+      <% if policy(Picture).index? %>
+        <%= link_to Picture.model_name.human(count: 2), pictures_path %>
+      <% else %>
+        <%= Picture.model_name.human(count: 2) %>
+      <% end -%>
+    </li>
+    <li>
+      <% if policy(@picture).show? %>
+        <%= link_to @picture.to_s, picture_path(@picture) %></li>
+      <% else %>
+        <%= @picture.to_s %></li>
+      <% end -%>
+    <li class="active"><%= t('edit', scope: :breadcrumb) %></li>
+  </ol>
+</div>
+
+<div class="form-wrapper" ng-controller="PicturesEditCtrl as editCtrl">
+  <%= render 'form' %>
+</div>

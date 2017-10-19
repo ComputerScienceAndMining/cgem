@@ -12,12 +12,12 @@
     <li><%= link_to @work_order.to_s, work_order_path(@work_order) %></li>
     <li>
       <% if policy(Specimen).index? %>
-        <%= link_to Specimen.model_name.human(count: 2), specimens_path %>
+        <%= link_to Specimen.model_name.human(count: 2), work_order_specimens_path %>
       <% else %>
         <%= Specimen.model_name.human(count: 2) %>
       <% end -%>
     </li>
-    <li><%= link_to @specimen.to_s, specimen_path(@specimen) %></li>
+    <li><%= link_to @specimen.to_s, work_order_specimen_path(@work_order, @specimen) %></li>
     <li class="active"><%= t('details', scope: :breadcrumb) %></li>
   </ol>
 </div>
@@ -29,11 +29,11 @@
         <div class="panel-heading panel-heading-toolbox">
           <h3 class="panel-title"><%= @specimen %></h3>
           <div class="panel-toolbar">
-            <%= link_to edit_specimen_path(@specimen), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: Specimen.model_name.human) do %>
+            <%= link_to edit_work_order_specimen_path(@work_order, @specimen), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: Specimen.model_name.human) do %>
               <%= icon 'pencil' %>
             <% end %>
 
-            <%= link_to @specimen, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: Specimen.model_name.human) do %>
+            <%= link_to work_order_specimen_path(@work_order, @specimen), method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: Specimen.model_name.human) do %>
               <%= icon 'trash' %>
             <% end %>
           </div>
@@ -48,18 +48,14 @@
             <dd><%= @specimen.sample %></dd>
             <dt><%= Specimen.human_attribute_name('specimen_type') %></dt>
             <dd><%= @specimen.specimen_type %></dd>
-            <dt><%= Specimen.human_attribute_name('specimen_type_version') %></dt>
-            <dd><%= @specimen.specimen_type_version %></dd>
             <dt><%= Specimen.human_attribute_name('prepared_by') %></dt>
             <dd><%= @specimen.prepared_by %></dd>
-            <dt><%= Specimen.human_attribute_name('data') %></dt>
-            <dd><%= @specimen.data %></dd>
+            <hr>
+            <% @specimen.data["fields"].each do |field| %>
+              <dt><%= field_title @sample, field %></dt>
+              <dd><%= field_value @sample, field %></dd>
+            <% end %>
           </dl>
-        </div>
-        <div class="panel-footer panel-footer-toolbox">
-          <div class="panel-toolbar">
-            <%= link_to t('back', scope: :crud_views), specimens_path, class: "btn btn-default" %>
-          </div>
         </div>
       </div>
     </div><!-- /.col-md-4 -->

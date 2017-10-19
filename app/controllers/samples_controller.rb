@@ -5,17 +5,20 @@ class SamplesController < ApplicationController
 
   # GET /samples
   def index
-    @page = params[:page]
-    @per_page = 10
-
-    @samples_filtered = params[:q].present? ? Sample.by_name(params[:q]) : Sample.all
-
-    @samples = @samples_filtered.paginate page: params[:page], per_page: @per_page
+    if request.format.xls?
+      @sheets = Sample.where(work_order: @work_order).to_xls
+    else
+      @page = params[:page]
+      @per_page = 10
+      @samples_filtered = params[:q].present? ? Sample.by_name(params[:q]) : Sample.all
+      @samples = @samples_filtered.paginate page: params[:page], per_page: @per_page
+    end
 
     # Display the data collected according to a format
     respond_to do |format|
       format.html
       format.json
+      format.xls
       #format.csv { send_data @samples.to_csv }
     end
   end
@@ -35,7 +38,6 @@ class SamplesController < ApplicationController
 
   # POST /samples
   def create
-    binding.pry
     @sample = Sample.new(sample_params)
     @sample.work_order = @work_order
 
@@ -83,6 +85,6 @@ class SamplesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def sample_params
-      params.require(:sample).permit(:code, :remarks, :sample_type_id, :sample_type_version_id, :work_order_id, :data)
+      params.require(:sample).permit(:code, :remarks, :sample_type_id, :sample_type_version_id, :work_order_id, :data, pictures_attributes: [ :id, :local_id, :image ])
     end
 end

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  
+  <% @sheets.each do |sheet_name, data| %>
+  <Worksheet ss:Name="<%= sheet_name %>">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">code</Data></Cell>
+        <Cell><Data ss:Type="String">remarks</Data></Cell>
+        <Cell><Data ss:Type="String">sample type</Data></Cell>
+        <Cell><Data ss:Type="String">work order</Data></Cell>
+        <Cell><Data ss:Type="String">created at</Data></Cell>
+        <Cell><Data ss:Type="String">updated at</Data></Cell>
+        <% data[:fields].each do |field| %>
+            <Cell><Data ss:Type="String"><%= field %></Data></Cell>
+        <% end %>
+      </Row>
+    <% data[:samples].each do |sample| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= sample.code %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= sample.remarks %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= sample.sample_type %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= sample.work_order %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= sample.created_at %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= sample.updated_at %></Data></Cell>
+        <% sample.data["fields"].each do |field| %>
+            <Cell><Data ss:Type="<%= xls_field_type sample, field %>"><%= field["value"] %></Data></Cell>
+        <% end %>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+  <% end %>
+</Workbook>
+

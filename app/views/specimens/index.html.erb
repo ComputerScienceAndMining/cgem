@@ -8,7 +8,7 @@
       <% end -%>
     </li>
     <li><%= link_to @work_order.to_s, work_order_path(@work_order) %></li>
-    <li><%= link_to Specimen.model_name.human(count: 2), specimens_path %></li>
+    <li><%= link_to Specimen.model_name.human(count: 2), work_order_specimens_path(@work_order) %></li>
     <li class="active"><%= t('index', scope: :breadcrumb) %></li>
   </ol>
 </div>
@@ -18,19 +18,11 @@
     <div class="panel-heading panel-heading-toolbox">
       <h3 class="panel-title"><%= Specimen.model_name.human(count: 2) %></h3>
       <div class="panel-toolbar">
-        <%= form_tag specimens_path, {method: :get, class: "form-inline", "role" => "form"} do %>
-          <div class="input-group">
-            <%= text_field_tag :q, nil, placeholder: t('search', scope: :crud_views), class: 'form-control' %>
-            <span class="input-group-btn">
-              <%= button_tag type: 'submit', class: 'btn btn-default btn-panel-toolbar', title: t('search_resources', scope: :crud_views, resources: Specimen.model_name.human(count: 2)) , name: '' do %>
-                <%= icon 'search' %>
-              <% end -%>
-            </span>
-          </div>
+        <%= link_to work_order_specimens_path(@work_order, format: "xls"), class: "btn btn-default btn-panel-toolbar", data: { tooltip: 'tooltip' }, title: t('export_resources', scope: :crud_views, resources: Specimen.model_name.human(count: 2)) do %>
+          <%= icon 'download' %>
         <% end %>
-
         <% if policy(Specimen).new? %>
-          <%= link_to new_specimen_path, class: "btn btn-primary btn-panel-toolbar", data: { tooltip: 'tooltip' }, title: t('new_resource', scope: :crud_views, resource: Specimen.model_name.human) do %>
+          <%= link_to new_work_order_specimen_path(@work_order), class: "btn btn-primary btn-panel-toolbar", data: { tooltip: 'tooltip' }, title: t('new_resource', scope: :crud_views, resource: Specimen.model_name.human) do %>
             <%= icon 'plus' %>
           <% end %>
         <% end -%>

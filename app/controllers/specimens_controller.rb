@@ -5,17 +5,20 @@ class SpecimensController < ApplicationController
 
   # GET /specimens
   def index
-    @page = params[:page]
-    @per_page = 10
-
-    @specimens_filtered = params[:q].present? ? Specimen.by_name(params[:q]) : Specimen.all
-
-    @specimens = @specimens_filtered.paginate page: params[:page], per_page: @per_page
+    if request.format.xls?
+      @sheets = Specimen.where(sample_id: @work_order.samples.pluck(&:id)).to_xls
+    else
+      @page = params[:page]
+      @per_page = 10
+      @specimens_filtered = params[:q].present? ? Specimen.by_name(params[:q]) : Specimen.all
+      @specimens = @specimens_filtered.paginate page: params[:page], per_page: @per_page
+    end
 
     # Display the data collected according to a format
     respond_to do |format|
       format.html
       format.json
+      format.xls
       #format.csv { send_data @specimens.to_csv }
     end
   end
@@ -82,6 +85,6 @@ class SpecimensController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def specimen_params
-      params.require(:specimen).permit(:code, :remarks, :sample_id, :specimen_type_id, :specimen_type_version_id, :prepared_by_id, :data)
+      params.require(:specimen).permit(:code, :remarks, :sample_id, :specimen_type_id, :specimen_type_version_id, :prepared_by_id, :data, pictures_attributes: [ :id, :local_id, :image ])
     end
 end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :pictures
   devise_for :users
   resources :users
   resources :organisations
@@ -24,9 +25,9 @@ Rails.application.routes.draw do
     resources :lab_tests
   end
 
-  resources :samples
-  resources :specimens
-  resources :lab_tests
+  # resources :samples
+  # resources :specimens
+  # resources :lab_tests
 
   scope "(:locale)", locale: /#{I18n.available_locales.join("|")}/ do
 

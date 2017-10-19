@@ -12,7 +12,7 @@
     <li><%= link_to @work_order.to_s, work_order_path(@work_order) %></li>
     <li>
       <% if policy(Sample).index? %>
-        <%= link_to Sample.model_name.human(count: 2), samples_path %>
+        <%= link_to Sample.model_name.human(count: 2), work_order_samples_path(@work_order) %>
       <% else %>
         <%= Sample.model_name.human(count: 2) %>
       <% end -%>

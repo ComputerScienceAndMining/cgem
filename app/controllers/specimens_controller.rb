@@ -29,7 +29,7 @@ class SpecimensController < ApplicationController
 
   # GET /specimens/new
   def new
-    @specimen = Specimen.new
+    @specimen = params["specimen"] ? Specimen.new(specimen_params) : Specimen.new
   end
 
   # GET /specimens/1/edit

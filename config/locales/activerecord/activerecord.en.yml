@@ -85,6 +85,7 @@ en:
         code: Code
         remarks: Remarks
         sample_type: Sample Type
+        sample_type_id: Sample Type
         sample_type_version: Sample Type Version
         work_order: Work Order
         data: Data
@@ -100,7 +101,9 @@ en:
         code: code
         remarks: remarks
         sample: sample
+        sample_id: sample
         specimen_type: Specimen Type
+        specimen_type_id: Specimen Type
         specimen_type_version: Specimen Type Version
         prepared_by: Prepared by
         prepared_by_id: Prepared by
@@ -123,6 +126,8 @@ en:
         test_type: Test Type
       test_status:
         name: Name
+        icon: Icon
+        icon_color: Icon color
       lab_test:
         lab_tests: Tests #https://stackoverflow.com/a/25385812
         name: Name
@@ -131,10 +136,13 @@ en:
         work_order: Work Order
         test_status: test_status
         test_type: Test Type
+        test_type_id: Test Type
         test_type_version: Test Type Version
         specimen: Specimen
         tested_by: Tested by
         tested_by_id: Tested by
+        started_at: Started at
+        ended_at: Ended at
         data: Data
       parameter:
         key: Key

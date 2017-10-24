@@ -27,10 +27,44 @@ class LabTest < ActiveRecord::Base
   # validates :specimen, <validations>
   # validates :user, <validations>
   # validates :data, <validations>
+  validates :test_type_id, uniqueness: { scope: :specimen_id }
 
   # Scopes (used for search form)
   # Put here custom queries for LabTest
   scope :by_name, ->(name) { where("name ILIKE ?", "%#{name}%") } # Scope for search
+
+  def self.to_xls(work_order)
+    samples = Sample.where(work_order: work_order).includes(:specimens, {lab_tests: :test_type})
+    specimens = Specimen.where(sample_id: work_order.samples.pluck(&:id)).includes({sample: :sample_type}, :specimen_type, {lab_tests: :test_type})
+    h = specimens.group_by {|s| "#{s.sample.sample_type} - #{s.specimen_type}" }
+
+    h = Hash[h.map {|k, specimens| [k, {
+      sample_fields: specimens.first.sample.sample_type.data["fields"],
+      specimen_fields: specimens.first.specimen_type.data["fields"],
+      test_types: specimens.map{|s| s.lab_tests}.flatten.map{|lt| lt.test_type}.uniq,
+      specimens: specimens
+    }]}]
+
+    # lab_tests = LabTest.all.includes(:test_type, specimen: [:specimen_type, {sample: :sample_type}])
+    # sample_types = lab_tests.map{|lt| lt.specimen.sample.sample_type}.uniq
+    # specimen_types = lab_tests.map{|lt| lt.specimen.specimen_type}.uniq
+    # test_types = lab_tests.map{|lt| lt.test_type}.uniq
+
+    # # Constructs hash for xls template
+    # h = {}
+    
+    # {
+
+    # }
+    # all.group_by { |s| s.sample_type.name }
+    # .map {|st_name, samples| [
+    #     st_name, 
+    #     {
+    #       fields: samples[0].sample_type.data["fields"].map {|f| f["name"] }, 
+    #       samples: samples
+    #      }
+    #   ]}.to_h
+  end
 
   # Instance methods
 

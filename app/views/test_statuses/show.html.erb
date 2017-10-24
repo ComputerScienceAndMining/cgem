@@ -32,6 +32,12 @@
       <dl class="dl-horizontal dl-show-item">
         <dt><%= TestStatus.human_attribute_name('name') %></dt>
         <dd><%= @test_status.name %></dd>
+
+        <dt><%= TestStatus.human_attribute_name('icon') %></dt>
+        <dd><%= @test_status.icon %></dd>
+
+        <dt><%= TestStatus.human_attribute_name('icon_color') %></dt>
+        <dd><%= @test_status.icon_color %></dd>
       </dl>
     </div>
     <div class="panel-footer panel-footer-toolbox">

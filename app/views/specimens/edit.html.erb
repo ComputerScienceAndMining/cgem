@@ -12,14 +12,14 @@
     <li><%= link_to @work_order.to_s, work_order_path(@work_order) %></li>
     <li>
       <% if policy(Specimen).index? %>
-        <%= link_to Specimen.model_name.human(count: 2), specimens_path %>
+        <%= link_to Specimen.model_name.human(count: 2), work_order_specimens_path(@work_order) %>
       <% else %>
         <%= Specimen.model_name.human(count: 2) %>
       <% end -%>
     </li>
     <li>
       <% if policy(@specimen).show? %>
-        <%= link_to @specimen.to_s, specimen_path(@specimen) %></li>
+        <%= link_to @specimen.to_s, work_order_specimen_path(@work_order, @specimen) %></li>
       <% else %>
         <%= @specimen.to_s %></li>
       <% end -%>

@@ -85,6 +85,7 @@ pt-BR:
         code: Código
         remarks: Observaciones
         sample_type: Tipo de Muestra
+        sample_type_id: Tipo de Muestra
         sample_type_version: Versión de Tipo de Muestra
         work_order: Orden de Trabajo
         data: Datos
@@ -100,7 +101,9 @@ pt-BR:
         code: Código
         remarks: Observaciones
         sample: Muestra
+        sample_id: Muestra
         specimen_type: Tipo de Espécimen
+        specimen_type_id: Tipo de Espécimen
         specimen_type_version: Versión de Tipo de Espécimen
         prepared_by: Preparado por
         prepared_by_id: Preparado por
@@ -123,6 +126,8 @@ pt-BR:
         test_type: Tipo de Ensayo
       test_status:
         name: Nombre
+        icon: Ícono
+        icon_color: Color de ícono
       lab_test:
         lab_tests: Ensayos #https://stackoverflow.com/a/25385812
         name: Nombre
@@ -131,10 +136,13 @@ pt-BR:
         work_order: Orden de Trabajo
         test_status: Status del Ensayo
         test_type: Tipo de Ensayo
+        test_type_id: Tipo de Ensayo
         test_type_version: Versión de Tipo de Ensayo
         specimen: Espécimen
         tested_by: Ensayado por
         tested_by_id: Ensayado por
+        started_at: Iniciado
+        ended_at: Finalizado
         data: Datos
       parameter:
         key: Clave

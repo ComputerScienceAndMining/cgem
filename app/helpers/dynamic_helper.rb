@@ -52,6 +52,7 @@ module DynamicHelper
   end
 
   def xls_field_type(obj, field)
+    return "String" if field["value"].nil?
     return "String" if field["type"] == "text"
     return "Number" if field["type"] == "number"
     return "String"

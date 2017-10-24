@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40"> 
+    <Styles>
+        <Style ss:ID="TitleGroup">
+            <Font ss:Bold="1"/>
+            <Alignment ss:Horizontal="Center"/>
+            <Borders>
+                <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+                <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+                <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+                <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+            </Borders>
+        </Style>
+        <Style ss:ID="TitleGroupAlt">
+            <Font ss:Bold="1"/>
+            <Alignment ss:Horizontal="Center"/>
+            <Interior ss:Color="#CCFFFF" ss:Pattern="Solid"/>
+            <Borders>
+                <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+                <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+                <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+                <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+            </Borders>
+        </Style>
+
+        <Style ss:ID="Normal">
+            <Alignment ss:Horizontal="Center"/>
+             <Borders>
+                <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+                <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+                <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+                <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+            </Borders>
+        </Style>
+
+        <Style ss:ID="Alt">
+            <Interior ss:Color="#CCFFFF" ss:Pattern="Solid"/>
+            <Borders>
+                <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+                <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+                <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+                <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+            </Borders>
+        </Style>
+    </Styles>
+  
+  <% @sheets.each do |sheet_name, data| %>
+  <Worksheet ss:Name="<%= sheet_name %>">
+    <Table>
+      <Row>
+        <Cell ss:StyleID="TitleGroupAlt" ss:MergeAcross="<%= 2 + data[:sample_fields].length %>">
+            <Data ss:Type="String"><%= Sample.model_name.human(count: 2) %></Data>
+        </Cell>
+        <Cell ss:StyleID="TitleGroup" ss:MergeAcross="<%= 2 + data[:specimen_fields].length %>">
+            <Data ss:Type="String"><%= Specimen.model_name.human(count: 2) %></Data>
+        </Cell>
+        <% data[:test_types].each_with_index do |test_type, index| %>
+            <Cell ss:StyleID="TitleGroup<%= (index % 2 == 0)? 'Alt': ''%>" ss:MergeAcross="<%= 3 + test_type.data["fields"].length %>">
+                <Data ss:Type="String">
+                    <%= test_type %>
+                </Data>
+            </Cell>
+        <% end %>
+      </Row>
+
+      <Row>
+        <%# Samples %>
+        <Cell ss:StyleID="Alt"><Data ss:Type="String"><%= Sample.human_attribute_name('code') %></Data></Cell>
+        <Cell ss:StyleID="Alt"><Data ss:Type="String"><%= Sample.human_attribute_name('remarks') %></Data></Cell>
+        <Cell ss:StyleID="Alt"><Data ss:Type="String"><%= Sample.human_attribute_name('sample_type') %></Data></Cell>
+
+        <% data[:sample_fields].each do |field| %>
+            <Cell ss:StyleID="Alt"><Data ss:Type="String"><%= field["name"] %></Data></Cell>
+        <% end %>
+
+        <%# Specimens %>
+        <Cell ss:StyleID="Normal"><Data ss:Type="String"><%= Specimen.human_attribute_name('code') %></Data></Cell>
+        <Cell ss:StyleID="Normal"><Data ss:Type="String"><%= Specimen.human_attribute_name('remarks') %></Data></Cell>
+        <Cell ss:StyleID="Normal"><Data ss:Type="String"><%= Specimen.human_attribute_name('specimen_type') %></Data></Cell>
+        <% data[:specimen_fields].each do |field| %>
+            <Cell ss:StyleID="Normal"><Data ss:Type="String"><%= field["name"] %></Data></Cell>
+        <% end %>
+
+        <%# LabTests %>
+        <% data[:test_types].each_with_index do |test_type, index| %>
+            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= LabTest.human_attribute_name('started_at') %></Data></Cell>
+            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= LabTest.human_attribute_name('ended_at') %></Data></Cell>
+            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= LabTest.human_attribute_name('status') %></Data></Cell>
+            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= LabTest.human_attribute_name('tested_by') %></Data></Cell>
+            <% test_type.data["fields"].each do |field| %>
+                <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= field["name"] %></Data></Cell>
+            <% end %>
+        <% end %>
+      </Row>
+    <% data[:specimens].each do |specimen| %>
+      <Row>
+
+        <%# Samples %>
+        <Cell ss:StyleID="Alt"><Data ss:Type="String"><%= specimen.sample.code %></Data></Cell>
+        <Cell ss:StyleID="Alt"><Data ss:Type="String"><%= specimen.sample.remarks %></Data></Cell>
+        <Cell ss:StyleID="Alt"><Data ss:Type="String"><%= specimen.sample.sample_type %></Data></Cell>
+        
+        <% specimen.sample.data["fields"].each do |field| %>
+            <Cell ss:StyleID="Alt"><Data ss:Type="<%= xls_field_type sample, field %>"><%= field_value specimen.sample, field %></Data></Cell>
+        <% end %>
+
+        <%# Specimens %>
+        <Cell ss:StyleID="Normal"><Data ss:Type="String"><%= specimen.code %></Data></Cell>
+        <Cell ss:StyleID="Normal"><Data ss:Type="String"><%= specimen.remarks %></Data></Cell>
+        <Cell ss:StyleID="Normal"><Data ss:Type="String"><%= specimen.specimen_type %></Data></Cell>
+
+        <% specimen.data["fields"].each do |field| %>
+            <Cell ss:StyleID="Normal"><Data ss:Type="<%= xls_field_type specimen, field %>"><%= field_value specimen, field %></Data></Cell>
+        <% end %>
+
+        <%# LabTest %>
+        <% data[:test_types].each_with_index do |test_type, index| %>
+            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test(test_type, specimen).try(:started_at).try(:to_time).try(:to_s, :short) %></Data></Cell>
+            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test(test_type, specimen).try(:started_at).try(:to_time).try(:to_s, :short) %></Data></Cell>
+            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test(test_type, specimen).try(:test_status) %></Data></Cell>
+            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test(test_type, specimen).try(:tested_by) %></Data></Cell>
+            <% find_test(test_type, specimen).data["fields"].each do |field| %>
+                <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="<%= xls_field_type find_test(test_type, specimen), field %>"><%= field_value find_test(test_type, specimen), field %></Data></Cell>
+            <% end %>
+        <% end %>
+
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+  <% end %>
+</Workbook>
+

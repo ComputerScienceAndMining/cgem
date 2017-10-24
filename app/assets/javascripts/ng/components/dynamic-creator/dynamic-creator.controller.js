@@ -11,6 +11,9 @@
     $log.debug('DynamicCreatorController: Hi!')
     var vm = this
 
+    // Variables
+    vm.showJSON = true
+
     vm.$onInit = function () {
       function initData () {
         vm.data = {

@@ -5,7 +5,7 @@
       <h3 class="panel-title"><%= @specimen.new_record? ? t('new_resource', scope: :crud_views, resource: Specimen.model_name.human) : @specimen.to_s %></h3>
       <div class="panel-toolbar">
         <% if action_name == 'edit' or action_name == 'update' %>
-          <%= link_to @specimen, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: Specimen.model_name.human) do %>
+          <%= link_to work_order_specimen_path(@work_order, @specimen), method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: Specimen.model_name.human) do %>
             <%= icon 'trash' %>
           <% end %>
         <% end %>
@@ -25,12 +25,12 @@
         <%= f.collection_select :sample_id, Sample.all, :id, :to_s, { prompt: true} , { class: 'form-control' }  %>
       </div><!-- /.form-group -->
       <div class="form-group">
-        <%= f.label :specimen_type_id, class: "control-label" %>
-        <%= f.collection_select :specimen_type_id, SpecimenType.all, :id, :to_s, { prompt: true} , { class: 'form-control' }  %>
-      </div><!-- /.form-group -->
-      <div class="form-group">
         <%= f.label :prepared_by_id, class: "control-label" %>
         <%= f.collection_select :prepared_by_id, User.all, :id, :to_s, { prompt: true} , { class: 'form-control' }  %>
+      </div><!-- /.form-group -->
+      <div class="form-group">
+        <%= f.label :specimen_type_id, class: "control-label" %>
+        <%= f.collection_select :specimen_type_id, SpecimenType.all, :id, :to_s, { prompt: true} , { class: 'form-control', 'ng-model': 'formCtrl.specimenTypeId', 'ng-init': "formCtrl.specimenTypeId='#{@specimen.specimen_type_id}'", 'ng-change': 'formCtrl.updateTemplate()' } %>
       </div><!-- /.form-group -->
       <!--
       <div class="form-group">
@@ -43,9 +43,9 @@
     <div class="panel-footer panel-footer-toolbox">
       <div class="panel-toolbar pull-right">
         <% if action_name == 'edit' or action_name == 'update' %>
-          <%= link_to t('cancel', scope: :crud_views), specimen_path(@specimen), class: "btn btn-default" %>
+          <%= link_to t('cancel', scope: :crud_views), work_order_specimen_path(@work_order, @specimen), class: "btn btn-default" %>
         <% else %>
-          <%= link_to t('cancel', scope: :crud_views), specimens_path, class: "btn btn-default" %>
+          <%= link_to t('cancel', scope: :crud_views), work_order_specimens_path(@work_order), class: "btn btn-default" %>
         <% end %>
         <%= f.submit class: "btn btn-success" %>
       </div><!-- /.panel-toolbar -->

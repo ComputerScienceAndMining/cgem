@@ -17,7 +17,7 @@
         <%= Sample.model_name.human(count: 2) %>
       <% end -%>
     </li>
-    <li><%= link_to @sample.to_s, sample_path(@sample) %></li>
+    <li><%= link_to @sample.to_s, work_order_sample_path(@work_order, @sample) %></li>
     <li class="active"><%= t('details', scope: :breadcrumb) %></li>
   </ol>
 </div>
@@ -59,7 +59,7 @@
         </div>
         <div class="panel-footer panel-footer-toolbox">
           <div class="panel-toolbar">
-            <%= link_to t('back', scope: :crud_views), samples_path, class: "btn btn-default" %>
+            <%= link_to t('back', scope: :crud_views), work_order_samples_path(@work_order), class: "btn btn-default" %>
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@
                       </td>
                     <% end %>
                     <td class="icon-cell">
-                      <%= link_to lab_test.test_type, work_order_lab_test_path(@work_order, lab_test) %> <i class="fa fa-check text-muted pull-right"></i>
+                      <%= link_to lab_test.test_type, work_order_lab_test_path(@work_order, lab_test) %> <i style="color: <%= lab_test.test_status.icon_color %>" class="fa fa-<%= lab_test.test_status.icon %> text-muted pull-right"></i>
                     </td>
                   </tr>
                 <% end %>

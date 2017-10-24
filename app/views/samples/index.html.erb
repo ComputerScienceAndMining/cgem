@@ -18,18 +18,6 @@
     <div class="panel-heading panel-heading-toolbox">
       <h3 class="panel-title"><%= Sample.model_name.human(count: 2) %></h3>
       <div class="panel-toolbar">
-        <!--
-        <%= form_tag samples_path, {method: :get, class: "form-inline", "role" => "form"} do %>
-          <div class="input-group">
-            <%= text_field_tag :q, nil, placeholder: t('search', scope: :crud_views), class: 'form-control' %>
-            <span class="input-group-btn">
-              <%= button_tag type: 'submit', class: 'btn btn-default btn-panel-toolbar', title: t('search_resources', scope: :crud_views, resources: Sample.model_name.human(count: 2)) , name: '' do %>
-                <%= icon 'search' %>
-              <% end -%>
-            </span>
-          </div>
-        <% end %>
-        -->
         <%= link_to work_order_samples_path(@work_order, format: "xls"), class: "btn btn-default btn-panel-toolbar", data: { tooltip: 'tooltip' }, title: t('export_resources', scope: :crud_views, resources: Sample.model_name.human(count: 2)) do %>
           <%= icon 'download' %>
         <% end %>

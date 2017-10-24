@@ -8,7 +8,7 @@
       <% end -%>
     </li>
     <li><%= link_to @work_order.to_s, work_order_path(@work_order) %></li>
-    <li><%= link_to LabTest.model_name.human(count: 2), lab_tests_path %></li>
+    <li><%= link_to LabTest.model_name.human(count: 2), work_order_lab_tests_path(@work_order) %></li>
     <li class="active"><%= t('index', scope: :breadcrumb) %></li>
   </ol>
 </div>
@@ -18,19 +18,12 @@
     <div class="panel-heading panel-heading-toolbox">
       <h3 class="panel-title"><%= LabTest.model_name.human(count: 2) %></h3>
       <div class="panel-toolbar">
-        <%= form_tag lab_tests_path, {method: :get, class: "form-inline", "role" => "form"} do %>
-          <div class="input-group">
-            <%= text_field_tag :q, nil, placeholder: t('search', scope: :crud_views), class: 'form-control' %>
-            <span class="input-group-btn">
-              <%= button_tag type: 'submit', class: 'btn btn-default btn-panel-toolbar', title: t('search_resources', scope: :crud_views, resources: LabTest.model_name.human(count: 2)) , name: '' do %>
-                <%= icon 'search' %>
-              <% end -%>
-            </span>
-          </div>
+        <%= link_to work_order_lab_tests_path(@work_order, format: "xls"), class: "btn btn-default btn-panel-toolbar", data: { tooltip: 'tooltip' }, title: t('export_resources', scope: :crud_views, resources: LabTest.model_name.human(count: 2)) do %>
+          <%= icon 'download' %>
         <% end %>
 
         <% if policy(LabTest).new? %>
-          <%= link_to new_lab_test_path, class: "btn btn-primary btn-panel-toolbar", data: { tooltip: 'tooltip' }, title: t('new_resource', scope: :crud_views, resource: LabTest.model_name.human) do %>
+          <%= link_to new_work_order_lab_test_path(@work_order), class: "btn btn-primary btn-panel-toolbar", data: { tooltip: 'tooltip' }, title: t('new_resource', scope: :crud_views, resource: LabTest.model_name.human) do %>
             <%= icon 'plus' %>
           <% end %>
         <% end -%>
@@ -55,8 +48,8 @@
           <% @lab_tests.each_with_index do |lab_test, index| %>
           <tr>
             <td><%= "#{index + 1}" %></td>
-            <td><%= lab_test.started_at %></td>
-            <td><%= lab_test.ended_at %></td>
+            <td><%= lab_test.started_at.try(:to_time).try(:to_s, :short) %></td>
+            <td><%= lab_test.ended_at.try(:to_time).try(:to_s, :short) %></td>
             <td><%= lab_test.test_status %></td>
             <td><%= lab_test.test_type %></td>
             <td><%= lab_test.specimen %></td>
@@ -64,19 +57,19 @@
             <td>
               <div class="btn-group" role="group">
                 <% if policy(lab_test).show? %>
-                  <%= link_to lab_test_path(lab_test), class: "btn btn-sm btn-default", data: { tooltip: 'tooltip', title: t('details', scope: :crud_views, resource: LabTest.model_name.human) } do %>
+                  <%= link_to work_order_lab_test_path(@work_order, lab_test), class: "btn btn-sm btn-default", data: { tooltip: 'tooltip', title: t('details', scope: :crud_views, resource: LabTest.model_name.human) } do %>
                     <%= icon 'eye'  %>
                   <% end -%>
                 <% end -%>
 
                 <% if policy(lab_test).edit? %>
-                  <%= link_to edit_lab_test_path(lab_test), class: "btn btn-sm btn-primary", data: { tooltip: 'tooltip', title: t('edit', scope: :crud_views, resource: LabTest.model_name.human) } do %>
+                  <%= link_to edit_work_order_lab_test_path(@work_order, lab_test), class: "btn btn-sm btn-primary", data: { tooltip: 'tooltip', title: t('edit', scope: :crud_views, resource: LabTest.model_name.human) } do %>
                     <%= icon 'pencil'  %>
                   <% end -%>
                 <% end -%>
 
                 <% if policy(lab_test).destroy? %>
-                  <%= link_to lab_test_path(lab_test), class: "btn btn-sm btn-danger", data: { tooltip: 'tooltip', title: t('delete', scope: :crud_views, resource: LabTest.model_name.human), confirm: t('are_you_sure', scope: :crud_views) }, method: :delete do %>
+                  <%= link_to work_order_lab_test_path(@work_order, lab_test), class: "btn btn-sm btn-danger", data: { tooltip: 'tooltip', title: t('delete', scope: :crud_views, resource: LabTest.model_name.human), confirm: t('are_you_sure', scope: :crud_views) }, method: :delete do %>
                     <%= icon 'trash'  %>
                   <% end -%>
                 <% end -%>

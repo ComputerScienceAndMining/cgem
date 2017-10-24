@@ -5,17 +5,20 @@ class LabTestsController < ApplicationController
 
   # GET /lab_tests
   def index
-    @page = params[:page]
-    @per_page = 10
-
-    @lab_tests_filtered = params[:q].present? ? LabTest.by_name(params[:q]) : LabTest.all
-
-    @lab_tests = @lab_tests_filtered.paginate page: params[:page], per_page: @per_page
+    if request.format.xls?
+      @sheets = LabTest.to_xls(@work_order)
+    else
+      @page = params[:page]
+      @per_page = 10
+      @lab_tests_filtered = params[:q].present? ? LabTest.by_name(params[:q]) : LabTest.all
+      @lab_tests = @lab_tests_filtered.paginate page: params[:page], per_page: @per_page
+    end
 
     # Display the data collected according to a format
     respond_to do |format|
       format.html
       format.json
+      format.xls
       #format.csv { send_data @lab_tests.to_csv }
     end
   end
@@ -26,7 +29,7 @@ class LabTestsController < ApplicationController
 
   # GET /lab_tests/new
   def new
-    @lab_test = LabTest.new
+    @lab_test = params["lab_test"] ? LabTest.new(lab_test_params) : LabTest.new
   end
 
   # GET /lab_tests/1/edit
@@ -39,7 +42,7 @@ class LabTestsController < ApplicationController
     @lab_test.work_order = @work_order
 
     if @lab_test.save
-      redirect_to @lab_test
+      redirect_to [@work_order, @lab_test]
     else
       render :new
     end
@@ -48,7 +51,7 @@ class LabTestsController < ApplicationController
   # PATCH/PUT /lab_tests/1
   def update
     if @lab_test.update(lab_test_params)
-      redirect_to @lab_test
+      redirect_to [@work_order, @lab_test]
     else
       render :edit
     end
@@ -57,7 +60,7 @@ class LabTestsController < ApplicationController
   # DELETE /lab_tests/1
   def destroy
     if @lab_test.destroy
-      redirect_to lab_tests_url
+      redirect_to work_order_lab_tests_url(@work_order)
     else
       render :show
     end

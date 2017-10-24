@@ -75,6 +75,6 @@ class TestStatusesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def test_status_params
-      params.require(:test_status).permit(:name)
+      params.require(:test_status).permit(:name, :icon, :icon_color)
     end
 end

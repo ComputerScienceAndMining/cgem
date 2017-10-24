@@ -12,12 +12,12 @@
     <li><%= link_to @work_order.to_s, work_order_path(@work_order) %></li>
     <li>
       <% if policy(LabTest).index? %>
-        <%= link_to LabTest.model_name.human(count: 2), lab_tests_path %>
+        <%= link_to LabTest.model_name.human(count: 2), work_order_lab_tests_path(@work_order) %>
       <% else %>
         <%= LabTest.model_name.human(count: 2) %>
       <% end -%>
     </li>
-    <li><%= link_to @lab_test.to_s, lab_test_path(@lab_test) %></li>
+    <li><%= link_to @lab_test.to_s, work_order_lab_test_path(@work_order, @lab_test) %></li>
     <li class="active"><%= t('details', scope: :breadcrumb) %></li>
   </ol>
 </div>
@@ -27,11 +27,11 @@
     <div class="panel-heading panel-heading-toolbox">
       <h3 class="panel-title"><%= @lab_test %></h3>
       <div class="panel-toolbar">
-        <%= link_to edit_lab_test_path(@lab_test), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: LabTest.model_name.human) do %>
+        <%= link_to edit_work_order_lab_test_path(@work_order, @lab_test), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: LabTest.model_name.human) do %>
           <%= icon 'pencil' %>
         <% end %>
 
-        <%= link_to @lab_test, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: LabTest.model_name.human) do %>
+        <%= link_to work_order_lab_test_path(@work_order, @lab_test), method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: LabTest.model_name.human) do %>
           <%= icon 'trash' %>
         <% end %>
       </div>
@@ -48,19 +48,25 @@
         <dd><%= @lab_test.test_status %></dd>
         <dt><%= LabTest.human_attribute_name('test_type') %></dt>
         <dd><%= @lab_test.test_type %></dd>
+        <!--
         <dt><%= LabTest.human_attribute_name('test_type_version') %></dt>
         <dd><%= @lab_test.test_type_version %></dd>
+        -->
         <dt><%= LabTest.human_attribute_name('specimen') %></dt>
         <dd><%= @lab_test.specimen %></dd>
         <dt><%= LabTest.human_attribute_name('tested_by') %></dt>
         <dd><%= @lab_test.tested_by %></dd>
-        <dt><%= LabTest.human_attribute_name('data') %></dt>
-        <dd><%= @lab_test.data %></dd>
+
+        <hr>
+        <% @lab_test.data["fields"].each do |field| %>
+          <dt><%= field_title @lab_test, field %></dt>
+          <dd><%= field_value @lab_test, field %></dd>
+        <% end %>
       </dl>
     </div>
     <div class="panel-footer panel-footer-toolbox">
       <div class="panel-toolbar">
-        <%= link_to t('back', scope: :crud_views), lab_tests_path, class: "btn btn-default" %>
+        <%= link_to t('back', scope: :crud_views), work_order_lab_tests_path(@work_order), class: "btn btn-default" %>
       </div>
     </div>
   </div>

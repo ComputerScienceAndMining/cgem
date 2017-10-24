@@ -12,7 +12,7 @@
     <li><%= link_to @work_order.to_s, work_order_path(@work_order) %></li>
     <li>
       <% if policy(LabTest).index? %>
-        <%= link_to LabTest.model_name.human(count: 2), lab_tests_path %>
+        <%= link_to LabTest.model_name.human(count: 2), work_order_lab_tests_path(@work_order) %>
       <% else %>
         <%= LabTest.model_name.human(count: 2) %>
       <% end -%>
@@ -21,6 +21,6 @@
   </ol>
 </div>
 
-<div class="form-wrapper" ng-controller="LabTestsNewCtrl as newCtrl">
+<div class="form-wrapper" ng-controller="LabTestsNewCtrl as formCtrl">
   <%= render 'form' %>
 </div>

@@ -11,14 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171005200951) do
+ActiveRecord::Schema.define(version: 20171023200404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "lab_tests", force: :cascade do |t|
-    t.string   "name",                 limit: 255
-    t.string   "description",          limit: 255
     t.datetime "started_at"
     t.datetime "ended_at"
     t.integer  "work_order_id"
@@ -28,8 +26,8 @@ ActiveRecord::Schema.define(version: 20171005200951) do
     t.integer  "specimen_id"
     t.integer  "tested_by_id"
     t.jsonb    "data"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   add_index "lab_tests", ["specimen_id"], name: "index_lab_tests_on_specimen_id", using: :btree
@@ -159,6 +157,8 @@ ActiveRecord::Schema.define(version: 20171005200951) do
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "icon"
+    t.string   "icon_color"
   end
 
   create_table "test_type_versions", force: :cascade do |t|

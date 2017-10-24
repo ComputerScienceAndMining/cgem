@@ -220,8 +220,94 @@ cilindro_data_filled = {
   ]
 }
 
-testigo = SampleType.create! name: 'Testigo', data: testigo_data
+# 
+vo_data = {
+  'fields': [
+    {
+      'name': 'Vp [m/s]',
+      'type': 'number',
+      'mandatory': true,
+    },
+    {
+      'name': 'Vs [m/s]',
+      'type': 'number',
+      'mandatory': true,
+    },
+    {
+      'name': 'E [GPa]',
+      'type': 'number',
+      'mandatory': true,
+    },
+    {
+      'name': 'Poisson',
+      'type': 'number',
+      'mandatory': true,
+    }
+  ]
+}
 
+vo_data_filled = {
+  'fields': [
+    {
+      'name': 'Vp [m/s]',
+      'type': 'number',
+      'mandatory': true,
+      'value': 4853,
+    },
+    {
+      'name': 'Vs [m/s]',
+      'type': 'number',
+      'mandatory': true,
+      'value': 2784,
+    },
+    {
+      'name': 'E [GPa]',
+      'type': 'number',
+      'mandatory': true,
+      'value': 57.96,
+    },
+    {
+      'name': 'Poisson',
+      'type': 'number',
+      'mandatory': true,
+      'value': 0.2,
+    }
+  ]
+}
+
+ccnbd_data = {
+  'fields': [
+    {
+      'name': 'K1c [MPA·m^1/2]',
+      'type': 'number',
+      'mandatory': true,
+    },
+    {
+      'name': 'Y*min',
+      'type': 'number',
+      'mandatory': true,
+    }
+  ]
+}
+
+ccnbd_data_filled = {
+  'fields': [
+    {
+      'name': 'K1c [MPA·m^1/2]',
+      'type': 'number',
+      'mandatory': true,
+      'value': 1.17
+    },
+    {
+      'name': 'Y*min',
+      'type': 'number',
+      'mandatory': true,
+      'value': 1.12
+    }
+  ]
+}
+
+testigo = SampleType.create! name: 'Testigo', data: testigo_data
 cilindro = SpecimenType.create! name: 'Cilindro', data: cilindro_data
 bloque = SpecimenType.create! name: 'Bloque'
 
@@ -241,19 +327,17 @@ samples.each do |sample|
 end
 
 # Status de ensayos
-ts_creado = TestStatus.create! name: 'Creado'
-ts_progreso = TestStatus.create! name: 'En progreso'
-ts_finalizado = TestStatus.create! name: 'Finalizado'
+ts_creado = TestStatus.create! name: 'Creado', icon: 'pencil', icon_color: '#777777'
+ts_progreso = TestStatus.create! name: 'En progreso', icon: 'hourglass-2', icon_color: '#f0ad4e'
+ts_finalizado = TestStatus.create! name: 'Finalizado', icon: 'check', icon_color: '#5cb85c'
 
 # Test Types
-tt_ucs = TestType.create! name: 'UCS', description: '', data: nil
-tt_cd = TestType.create! name: 'Coeficientes dinámicos', description: '', data: nil
-tt_d = TestType.create! name: 'Densidad', description: '', data: nil
+tt_vo = TestType.create! name: 'Velocidad de onda', description: '', data: vo_data
+tt_ccnbd = TestType.create! name: 'CCNBD', description: '', data: ccnbd_data
 
 # Se crean ensayos
 lab_tests = []
 specimens.each do |specimen|
-  new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_cd, specimen: specimen, tested_by: user_1, data: nil
-  new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_d, specimen: specimen, tested_by: user_1, data: nil
-  new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: nil, work_order: wo_1, test_status: ts_creado, test_type: tt_ucs, specimen: specimen, tested_by: user_1, data: nil
+  new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_vo, specimen: specimen, tested_by: user_1, data: vo_data_filled
+  new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_ccnbd, specimen: specimen, tested_by: user_1, data: ccnbd_data_filled
 end

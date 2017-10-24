@@ -80,7 +80,7 @@
               <%# Yield tests for specimen %>
               <% @specimen.lab_tests.each_with_index do |lab_test, index_lt| %>
                   <td class="icon-cell">
-                    <%= link_to lab_test.test_type, work_order_lab_test_path(@work_order, lab_test) %> <i class="fa fa-check text-muted pull-right"></i>
+                    <%= link_to lab_test.test_type, work_order_lab_test_path(@work_order, lab_test) %> <i style="color: <%= lab_test.test_status.icon_color %>" class="fa fa-<%= lab_test.test_status.icon %> text-muted pull-right"></i>
                   </td>
                 </tr>
               <% end %>

@@ -23,7 +23,7 @@
 
       <div class="form-group">
         <%= f.label :sample_type_id, class: "control-label" %>
-        <%= f.collection_select :sample_type_id, SampleType.all, :id, :to_s, { prompt: true} , { class: 'form-control', 'ng-model': 'formCtrl.sampleTypeId', 'ng-init': "formCtrl.sampleTypeId='#{@sample.sample_type_id}'", 'ng-change': 'formCtrl.updateTemplate()' }  %>
+        <%= f.collection_select :sample_type_id, SampleType.all, :id, :to_s, { prompt: true} , { class: 'form-control', 'ng-model': 'formCtrl.sampleTypeId', 'ng-init': "formCtrl.sampleTypeId='#{@sample.sample_type_id}'", 'ng-change': 'formCtrl.updateTemplate()' } %>
       </div><!-- /.form-group -->
 
       <dynamic-filler name="sample[data]" template="formCtrl.dynamicTemplate" value="<%= @sample.data %>"></dynamic-filler>
@@ -31,9 +31,9 @@
     <div class="panel-footer panel-footer-toolbox">
       <div class="panel-toolbar pull-right">
         <% if action_name == 'edit' or action_name == 'update' %>
-          <%= link_to t('cancel', scope: :crud_views), sample_path(@sample), class: "btn btn-default" %>
+          <%= link_to t('cancel', scope: :crud_views), work_order_sample_path(@work_order, @sample), class: "btn btn-default" %>
         <% else %>
-          <%= link_to t('cancel', scope: :crud_views), samples_path, class: "btn btn-default" %>
+          <%= link_to t('cancel', scope: :crud_views), work_order_samples_path(@work_order), class: "btn btn-default" %>
         <% end %>
         <%= f.submit class: "btn btn-success" %>
       </div><!-- /.panel-toolbar -->

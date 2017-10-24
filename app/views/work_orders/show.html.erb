@@ -65,28 +65,42 @@
             <%= t('view_resources', scope: :crud_views, resources: Sample.model_name.human(count: 2)) %>
             <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
           </a>
+          <a href="<%= work_order_samples_path(@work_order, format: :xls) %>" class="list-group-item">
+            <%= t('export_resources', scope: :crud_views, resources: Sample.model_name.human(count: 2)) %>
+            <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
+          </a>
           <a href="<%= new_work_order_sample_path(@work_order) %>" class="list-group-item">
             <%= t('new_resource_fem', scope: :crud_views, resource: Sample.model_name.human) %>
             <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
           </a>
+
           <li class="list-group-item list-group-item-default">
             <span class="badge"><%= @work_order.specimens.length %></span>
             <%= Specimen.model_name.human(count: 2) %>
           </li>
-          <a href="<%= work_order_specimens_path(@work_order) %>" class="list-group-item">
+          <a href="<%= work_order_specimens_path(@work_order, format: :xls) %>" class="list-group-item">
             <%= t('view_resources', scope: :crud_views, resources: Specimen.model_name.human(count: 2)) %>
+            <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
+          </a>
+          <a href="<%= work_order_specimens_path(@work_order) %>" class="list-group-item">
+            <%= t('export_resources', scope: :crud_views, resources: Specimen.model_name.human(count: 2)) %>
             <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
           </a>
           <a href="<%= new_work_order_specimen_path(@work_order) %>" class="list-group-item">
             <%= t('new_resource', scope: :crud_views, resource: Specimen.model_name.human) %>
             <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
           </a>
+
           <li class="list-group-item list-group-item-default">
             <span class="badge"><%= @work_order.lab_tests.length %></span>
             <%= LabTest.model_name.human(count: 2) %>
           </li>
           <a href="<%= work_order_lab_tests_path(@work_order) %>" class="list-group-item">
             <%= t('view_resources', scope: :crud_views, resources: LabTest.model_name.human(count: 2)) %>
+            <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
+          </a>
+          <a href="<%= work_order_lab_tests_path(@work_order, format: :xls) %>" class="list-group-item">
+            <%= t('export_resources', scope: :crud_views, resources: LabTest.model_name.human(count: 2)) %>
             <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
           </a>
           <a href="<%= new_work_order_lab_test_path(@work_order) %>" class="list-group-item">
@@ -178,7 +192,7 @@
                         </td>
                       <% end %>
                       <td class="icon-cell">
-                        <%= link_to lab_test.test_type, work_order_lab_test_path(@work_order, lab_test) %> <i class="fa fa-check text-muted pull-right"></i>
+                        <%= link_to lab_test.test_type, work_order_lab_test_path(@work_order, lab_test) %> <i style="color: <%= lab_test.test_status.icon_color %>" class="fa fa-<%= lab_test.test_status.icon %> text-muted pull-right"></i>
                       </td>
                     </tr>
                   <% end %>
@@ -186,7 +200,7 @@
                   <%# "New test" button below specimen %>
                   <tr>
                     <td style="vertical-align:middle" colspan="2" class="striped text-center">
-                      <%= link_to t('new_resource', scope: :crud_views, resource: LabTest.model_name.human), new_work_order_lab_test_path(@work_order) %>
+                      <%= link_to t('new_resource', scope: :crud_views, resource: LabTest.model_name.human), new_work_order_lab_test_path(@work_order, lab_test: {specimen_id: specimen.id}) %>
                       <!-- <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span> -->
                     </td>
                   </tr>
@@ -195,7 +209,7 @@
                 <%# "New specimen" button below sample %>
                 <tr>
                   <td colspan="3" class="striped text-center icon-cell">
-                    <%= link_to t('new_resource', scope: :crud_views, resource: Specimen.model_name.human), new_work_order_specimen_path(@work_order) %>
+                    <%= link_to t('new_resource', scope: :crud_views, resource: Specimen.model_name.human), new_work_order_specimen_path(@work_order,  specimen: {sample_id: sample.id}) %>
                   </td>
                 </tr>
               <% end %>

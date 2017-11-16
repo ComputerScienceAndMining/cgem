@@ -34,8 +34,16 @@
         <dd><%= @test_type.name %></dd>
         <dt><%= TestType.human_attribute_name('description') %></dt>
         <dd><%= @test_type.description %></dd>
-        <dt><%= TestType.human_attribute_name('data') %></dt>
-        <dd><%= @test_type.data %></dd>
+        <% if @test_type.data %>
+          <dt><%= TestType.human_attribute_name('data') %></dt>
+          <dd>
+            <% @test_type.data['fields'].each do |field| %>
+              <p>
+                <%= field['name'] %>: <%= field['type'] %>
+              </p>
+            <% end %>
+          </dd>
+        <% end %>
       </dl>
     </div>
     <div class="panel-footer panel-footer-toolbox">

@@ -10,16 +10,6 @@
     <div class="panel-heading panel-heading-toolbox">
       <h3 class="panel-title"><%= SpecimenType.model_name.human(count: 2) %></h3>
       <div class="panel-toolbar">
-        <%= form_tag specimen_types_path, {method: :get, class: "form-inline", "role" => "form"} do %>
-          <div class="input-group">
-            <%= text_field_tag :q, nil, placeholder: t('search', scope: :crud_views), class: 'form-control' %>
-            <span class="input-group-btn">
-              <%= button_tag type: 'submit', class: 'btn btn-default btn-panel-toolbar', title: t('search_resources', scope: :crud_views, resources: SpecimenType.model_name.human(count: 2)) , name: '' do %>
-                <%= icon 'search' %>
-              <% end -%>
-            </span>
-          </div>
-        <% end %>
         
         <% if policy(SpecimenType).new? %>
           <%= link_to new_specimen_type_path, class: "btn btn-primary btn-panel-toolbar", data: { tooltip: 'tooltip' }, title: t('new_resource', scope: :crud_views, resource: SpecimenType.model_name.human) do %>
@@ -35,7 +25,6 @@
           <tr>
             <th>#</th>
             <th><%= SpecimenType.human_attribute_name('name') %></th>
-            <th><%= SpecimenType.human_attribute_name('data') %></th>
             <th><%= t('actions', scope: :crud_views) %></th>
           </tr>
         </thead>
@@ -44,7 +33,6 @@
           <tr>
             <td><%= "#{index + 1}" %></td>
             <td><%= link_to specimen_type, specimen_type_path(specimen_type) %></td>
-            <td><%= specimen_type.data %></td>
             <td>
               <div class="btn-group" role="group">
                 <% if policy(specimen_type).show? %>

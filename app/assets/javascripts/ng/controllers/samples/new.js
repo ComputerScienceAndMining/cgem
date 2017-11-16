@@ -12,18 +12,18 @@
     angular.extend(vm, rails_data)
 
     // Variables
-    vm.sampleTypes = JSON.parse(vm.sampleTypes)
-    vm.sampleTypeId = vm.sampleTypeId || undefined
+    vm.sampleTypeVersions = JSON.parse(vm.sampleTypeVersions)
+    vm.sampleTypeVersionId = vm.sampleTypeVersionId || undefined
     vm.dynamicTemplate = vm.dynamicTemplate || undefined
 
     // Functions
     vm.updateTemplate = updateTemplate
 
     function updateTemplate () {
-      var sampleType = _.find(vm.sampleTypes, function (sampleType) {
-        return sampleType.id == vm.sampleTypeId
+      var sampleTypeVersion = _.find(vm.sampleTypeVersions, function (sampleTypeVersion) {
+        return sampleTypeVersion.id == vm.sampleTypeVersionId
       })
-      vm.dynamicTemplate = sampleType.data
+      vm.dynamicTemplate = sampleTypeVersion.data
     }
   }
 

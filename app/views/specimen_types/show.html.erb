@@ -32,8 +32,16 @@
       <dl class="dl-horizontal dl-show-item">
         <dt><%= SpecimenType.human_attribute_name('name') %></dt>
         <dd><%= @specimen_type.name %></dd>
-        <dt><%= SpecimenType.human_attribute_name('data') %></dt>
-        <dd><%= @specimen_type.data %></dd>
+        <% if @specimen_type.data %>
+          <dt><%= SpecimenType.human_attribute_name('data') %></dt>
+          <dd>
+            <% @specimen_type.data['fields'].each do |field| %>
+              <p>
+                <%= field['name'] %>: <%= field['type'] %>
+              </p>
+            <% end %>
+          </dd>
+        <% end %>
       </dl>
     </div>
     <div class="panel-footer panel-footer-toolbox">

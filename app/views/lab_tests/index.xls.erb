@@ -124,7 +124,7 @@
             <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test(test_type, specimen).try(:test_status) %></Data></Cell>
             <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test(test_type, specimen).try(:tested_by) %></Data></Cell>
             <% find_test(test_type, specimen).data["fields"].each do |field| %>
-                <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="<%= xls_field_type find_test(test_type, specimen), field %>"><%= field_value find_test(test_type, specimen), field %></Data></Cell>
+                <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="<%= xls_field_type find_test(test_type, specimen), field %>"><%= field_value find_test(test_type, specimen), field, empty: '' %></Data></Cell>
             <% end %>
         <% end %>
 

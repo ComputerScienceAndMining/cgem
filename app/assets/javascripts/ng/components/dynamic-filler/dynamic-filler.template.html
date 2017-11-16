@@ -13,7 +13,7 @@
           <label class="control-label">{{field.name}}</label>
           <textarea ng-model="field.value" ng-switch-when="textarea" class="form-control" rows="3"></textarea>
           <input ng-model="field.value" ng-switch-when="color" class="form-control" type="{{field.type}}">
-          <input ng-model="field.value" ng-switch-when="number" class="form-control" type="{{field.type}}">
+          <input ng-model="field.value" ng-switch-when="number" class="form-control" type="{{field.type}}" step="0.001">
           <input ng-model="field.value" ng-switch-when="text" class="form-control" type="{{field.type}}">
           <input ng-model="field.value" ng-switch-when="date" class="form-control" type="{{field.type}}">
           <input ng-model="field.value" ng-switch-when="email" class="form-control" type="{{field.type}}">

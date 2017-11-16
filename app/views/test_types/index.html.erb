@@ -10,16 +10,6 @@
     <div class="panel-heading panel-heading-toolbox">
       <h3 class="panel-title"><%= TestType.model_name.human(count: 2) %></h3>
       <div class="panel-toolbar">
-        <%= form_tag test_types_path, {method: :get, class: "form-inline", "role" => "form"} do %>
-          <div class="input-group">
-            <%= text_field_tag :q, nil, placeholder: t('search', scope: :crud_views), class: 'form-control' %>
-            <span class="input-group-btn">
-              <%= button_tag type: 'submit', class: 'btn btn-default btn-panel-toolbar', title: t('search_resources', scope: :crud_views, resources: TestType.model_name.human(count: 2)) , name: '' do %>
-                <%= icon 'search' %>
-              <% end -%>
-            </span>
-          </div>
-        <% end %>
         
         <% if policy(TestType).new? %>
           <%= link_to new_test_type_path, class: "btn btn-primary btn-panel-toolbar", data: { tooltip: 'tooltip' }, title: t('new_resource', scope: :crud_views, resource: TestType.model_name.human) do %>
@@ -36,7 +26,6 @@
             <th>#</th>
             <th><%= TestType.human_attribute_name('name') %></th>
             <th><%= TestType.human_attribute_name('description') %></th>
-            <th><%= TestType.human_attribute_name('data') %></th>
             <th><%= t('actions', scope: :crud_views) %></th>
           </tr>
         </thead>
@@ -46,7 +35,6 @@
             <td><%= "#{index + 1}" %></td>
             <td><%= link_to test_type, test_type_path(test_type) %></td>
             <td><%= test_type.description %></td>
-            <td><%= test_type.data %></td>
             <td>
               <div class="btn-group" role="group">
                 <% if policy(test_type).show? %>

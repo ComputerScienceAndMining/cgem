@@ -19,7 +19,7 @@
     </li>
     <li>
       <% if policy(@sample).show? %>
-        <%= link_to @sample.to_s, sample_path(@sample) %></li>
+        <%= link_to @sample.to_s, work_order_sample_path(@work_order, @sample) %></li>
       <% else %>
         <%= @sample.to_s %></li>
       <% end -%>

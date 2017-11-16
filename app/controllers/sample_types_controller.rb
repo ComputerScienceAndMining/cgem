@@ -21,6 +21,7 @@ class SampleTypesController < ApplicationController
 
   # GET /sample_types/1
   def show
+    @sample_type_versions = @sample_type.sample_type_versions
   end
 
   # GET /sample_types/new

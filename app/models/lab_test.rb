@@ -35,7 +35,7 @@ class LabTest < ActiveRecord::Base
 
   def self.to_xls(work_order)
     samples = Sample.where(work_order: work_order).includes(:specimens, {lab_tests: :test_type})
-    specimens = Specimen.where(sample_id: work_order.samples.pluck(&:id)).includes({sample: :sample_type}, :specimen_type, {lab_tests: :test_type})
+    specimens = Specimen.where(sample_id: work_order.samples.pluck(:'samples.id')).includes({sample: :sample_type}, :specimen_type, {lab_tests: :test_type})
     h = specimens.group_by {|s| "#{s.sample.sample_type} - #{s.specimen_type}" }
 
     h = Hash[h.map {|k, specimens| [k, {
@@ -44,26 +44,6 @@ class LabTest < ActiveRecord::Base
       test_types: specimens.map{|s| s.lab_tests}.flatten.map{|lt| lt.test_type}.uniq,
       specimens: specimens
     }]}]
-
-    # lab_tests = LabTest.all.includes(:test_type, specimen: [:specimen_type, {sample: :sample_type}])
-    # sample_types = lab_tests.map{|lt| lt.specimen.sample.sample_type}.uniq
-    # specimen_types = lab_tests.map{|lt| lt.specimen.specimen_type}.uniq
-    # test_types = lab_tests.map{|lt| lt.test_type}.uniq
-
-    # # Constructs hash for xls template
-    # h = {}
-    
-    # {
-
-    # }
-    # all.group_by { |s| s.sample_type.name }
-    # .map {|st_name, samples| [
-    #     st_name, 
-    #     {
-    #       fields: samples[0].sample_type.data["fields"].map {|f| f["name"] }, 
-    #       samples: samples
-    #      }
-    #   ]}.to_h
   end
 
   # Instance methods

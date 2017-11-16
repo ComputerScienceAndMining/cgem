@@ -8,9 +8,18 @@ class WorkOrder < ActiveRecord::Base
   belongs_to :responsible, class_name: 'User', foreign_key: 'responsible_id'
   belongs_to :work_order_status
   belongs_to :organisation
+  
   has_many :samples, dependent: :restrict_with_error
+  has_many :sample_types, through: :samples
+  has_many :sample_type_versions, through: :samples
+  
   has_many :specimens, through: :samples
+  has_many :specimen_types, through: :specimens
+  has_many :specimen_type_versions, through: :specimens
+
   has_many :lab_tests, through: :specimens
+  has_many :test_types, through: :lab_tests
+  has_many :test_type_versions, through: :lab_tests
 
   # Callbacks
   # Put here custom callback methods for WorkOrder

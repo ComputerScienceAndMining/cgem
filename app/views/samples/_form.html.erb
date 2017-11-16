@@ -22,8 +22,8 @@
       </div><!-- /.form-group -->
 
       <div class="form-group">
-        <%= f.label :sample_type_id, class: "control-label" %>
-        <%= f.collection_select :sample_type_id, SampleType.all, :id, :to_s, { prompt: true} , { class: 'form-control', 'ng-model': 'formCtrl.sampleTypeId', 'ng-init': "formCtrl.sampleTypeId='#{@sample.sample_type_id}'", 'ng-change': 'formCtrl.updateTemplate()' } %>
+        <%= f.label :sample_type_version_id, class: "control-label" %>
+        <%= f.collection_select :sample_type_version_id, @sample_type_versions, :id, :to_s, { prompt: true} , { class: 'form-control', 'ng-model': 'formCtrl.sampleTypeVersionId', 'ng-init': "formCtrl.sampleTypeVersionId='#{@sample.sample_type_version_id}'", 'ng-change': 'formCtrl.updateTemplate()' } %>
       </div><!-- /.form-group -->
 
       <dynamic-filler name="sample[data]" template="formCtrl.dynamicTemplate" value="<%= @sample.data %>"></dynamic-filler>
@@ -52,8 +52,8 @@
     },
     'action_name': '<%= action_name %>',
     'sample': '<%= @sample.to_json.html_safe %>',
-    'sampleTypes': '<%= SampleType.all.to_json.html_safe %>',
-    'sampleType':  '<%= @sample.sample_type.to_json.html_safe %>'
+    'sampleTypeVersions': '<%= @sample_type_versions.to_json.html_safe %>',
+    'sampleTypeVersion':  '<%= @sample.sample_type_version.to_json.html_safe %>'
   }
 </script>
 <% end %>

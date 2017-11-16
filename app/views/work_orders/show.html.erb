@@ -50,7 +50,7 @@
 
       <div class="panel panel-default">
         <div class="panel-heading panel-heading-toolbox">
-          <h3 class="panel-title">Assets</h3>
+          <h3 class="panel-title">Menu</h3>
           <div class="panel-toolbar"></div>
         </div>
         <!-- <div class="panel-body">
@@ -82,7 +82,7 @@
             <%= t('view_resources', scope: :crud_views, resources: Specimen.model_name.human(count: 2)) %>
             <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
           </a>
-          <a href="<%= work_order_specimens_path(@work_order) %>" class="list-group-item">
+          <a href="<%= work_order_specimens_path(@work_order, format: :xls) %>" class="list-group-item">
             <%= t('export_resources', scope: :crud_views, resources: Specimen.model_name.human(count: 2)) %>
             <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
           </a>
@@ -114,7 +114,7 @@
     <div class="col-md-8">
       <div class="panel panel-default">
         <div class="panel-heading panel-heading-toolbox">
-          <h3 class="panel-title">Summary</h3>
+          <h3 class="panel-title">Resumen</h3>
           <div class="panel-toolbar"></div>
         </div>
 

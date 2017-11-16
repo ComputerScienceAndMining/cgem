@@ -8,6 +8,7 @@ class SpecimenType < ActiveRecord::Base
 
   # Callbacks
   # Put here custom callback methods for SpecimenType
+  after_save :create_new_version
 
   # Validations
   # validates :name, <validations>
@@ -24,4 +25,8 @@ class SpecimenType < ActiveRecord::Base
     (defined? name)? name : ((defined? email)? email : id)  # editable
   end
 
+  private
+    def create_new_version
+      SpecimenTypeVersion.create! specimen_type_id: self.id, name: self.name, data: self.data
+    end
 end

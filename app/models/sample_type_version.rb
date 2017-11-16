@@ -23,7 +23,7 @@ class SampleTypeVersion < ActiveRecord::Base
 
   # Override to_s method
   def to_s
-    (defined? name)? name : ((defined? email)? email : id)  # editable
+    "#{name} [v#{id}]"
   end
 
 end

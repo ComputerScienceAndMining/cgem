@@ -10,7 +10,7 @@ class Organisation < ActiveRecord::Base
   # Put here custom callback methods for Organisation
 
   # Validations
-  # validates :name, <validations>
+  validates :name, presence: true
 
   # Scopes (used for search form)
   # Put here custom queries for Organisation

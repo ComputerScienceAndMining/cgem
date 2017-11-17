@@ -10,8 +10,8 @@ class Parameter < ActiveRecord::Base
   # Put here custom callback methods for Parameter
 
   # Validations
-  # validates :key, <validations>
-  # validates :value, <validations>
+  validates :key, presence: true
+  validates :value, presence: true
 
   # Scopes (used for search form)
   # Put here custom queries for Parameter

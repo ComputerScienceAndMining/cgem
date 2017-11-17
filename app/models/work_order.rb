@@ -25,12 +25,12 @@ class WorkOrder < ActiveRecord::Base
   # Put here custom callback methods for WorkOrder
 
   # Validations
-  # validates :name, <validations>
+  validates :name, presence: true
   # validates :description, <validations>
   # validates :due_date, <validations>
-  # validates :user, <validations>
-  # validates :work_order_status, <validations>
-  # validates :organisation, <validations>
+  validates :user, presence: true
+  validates :work_order_status, presence: true
+  validates :organisation, presence: true
 
   # Scopes (used for search form)
   # Put here custom queries for WorkOrder

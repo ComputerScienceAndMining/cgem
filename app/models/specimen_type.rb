@@ -12,7 +12,7 @@ class SpecimenType < ActiveRecord::Base
   after_save :create_new_version
 
   # Validations
-  # validates :name, <validations>
+  validates :name, presence: true
   # validates :data, <validations>
 
   # Scopes (used for search form)

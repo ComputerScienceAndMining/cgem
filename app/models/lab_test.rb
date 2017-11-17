@@ -16,16 +16,14 @@ class LabTest < ActiveRecord::Base
   # Put here custom callback methods for LabTest
 
   # Validations
-  # validates :name, <validations>
-  # validates :description, <validations>
   # validates :started_at, <validations>
   # validates :ended_at, <validations>
   # validates :work_order, <validations>
-  # validates :test_status, <validations>
+  validates :test_status, presence: true
   # validates :test_type, <validations>
-  # validates :test_type_version, <validations>
-  # validates :specimen, <validations>
-  # validates :user, <validations>
+  validates :test_type_version, presence: true
+  validates :specimen, presence: true
+  validates :user, presence: true
   # validates :data, <validations>
   validates :test_type_id, uniqueness: { scope: :specimen_id }
 

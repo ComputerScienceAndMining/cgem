@@ -30,10 +30,12 @@ class LabTestsController < ApplicationController
   # GET /lab_tests/new
   def new
     @lab_test = params["lab_test"] ? LabTest.new(lab_test_params) : LabTest.new
+    @test_type_versions = TestType.versions_for(@work_order)
   end
 
   # GET /lab_tests/1/edit
   def edit
+    @test_type_versions = TestType.versions_for(@work_order)
   end
 
   # POST /lab_tests
@@ -44,6 +46,7 @@ class LabTestsController < ApplicationController
     if @lab_test.save
       redirect_to [@work_order, @lab_test]
     else
+      @test_type_versions = TestType.versions_for(@work_order)
       render :new
     end
   end
@@ -53,6 +56,7 @@ class LabTestsController < ApplicationController
     if @lab_test.update(lab_test_params)
       redirect_to [@work_order, @lab_test]
     else
+      @test_type_versions = TestType.versions_for(@work_order)
       render :edit
     end
   end

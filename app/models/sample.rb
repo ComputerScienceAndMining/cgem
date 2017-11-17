@@ -21,10 +21,10 @@ class Sample < ActiveRecord::Base
     :allow_destroy => true
 
   # Validations
-  # validates :code, <validations>
+  validates :code, presence: true
   # validates :remarks, <validations>
   # validates :sample_type, <validations>
-  # validates :sample_type_version, <validations>
+  validates :sample_type_version, presence: true
   # validates :work_order, <validations>
   # validates :data, <validations>
 

@@ -33,8 +33,8 @@
         <%= f.collection_select :tested_by_id, User.all, :id, :to_s, { prompt: true} , { class: 'form-control' }  %>
       </div><!-- /.form-group -->
       <div class="form-group">
-        <%= f.label :test_type_id, class: "control-label" %>
-        <%= f.collection_select :test_type_id, TestType.all, :id, :to_s, { prompt: true} , { class: 'form-control', 'ng-model': 'formCtrl.testTypeId', 'ng-init': "formCtrl.testTypeId='#{@lab_test.test_type_id}'", 'ng-change': 'formCtrl.updateTemplate()' } %>
+        <%= f.label :test_type_version_id, class: "control-label" %>
+        <%= f.collection_select :test_type_version_id, @test_type_versions, :id, :to_s, { prompt: true} , { class: 'form-control', 'ng-model': 'formCtrl.testTypeVersionId', 'ng-init': "formCtrl.testTypeVersionId='#{@lab_test.test_type_version_id}'", 'ng-change': 'formCtrl.updateTemplate()' } %>
       </div><!-- /.form-group -->
 
       <dynamic-filler name="lab_test[data]" template="formCtrl.dynamicTemplate" value="<%= @lab_test.data %>"></dynamic-filler>
@@ -63,8 +63,8 @@
     },
     'action_name': '<%= action_name %>',
     'test': '<%= @lab_test.to_json.html_safe %>',
-    'testTypes': '<%= TestType.all.to_json.html_safe %>',
-    'testType': '<%= @lab_test.test_type.to_json.html_safe %>'
+    'testTypeVersions': '<%= TestTypeVersion.all.to_json.html_safe %>',
+    'testTypeVersion': '<%= @lab_test.test_type_version.to_json.html_safe %>'
   }
 </script>
 <% end %>

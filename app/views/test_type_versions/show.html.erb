@@ -30,14 +30,22 @@
     </div>
     <div class="panel-body">
       <dl class="dl-horizontal dl-show-item">
+        <dt><%= TestTypeVersion.human_attribute_name('test_type') %></dt>
+        <dd><%= @test_type_version.test_type %></dd>
         <dt><%= TestTypeVersion.human_attribute_name('name') %></dt>
         <dd><%= @test_type_version.name %></dd>
         <dt><%= TestTypeVersion.human_attribute_name('description') %></dt>
         <dd><%= @test_type_version.description %></dd>
-        <dt><%= TestTypeVersion.human_attribute_name('data') %></dt>
-        <dd><%= @test_type_version.data %></dd>
-        <dt><%= TestTypeVersion.human_attribute_name('test_type') %></dt>
-        <dd><%= @test_type_version.test_type %></dd>
+        <% if @test_type_version.data %>
+          <dt><%= TestTypeVersion.human_attribute_name('data') %></dt>
+          <dd>
+            <% @test_type_version.data['fields'].each do |field| %>
+              <p>
+                <%= field['name'] %>: <%= field['type'] %>
+              </p>
+            <% end %>
+          </dd>
+        <% end %>
       </dl>
     </div>
     <div class="panel-footer panel-footer-toolbox">

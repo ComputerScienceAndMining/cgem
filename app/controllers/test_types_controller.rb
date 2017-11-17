@@ -21,6 +21,7 @@ class TestTypesController < ApplicationController
 
   # GET /test_types/1
   def show
+    @test_type_versions = @test_type.test_type_versions
   end
 
   # GET /test_types/new

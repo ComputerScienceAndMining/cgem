@@ -57,10 +57,12 @@
         <dt><%= LabTest.human_attribute_name('tested_by') %></dt>
         <dd><%= @lab_test.tested_by %></dd>
 
-        <hr>
-        <% @lab_test.data["fields"].each do |field| %>
-          <dt><%= field_title @lab_test, field %></dt>
-          <dd><%= field_value @lab_test, field %></dd>
+        <% if @lab_test.data %>
+          <hr>
+          <% @lab_test.data["fields"].each do |field| %>
+            <dt><%= field_title @lab_test, field %></dt>
+            <dd><%= field_value @lab_test, field %></dd>
+          <% end %>
         <% end %>
       </dl>
     </div>

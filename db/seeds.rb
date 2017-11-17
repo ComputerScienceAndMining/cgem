@@ -363,7 +363,9 @@ ts_finalizado = TestStatus.create! name: 'Finalizado', icon: 'check', icon_color
 
 # Test Types
 tt_vo = TestType.create! name: 'Velocidad de onda', description: '', data: vo_data
+tt_vo_version = TestTypeVersion.last
 tt_ccnbd = TestType.create! name: 'CCNBD', description: '', data: ccnbd_data
+tt_ccnbd_version = TestTypeVersion.last
 
 # Se crean ensayos
 lab_tests = []
@@ -371,6 +373,6 @@ specimens.each do |specimen|
   new_vo_data_filled = tenpercdev(vo_data_filled.clone)
   new_ccnbd_data_filled = tenpercdev(ccnbd_data_filled.clone)
 
-  new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_vo, specimen: specimen, tested_by: user_1, data: vo_data_filled
-  new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_ccnbd, specimen: specimen, tested_by: user_1, data: ccnbd_data_filled
+  new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_vo, test_type_version: tt_vo_version, specimen: specimen, tested_by: user_1, data: vo_data_filled
+  new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_ccnbd, test_type_version: tt_ccnbd_version, specimen: specimen, tested_by: user_1, data: ccnbd_data_filled
 end

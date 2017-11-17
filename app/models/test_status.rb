@@ -10,7 +10,7 @@ class TestStatus < ActiveRecord::Base
   # Put here custom callback methods for TestStatus
 
   # Validations
-  # validates :name, <validations>
+  validates :name, presence: true
 
   # Scopes (used for search form)
   # Put here custom queries for TestStatus

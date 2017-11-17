@@ -14,10 +14,10 @@ class User < ActiveRecord::Base
   # Put here custom callback methods for User
 
   # Validations
-  # validates :first_name, <validations>
-  # validates :last_name, <validations>
-  # validates :enabled, <validations>
-  # validates :role, <validations>
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :enabled, presence: true
+  validates :role, presence: true
 
   # Scopes (used for search form)
   # Put here custom queries for User

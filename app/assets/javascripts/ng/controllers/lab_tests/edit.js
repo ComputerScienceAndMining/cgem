@@ -13,11 +13,11 @@
 
     // Variables
     vm.test = JSON.parse(vm.test)
-    vm.testType = JSON.parse(vm.testType)
-    vm.testTypes = JSON.parse(vm.testTypes)
-    vm.testTypeId = vm.testTypeId || undefined
+    vm.testTypeVersion = JSON.parse(vm.testTypeVersion)
+    vm.testTypeVersions = JSON.parse(vm.testTypeVersions)
+    vm.testTypeVersionId = vm.testTypeVersionId || undefined
 
-    var template = vm.test.data || vm.testType.data || vm.dynamicTemplate || undefined
+    var template = vm.test.data || vm.testTypeVersion.data || vm.dynamicTemplate || undefined
     if (template.fields) {
       template.fields.forEach(function (f) {
         if (f.type == "date")
@@ -32,10 +32,10 @@
     vm.updateTemplate = updateTemplate
 
     function updateTemplate () {
-      var testType = _.find(vm.testTypes, function (testType) {
-        return testType.id == vm.testTypeId
+      var testTypeVersion = _.find(vm.testTypeVersions, function (testTypeVersion) {
+        return testTypeVersion.id == vm.testTypeVersionId
       })
-      vm.dynamicTemplate = testType.data
+      vm.dynamicTemplate = testTypeVersion.data
     }
   }
 

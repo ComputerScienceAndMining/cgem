@@ -13,14 +13,15 @@ class Specimen < ActiveRecord::Base
 
   # Callbacks
   # Put here custom callback methods for Specimen
-
+  before_save :set_specimen_type
+  
   # Validations
-  # validates :code, <validations>
+  validates :code, presence: true
   # validates :remarks, <validations>
-  # validates :sample, <validations>
+  validates :sample, presence: true
   # validates :specimen_type, <validations>
-  # validates :specimen_type_version, <validations>
-  # validates :user, <validations>
+  validates :specimen_type_version, presence: true
+  validates :user, presence: true
   # validates :data, <validations>
 
   # Scopes (used for search form)
@@ -45,4 +46,10 @@ class Specimen < ActiveRecord::Base
     code
   end
 
+  private
+    def set_specimen_type
+      if self.specimen_type_version
+        self.specimen_type = self.specimen_type_version.specimen_type
+      end
+    end
 end

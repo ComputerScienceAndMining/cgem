@@ -10,7 +10,7 @@ class WorkOrderStatus < ActiveRecord::Base
   # Put here custom callback methods for WorkOrderStatus
 
   # Validations
-  # validates :name, <validations>
+  validates :name, presence: true
 
   # Scopes (used for search form)
   # Put here custom queries for WorkOrderStatus

@@ -36,12 +36,12 @@
         <dd><%= @sample_type_version.name %></dd>
         <dt><%= SampleTypeVersion.human_attribute_name('data') %></dt>
         <dd>
-            <% @sample_type_version.data['fields'].each do |field| %>
-              <p>
-                <%= field['name'] %>: <%= field['type'] %>
-              </p>
-            <% end %>
-          </dd>
+          <% @sample_type_version.data['fields'].each do |field| %>
+            <p>
+              <%= field['name'] %>: <%= field['type'] %>
+            </p>
+          <% end %>
+        </dd>
       </dl>
     </div>
     <div class="panel-footer panel-footer-toolbox">

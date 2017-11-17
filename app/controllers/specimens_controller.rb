@@ -30,10 +30,12 @@ class SpecimensController < ApplicationController
   # GET /specimens/new
   def new
     @specimen = params["specimen"] ? Specimen.new(specimen_params) : Specimen.new
+    @specimen_type_versions = SpecimenType.versions_for(@work_order)
   end
 
   # GET /specimens/1/edit
   def edit
+    @specimen_type_versions = SpecimenType.versions_for(@work_order)
   end
 
   # POST /specimens

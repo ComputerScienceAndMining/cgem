@@ -21,6 +21,7 @@ class SpecimenTypesController < ApplicationController
 
   # GET /specimen_types/1
   def show
+    @specimen_type_versions = @specimen_type.specimen_type_versions
   end
 
   # GET /specimen_types/new

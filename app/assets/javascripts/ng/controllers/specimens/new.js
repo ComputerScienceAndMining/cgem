@@ -13,19 +13,19 @@
 
     // Variables
     vm.specimen = JSON.parse(vm.specimen)
-    vm.specimenType = JSON.parse(vm.specimenType)
-    vm.specimenTypes = JSON.parse(vm.specimenTypes)
-    vm.specimenTypeId = vm.specimenTypeId || undefined
+    vm.specimenTypeVersion = JSON.parse(vm.specimenTypeVersion)
+    vm.specimenTypeVersions = JSON.parse(vm.specimenTypeVersions)
+    vm.specimenTypeVersionId = vm.specimenTypeVersionId || undefined
     vm.dynamicTemplate = vm.dynamicTemplate || undefined
 
     // Functions
     vm.updateTemplate = updateTemplate
 
     function updateTemplate () {
-      var specimenType = _.find(vm.specimenTypes, function (specimenType) {
-        return specimenType.id == vm.specimenTypeId
+      var specimenTypeVersion = _.find(vm.specimenTypeVersions, function (specimenTypeVersion) {
+        return specimenTypeVersion.id == vm.specimenTypeVersionId
       })
-      vm.dynamicTemplate = specimenType.data
+      vm.dynamicTemplate = specimenTypeVersion.data
     }
   }
 

@@ -15,6 +15,7 @@ class Sample < ActiveRecord::Base
   # Callbacks
   # Put here custom callback methods for Sample
   # after_create :bind_version
+  before_save :set_sample_type
 
   accepts_nested_attributes_for :pictures,
     :allow_destroy => true
@@ -80,4 +81,11 @@ class Sample < ActiveRecord::Base
   def save_pictures
 
   end
+
+  private
+    def set_sample_type
+      if self.sample_type_version
+        self.sample_type = self.sample_type_version.sample_type
+      end
+    end
 end

@@ -35,6 +35,7 @@ class SamplesController < ApplicationController
 
   # GET /samples/1/edit
   def edit
+    @sample_type_versions = SampleType.versions_for(@work_order)
   end
 
   # POST /samples

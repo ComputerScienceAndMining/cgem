@@ -52,6 +52,52 @@
   </div>
 </div>
 
+<div class="main container">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-heading-toolbox">
+      <h3 class="panel-title"><%= SpecimenTypeVersion.model_name.human(count: 2) %></h3>
+    </div>
+    <% unless @specimen_type_versions.empty? %>
+    <div class="table-responsive">
+      <table class="table table-striped pretty">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th><%= SpecimenTypeVersion.human_attribute_name('name') %></th>
+            <th><%= SpecimenTypeVersion.human_attribute_name('created_at') %></th>
+            <th><%= t('actions', scope: :crud_views) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @specimen_type_versions.each_with_index do |specimen_type_version, index| %>
+          <tr>
+            <td><%= "#{index + 1}" %></td>
+            <td><%= link_to specimen_type_version, specimen_type_version_path(specimen_type_version) %></td>
+            <td><%= specimen_type_version.created_at %></td>
+            <td>
+              <div class="btn-group" role="group">
+                <% if policy(specimen_type_version).show? %>
+                  <%= link_to specimen_type_version_path(specimen_type_version), class: "btn btn-sm btn-default", data: { tooltip: 'tooltip', title: t('details', scope: :crud_views, resource: SpecimenTypeVersion.model_name.human) } do %>
+                    <%= icon 'eye'  %>
+                  <% end -%>
+                <% end -%>
+              </div>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div><!-- /.table-responsive -->
+    <% else %>
+      <div class="panel-body">
+        <div class="no-resources-found text-center text-muted">
+          <h3><%= icon 'exclamation-triangle' %> <%= t('no_resources_found', scope: :crud_views, resources: SpecimenTypeVersion.model_name.human(count: 2)) %>.</h3>
+        </div>
+      </div><!--/.panel-body-->
+    <% end %>
+  </div>
+</div>
+
 <% content_for :js_rails_data do %>
 <script type="text/javascript">
   <%# Data here will be passed to angular js %>

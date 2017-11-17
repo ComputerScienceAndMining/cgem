@@ -5,6 +5,7 @@ class SpecimenType < ActiveRecord::Base
   # Put here constants for SpecimenType
 
   # Relations
+  has_many :specimen_type_versions
 
   # Callbacks
   # Put here custom callback methods for SpecimenType
@@ -17,6 +18,25 @@ class SpecimenType < ActiveRecord::Base
   # Scopes (used for search form)
   # Put here custom queries for SpecimenType
   scope :by_name, ->(name) { where("name ILIKE ?", "%#{name}%") } # Scope for search
+
+  # Class methods
+  def self.versions_for work_order
+    work_order = WorkOrder.find(work_order)
+
+    # All current versions for work_order
+    existing_versions = work_order.specimen_type_versions.uniq
+    specimen_type_ids = existing_versions.map{|v| v.specimen_type_id}
+
+    # Selects last version for all other specimen_types
+    all_specimen_type_versions = SpecimenTypeVersion.order(specimen_type_id: :asc, created_at: :desc)
+                                                    .select('distinct on (specimen_type_id) *')
+    # Filter where not in existing_versions
+    if specimen_type_ids.any?
+      all_specimen_type_versions = all_specimen_type_versions.where('specimen_type_id NOT IN (?)', specimen_type_ids)
+    end
+
+    return existing_versions | all_specimen_type_versions
+  end
 
   # Instance methods
 

@@ -29,8 +29,8 @@
         <%= f.collection_select :prepared_by_id, User.all, :id, :to_s, { prompt: true} , { class: 'form-control' }  %>
       </div><!-- /.form-group -->
       <div class="form-group">
-        <%= f.label :specimen_type_id, class: "control-label" %>
-        <%= f.collection_select :specimen_type_id, SpecimenType.all, :id, :to_s, { prompt: true} , { class: 'form-control', 'ng-model': 'formCtrl.specimenTypeId', 'ng-init': "formCtrl.specimenTypeId='#{@specimen.specimen_type_id}'", 'ng-change': 'formCtrl.updateTemplate()' } %>
+        <%= f.label :specimen_type_version_id, class: "control-label" %>
+        <%= f.collection_select :specimen_type_version_id, @specimen_type_versions, :id, :to_s, { prompt: true} , { class: 'form-control', 'ng-model': 'formCtrl.specimenTypeVersionId', 'ng-init': "formCtrl.specimenTypeVersionId='#{@specimen.specimen_type_version_id}'", 'ng-change': 'formCtrl.updateTemplate()' } %>
       </div><!-- /.form-group -->
       <!--
       <div class="form-group">
@@ -64,8 +64,8 @@
     },
     'action_name': '<%= action_name %>',
     'specimen': '<%= @specimen.to_json.html_safe %>',
-    'specimenTypes': '<%= SpecimenType.all.to_json.html_safe %>',
-    'specimenType':  '<%= @specimen.specimen_type.to_json.html_safe %>'
+    'specimenTypeVersions': '<%= SpecimenTypeVersion.all.to_json.html_safe %>',
+    'specimenTypeVersion':  '<%= @specimen.specimen_type_version.to_json.html_safe %>'
   }
 </script>
 <% end %>

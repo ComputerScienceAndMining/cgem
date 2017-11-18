@@ -24,7 +24,7 @@ class TestTypeVersion < ActiveRecord::Base
 
   # Override to_s method
   def to_s
-    (defined? name)? name : ((defined? email)? email : id)  # editable
+    "#{name} (#{created_at.to_formatted_s(:short)})"
   end
 
 end

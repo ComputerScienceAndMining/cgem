@@ -9,18 +9,7 @@
   <div class="panel panel-default">
     <div class="panel-heading panel-heading-toolbox">
       <h3 class="panel-title"><%= User.model_name.human(count: 2) %></h3>
-      <div class="panel-toolbar">
-        <%= form_tag users_path, {method: :get, class: "form-inline", "role" => "form"} do %>
-          <div class="input-group">
-            <%= text_field_tag :q, nil, placeholder: t('search', scope: :crud_views), class: 'form-control' %>
-            <span class="input-group-btn">
-              <%= button_tag type: 'submit', class: 'btn btn-default btn-panel-toolbar', title: t('search_resources', scope: :crud_views, resources: User.model_name.human(count: 2)) , name: '' do %>
-                <%= icon 'search' %>
-              <% end -%>
-            </span>
-          </div>
-        <% end %>
-        
+      <div class="panel-toolbar">  
         <% if policy(User).new? %>
           <%= link_to new_user_path, class: "btn btn-primary btn-panel-toolbar", data: { tooltip: 'tooltip' }, title: t('new_resource', scope: :crud_views, resource: User.model_name.human) do %>
             <%= icon 'plus' %>
@@ -47,8 +36,8 @@
             <td><%= "#{index + 1}" %></td>
             <td><%= user.first_name %></td>
             <td><%= user.last_name %></td>
-            <td><%= user.enabled %></td>
-            <td><%= user.role %></td>
+            <td><%= humanize_boolean user.enabled %></td>
+            <td><%= user.role_name %></td>
             <td>
               <div class="btn-group" role="group">
                 <% if policy(user).show? %>

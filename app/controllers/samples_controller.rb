@@ -10,7 +10,7 @@ class SamplesController < ApplicationController
     else
       @page = params[:page]
       @per_page = 10
-      @samples_filtered = params[:q].present? ? Sample.by_name(params[:q]) : Sample.all
+      @samples_filtered = params[:q].present? ? @work_order.samples.by_name(params[:q]) : @work_order.samples
       @samples = @samples_filtered.paginate page: params[:page], per_page: @per_page
     end
 
@@ -46,6 +46,7 @@ class SamplesController < ApplicationController
     if @sample.save
       redirect_to [@work_order, @sample]
     else
+      @sample_type_versions = SampleType.versions_for(@work_order)
       render :new
     end
   end
@@ -55,6 +56,7 @@ class SamplesController < ApplicationController
     if @sample.update(sample_params)
       redirect_to [@work_order, @sample]
     else
+      @sample_type_versions = SampleType.versions_for(@work_order)
       render :edit
     end
   end
@@ -72,7 +74,7 @@ class SamplesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_work_order
       @work_order = WorkOrder.find(params[:work_order_id])
-      authorize @work_order
+      authorize @work_order, :show?
     end
 
     def set_sample

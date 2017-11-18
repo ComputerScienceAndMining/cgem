@@ -86,3 +86,7 @@ pt-BR:
   modals:
     detail: 'Detalhes'
     close: 'Fechar'
+  boolean_yes: 'Sim'
+  boolean_no: 'Não'
+  dynamic_fields:
+    empty_value: 'Vazio'

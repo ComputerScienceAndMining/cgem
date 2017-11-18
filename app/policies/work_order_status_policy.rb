@@ -5,9 +5,9 @@ class WorkOrderStatusPolicy < ApplicationPolicy
     end
   end
 
-  # def index?   ; true ; end
-  # def create?  ; true ; end
+  def index?   ; user.admin? || user.lab_chief? ; end
+  def create?  ; user.admin? || user.lab_chief? ; end
   # def show?    ; true ; end
-  # def update?  ; true ; end
-  # def destroy? ; true ; end
+  def update?  ; user.admin? || user.lab_chief? ; end
+  def destroy? ; user.admin? || user.lab_chief? ; end
 end

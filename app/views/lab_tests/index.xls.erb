@@ -58,10 +58,10 @@
         <Cell ss:StyleID="TitleGroup" ss:MergeAcross="<%= 2 + data[:specimen_fields].length %>">
             <Data ss:Type="String"><%= Specimen.model_name.human(count: 2) %></Data>
         </Cell>
-        <% data[:test_types].each_with_index do |test_type, index| %>
-            <Cell ss:StyleID="TitleGroup<%= (index % 2 == 0)? 'Alt': ''%>" ss:MergeAcross="<%= 3 + test_type.data["fields"].length %>">
+        <% data[:test_type_versions].each_with_index do |test_type_version, index| %>
+            <Cell ss:StyleID="TitleGroup<%= (index % 2 == 0)? 'Alt': ''%>" ss:MergeAcross="<%= 3 + test_type_version.data["fields"].length %>">
                 <Data ss:Type="String">
-                    <%= test_type %>
+                    <%= test_type_version %>
                 </Data>
             </Cell>
         <% end %>
@@ -86,12 +86,12 @@
         <% end %>
 
         <%# LabTests %>
-        <% data[:test_types].each_with_index do |test_type, index| %>
+        <% data[:test_type_versions].each_with_index do |test_type_version, index| %>
             <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= LabTest.human_attribute_name('started_at') %></Data></Cell>
             <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= LabTest.human_attribute_name('ended_at') %></Data></Cell>
             <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= LabTest.human_attribute_name('status') %></Data></Cell>
             <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= LabTest.human_attribute_name('tested_by') %></Data></Cell>
-            <% test_type.data["fields"].each do |field| %>
+            <% test_type_version.data["fields"].each do |field| %>
                 <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= field["name"] %></Data></Cell>
             <% end %>
         <% end %>
@@ -102,7 +102,7 @@
         <%# Samples %>
         <Cell ss:StyleID="Alt"><Data ss:Type="String"><%= specimen.sample.code %></Data></Cell>
         <Cell ss:StyleID="Alt"><Data ss:Type="String"><%= specimen.sample.remarks %></Data></Cell>
-        <Cell ss:StyleID="Alt"><Data ss:Type="String"><%= specimen.sample.sample_type %></Data></Cell>
+        <Cell ss:StyleID="Alt"><Data ss:Type="String"><%= specimen.sample.sample_type_version.name %></Data></Cell>
         
         <% specimen.sample.data["fields"].each do |field| %>
             <Cell ss:StyleID="Alt"><Data ss:Type="<%= xls_field_type sample, field %>"><%= field_value specimen.sample, field %></Data></Cell>
@@ -111,20 +111,20 @@
         <%# Specimens %>
         <Cell ss:StyleID="Normal"><Data ss:Type="String"><%= specimen.code %></Data></Cell>
         <Cell ss:StyleID="Normal"><Data ss:Type="String"><%= specimen.remarks %></Data></Cell>
-        <Cell ss:StyleID="Normal"><Data ss:Type="String"><%= specimen.specimen_type %></Data></Cell>
+        <Cell ss:StyleID="Normal"><Data ss:Type="String"><%= specimen.specimen_type_version.name %></Data></Cell>
 
         <% specimen.data["fields"].each do |field| %>
             <Cell ss:StyleID="Normal"><Data ss:Type="<%= xls_field_type specimen, field %>"><%= field_value specimen, field %></Data></Cell>
         <% end %>
 
         <%# LabTest %>
-        <% data[:test_types].each_with_index do |test_type, index| %>
-            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test(test_type, specimen).try(:started_at).try(:to_time).try(:to_s, :short) %></Data></Cell>
-            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test(test_type, specimen).try(:started_at).try(:to_time).try(:to_s, :short) %></Data></Cell>
-            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test(test_type, specimen).try(:test_status) %></Data></Cell>
-            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test(test_type, specimen).try(:tested_by) %></Data></Cell>
-            <% find_test(test_type, specimen).data["fields"].each do |field| %>
-                <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="<%= xls_field_type find_test(test_type, specimen), field %>"><%= field_value find_test(test_type, specimen), field, empty: '' %></Data></Cell>
+        <% data[:test_type_versions].each_with_index do |test_type_version, index| %>
+            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test_version(test_type_version, specimen).try(:started_at).try(:to_time).try(:to_s, :short) %></Data></Cell>
+            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test_version(test_type_version, specimen).try(:started_at).try(:to_time).try(:to_s, :short) %></Data></Cell>
+            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test_version(test_type_version, specimen).try(:test_status) %></Data></Cell>
+            <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test_version(test_type_version, specimen).try(:tested_by) %></Data></Cell>
+            <% find_test_version(test_type_version, specimen).data["fields"].each do |field| %>
+                <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="<%= xls_field_type find_test_version(test_type_version, specimen), field %>"><%= field_value find_test_version(test_type_version, specimen), field, empty: '' %></Data></Cell>
             <% end %>
         <% end %>
 

@@ -45,10 +45,21 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
-    if @user.update(user_params)
-      redirect_to @user
+    successfully_updated = if needs_update_password? @user, params
+      same_user = current_user.id == @user.id
+      @user.update(user_params)
+      sign_in(@user, bypass: true) if same_user
     else
-      render :edit
+      @user.update_without_password(user_params.except(:current_password, :password, :password_confirmation))
+    end
+
+    if successfully_updated
+      redirect_to @user, notice: t('success_on_resource_action',
+                          scope: :crud_views,
+                          resource: t('one', scope: [:activerecord, :models, :user]),
+                          action: t('participle', scope: [:actions, :update]))
+    else
+        render :edit
     end
   end
 
@@ -75,6 +86,13 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :enabled, :role)
+      params.require(:user).permit(:first_name, :last_name, :enabled, :role, :password, :password_confirmation)
+    end
+
+    # Check if passwords needs to be updated
+    def needs_update_password? user, params
+      user.email != params[:user][:email] ||
+        params[:user][:password].present? ||
+        params[:user][:password_confirmation].present?
     end
 end

@@ -9,12 +9,12 @@
   <Worksheet ss:Name="<%= sheet_name %>">
     <Table>
       <Row>
-        <Cell><Data ss:Type="String">code</Data></Cell>
-        <Cell><Data ss:Type="String">remarks</Data></Cell>
-        <Cell><Data ss:Type="String">sample type</Data></Cell>
-        <Cell><Data ss:Type="String">work order</Data></Cell>
-        <Cell><Data ss:Type="String">created at</Data></Cell>
-        <Cell><Data ss:Type="String">updated at</Data></Cell>
+        <Cell><Data ss:Type="String"><%= Sample.human_attribute_name('code') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= Sample.human_attribute_name('remarks') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= Sample.human_attribute_name('sample_type') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= Sample.human_attribute_name('work_order') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= Sample.human_attribute_name('created_at') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= Sample.human_attribute_name('updated_at') %></Data></Cell>
         <% data[:fields].each do |field| %>
             <Cell><Data ss:Type="String"><%= field %></Data></Cell>
         <% end %>
@@ -23,7 +23,7 @@
       <Row>
         <Cell><Data ss:Type="String"><%= sample.code %></Data></Cell>
         <Cell><Data ss:Type="String"><%= sample.remarks %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= sample.sample_type %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= sample.sample_type_version.name %></Data></Cell>
         <Cell><Data ss:Type="String"><%= sample.work_order %></Data></Cell>
         <Cell><Data ss:Type="String"><%= sample.created_at %></Data></Cell>
         <Cell><Data ss:Type="String"><%= sample.updated_at %></Data></Cell>

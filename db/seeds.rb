@@ -51,9 +51,9 @@ usach = Organisation.create! name: 'Universidad de Santiago de Chile'
 teniente = Organisation.create! name: 'Teniente'
 
 # Users
-user_1 = User.create! first_name: 'Danilo', last_name: 'Aburto', email:'danilo.aburto@usach.cl', password: 'danilo123', password_confirmation:'danilo123', role: 0, enabled: true
-user_2 = User.create! first_name: 'Marcos', last_name: 'Villarreal', email:'marcos.villarreal@usach.cl', password: 'marcos123', password_confirmation:'marcos123', role: 0, enabled: true
-user_3 = User.create! first_name: 'Miguel', last_name: 'Vera', email:'miguel.vera@usach.cl', password: 'miguel123', password_confirmation:'miguel123', role: 0, enabled: true
+user_1 = User.create! first_name: 'Danilo', last_name: 'Aburto', email:'danilo.aburto@usach.cl', password: 'danilo123', password_confirmation:'danilo123', role: 0, enabled: true, organisation: usach
+user_2 = User.create! first_name: 'Marcos', last_name: 'Villarreal', email:'marcos.villarreal@usach.cl', password: 'marcos123', password_confirmation:'marcos123', role: 400, enabled: true, organisation: teniente
+user_3 = User.create! first_name: 'Miguel', last_name: 'Vera', email:'miguel.vera@usach.cl', password: 'miguel123', password_confirmation:'miguel123', role: 300, enabled: true, organisation: usach
 
 # Work Order statuses
 wos_creada = WorkOrderStatus.create! name: 'Creada'

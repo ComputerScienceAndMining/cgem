@@ -22,7 +22,7 @@
       </div><!-- /.form-group -->
       <div class="form-group">
         <%= f.label :sample_id, class: "control-label" %>
-        <%= f.collection_select :sample_id, Sample.all, :id, :to_s, { prompt: true} , { class: 'form-control' }  %>
+        <%= f.collection_select :sample_id, @work_order.samples, :id, :to_s, { prompt: true} , { class: 'form-control' }  %>
       </div><!-- /.form-group -->
       <div class="form-group">
         <%= f.label :prepared_by_id, class: "control-label" %>

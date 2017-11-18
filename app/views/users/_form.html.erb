@@ -4,14 +4,20 @@
     <div class="panel-heading panel-heading-toolbox">
       <h3 class="panel-title"><%= @user.new_record? ? t('new_resource', scope: :crud_views, resource: User.model_name.human) : @user.to_s %></h3>
       <div class="panel-toolbar">
-        <% if action_name == 'edit' or action_name == 'update' %>
-          <%= link_to @user, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: User.model_name.human) do %>
-            <%= icon 'trash' %>
+        <% if policy(@user).destroy? %>
+          <% if action_name == 'edit' or action_name == 'update' %>
+            <%= link_to @user, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: User.model_name.human) do %>
+              <%= icon 'trash' %>
+            <% end %>
           <% end %>
         <% end %>
       </div>
     </div>
     <div class="panel-body">
+      <div class="form-group">
+        <%= f.label :email, class: "control-label" %>
+        <%= f.text_field :email, class: "form-control", placeholder: User.human_attribute_name('email') %>
+      </div><!-- /.form-group -->
       <div class="form-group">
         <%= f.label :first_name, class: "control-label" %>
         <%= f.text_field :first_name, class: "form-control", placeholder: User.human_attribute_name('first_name') %>
@@ -20,14 +26,28 @@
         <%= f.label :last_name, class: "control-label" %>
         <%= f.text_field :last_name, class: "form-control", placeholder: User.human_attribute_name('last_name') %>
       </div><!-- /.form-group -->
+      <% if policy(@user).can_change_enabled? %>
+        <div class="form-group">
+          <%= f.label :enabled, class: "control-label" %>
+          <%= f.check_box :enabled %>
+        </div><!-- /.form-group -->
+      <% end %>
+      
+      <% if policy(@user).can_change_role? %>
+        <div class="form-group">
+          <%= f.label :role, class: "control-label" %>
+          <%= f.number_field :role, class: "form-control", placeholder: User.human_attribute_name('role') %>
+        </div><!-- /.form-group -->
+      <% end %>
+
       <div class="form-group">
-        <%= f.label :enabled, class: "control-label" %>
-        <%= f.check_box :enabled %>
-      </div><!-- /.form-group -->
+        <%= f.label :password, class: "control-label" %>
+        <%= f.password_field :password, class: "form-control", placeholder: User.human_attribute_name('password') %>
+      </div>
       <div class="form-group">
-        <%= f.label :role, class: "control-label" %>
-        <%= f.number_field :role, class: "form-control", placeholder: User.human_attribute_name('role') %>
-      </div><!-- /.form-group -->
+        <%= f.label :password_confirmation, class: "control-label" %>
+        <%= f.password_field :password_confirmation, class: "form-control", placeholder: User.human_attribute_name('password_confirmation') %>
+      </div>
     </div><!-- /.panel-body -->
     <div class="panel-footer panel-footer-toolbox">
       <div class="panel-toolbar pull-right">

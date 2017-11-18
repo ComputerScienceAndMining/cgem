@@ -6,8 +6,8 @@ class SamplePolicy < ApplicationPolicy
   end
 
   # def index?   ; true ; end
-  # def create?  ; true ; end
+  def create?  ; admin? || lab_chief? || lab_worker? || org_worker? ; end
   # def show?    ; true ; end
-  # def update?  ; true ; end
-  # def destroy? ; true ; end
+  def update?  ; admin? || lab_chief? || lab_worker? || org_worker? ; end
+  def destroy? ; admin? || lab_chief? || lab_worker? || org_worker? ; end
 end

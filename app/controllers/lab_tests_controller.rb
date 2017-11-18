@@ -10,7 +10,7 @@ class LabTestsController < ApplicationController
     else
       @page = params[:page]
       @per_page = 10
-      @lab_tests_filtered = params[:q].present? ? LabTest.by_name(params[:q]) : LabTest.all
+      @lab_tests_filtered = params[:q].present? ? @work_order.lab_tests.by_name(params[:q]) : @work_order.lab_tests
       @lab_tests = @lab_tests_filtered.paginate page: params[:page], per_page: @per_page
     end
 

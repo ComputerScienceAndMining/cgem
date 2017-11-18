@@ -57,11 +57,11 @@ class Sample < ActiveRecord::Base
   # end
 
   def self.to_xls options = {}
-    all.group_by { |s| s.sample_type.name }
+    all.includes(:sample_type_version, :work_order).group_by { |s| s.sample_type_version.name }
        .map {|st_name, samples| [
            st_name, 
            {
-             fields: samples[0].sample_type.data["fields"].map {|f| f["name"] }, 
+             fields: samples[0].sample_type_version.data["fields"].map {|f| f["name"] }, 
              samples: samples
             }
          ]}.to_h

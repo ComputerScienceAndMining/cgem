@@ -21,12 +21,16 @@
         <div class="panel-heading panel-heading-toolbox">
           <h3 class="panel-title"><%= WorkOrder.model_name.human %></h3>
           <div class="panel-toolbar">
-            <%= link_to edit_work_order_path(@work_order), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: WorkOrder.model_name.human) do %>
-              <%= icon 'pencil' %>
+            <% if policy(@work_order).edit? %>
+              <%= link_to edit_work_order_path(@work_order), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: WorkOrder.model_name.human) do %>
+                <%= icon 'pencil' %>
+              <% end %>
             <% end %>
 
-            <%= link_to @work_order, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: WorkOrder.model_name.human) do %>
-              <%= icon 'trash' %>
+            <% if policy(@work_order).destroy? %>
+              <%= link_to @work_order, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: WorkOrder.model_name.human) do %>
+                <%= icon 'trash' %>
+              <% end %>
             <% end %>
           </div>
         </div>
@@ -78,7 +82,7 @@
             <span class="badge"><%= @work_order.specimens.length %></span>
             <%= Specimen.model_name.human(count: 2) %>
           </li>
-          <a href="<%= work_order_specimens_path(@work_order, format: :xls) %>" class="list-group-item">
+          <a href="<%= work_order_specimens_path(@work_order) %>" class="list-group-item">
             <%= t('view_resources', scope: :crud_views, resources: Specimen.model_name.human(count: 2)) %>
             <span class="text-muted chevron pull-right"><%= icon 'chevron-right' %></span>
           </a>
@@ -147,11 +151,11 @@
                       <span class="visible-xs rotated"><%= link_to sample, work_order_sample_path(@work_order, sample) %></span>
                     </td>
                     <td class="rotated-parent" rowspan="1">
-                      <span class="hidden-xs">No Specimens</span>
-                      <span class="visible-xs rotated">No Specimens</span>
+                      <span class="hidden-xs"><%= t('specimens', scope: [:activerecord, :no_models])%></span>
+                      <span class="visible-xs rotated"><%= t('specimens', scope: [:activerecord, :no_models])%></span>
                     </td>
                     <td class="icon-cell">
-                      No Tests
+                      <%= t('lab_tests', scope: [:activerecord, :no_models]) %>
                     </td>
                   </tr>
                 <% end %>
@@ -171,7 +175,7 @@
                         <span class="visible-xs rotated"><%= link_to specimen, work_order_specimen_path(@work_order, specimen) %></span>
                       </td>
                       <td style="vertical-align:middle" class="icon-cell">
-                        No Tests
+                        <%= t('lab_tests', scope: [:activerecord, :no_models]) %>
                       </td>
                     </tr>
                   <% end %>
@@ -192,7 +196,7 @@
                         </td>
                       <% end %>
                       <td class="icon-cell">
-                        <%= link_to lab_test.test_type, work_order_lab_test_path(@work_order, lab_test) %> <i style="color: <%= lab_test.test_status.icon_color %>" class="fa fa-<%= lab_test.test_status.icon %> text-muted pull-right"></i>
+                        <%= link_to lab_test.test_type_version.name, work_order_lab_test_path(@work_order, lab_test) %> <i style="color: <%= lab_test.test_status.icon_color %>" class="fa fa-<%= lab_test.test_status.icon %> text-muted pull-right"></i>
                       </td>
                     </tr>
                   <% end %>

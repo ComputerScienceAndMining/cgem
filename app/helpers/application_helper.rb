@@ -23,4 +23,9 @@ module ApplicationHelper
     HTML
     html.html_safe
   end
+
+  # Transform a boolean into a human word
+  def humanize_boolean value
+    value ? t('boolean_yes') : t('boolean_no')
+  end
 end

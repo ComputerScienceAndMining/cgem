@@ -6,11 +6,11 @@ class SpecimensController < ApplicationController
   # GET /specimens
   def index
     if request.format.xls?
-      @sheets = Specimen.where(sample_id: @work_order.samples.pluck(&:id)).to_xls
+      @sheets = Specimen.where(sample_id: @work_order.samples.pluck(:id).flatten).to_xls
     else
       @page = params[:page]
       @per_page = 10
-      @specimens_filtered = params[:q].present? ? Specimen.by_name(params[:q]) : Specimen.all
+      @specimens_filtered = params[:q].present? ? @work_order.specimens.by_name(params[:q]) : @work_order.specimens
       @specimens = @specimens_filtered.paginate page: params[:page], per_page: @per_page
     end
 
@@ -46,6 +46,7 @@ class SpecimensController < ApplicationController
     if @specimen.save
       redirect_to [@work_order, @specimen]
     else
+      @specimen_type_versions = SpecimenType.versions_for(@work_order)
       render :new
     end
   end
@@ -55,6 +56,7 @@ class SpecimensController < ApplicationController
     if @specimen.update(specimen_params)
       redirect_to [@work_order, @specimen]
     else
+      @specimen_type_versions = SpecimenType.versions_for(@work_order)
       render :edit
     end
   end

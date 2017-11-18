@@ -28,7 +28,7 @@ class WorkOrder < ActiveRecord::Base
   validates :name, presence: true
   # validates :description, <validations>
   # validates :due_date, <validations>
-  validates :user, presence: true
+  validates :responsible, presence: true
   validates :work_order_status, presence: true
   validates :organisation, presence: true
 

@@ -21,7 +21,7 @@ class Specimen < ActiveRecord::Base
   validates :sample, presence: true
   # validates :specimen_type, <validations>
   validates :specimen_type_version, presence: true
-  validates :user, presence: true
+  validates :prepared_by, presence: true
   # validates :data, <validations>
 
   # Scopes (used for search form)
@@ -29,11 +29,11 @@ class Specimen < ActiveRecord::Base
   scope :by_name, ->(name) { where("name ILIKE ?", "%#{name}%") } # Scope for search
 
   def self.to_xls options = {}
-    all.group_by { |s| s.specimen_type.name }
+    all.includes(:specimen_type_version, :prepared_by).group_by { |s| s.specimen_type_version.name }
        .map {|st_name, specimens| [
          st_name, 
          {
-           fields: specimens[0].specimen_type.data["fields"].map {|f| f["name"] }, 
+           fields: specimens[0].specimen_type_version.data["fields"].map {|f| f["name"] }, 
            specimens: specimens
           }
        ]}.to_h

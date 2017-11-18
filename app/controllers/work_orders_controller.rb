@@ -7,8 +7,7 @@ class WorkOrdersController < ApplicationController
     @page = params[:page]
     @per_page = 10
 
-    @work_orders_filtered = params[:q].present? ? WorkOrder.by_name(params[:q]) : WorkOrder.all
-
+    @work_orders_filtered = params[:q].present? ? policy_scope(WorkOrder).by_name(params[:q]) : policy_scope(WorkOrder).all
     @work_orders = @work_orders_filtered.paginate page: params[:page], per_page: @per_page
 
     # Display the data collected according to a format
@@ -22,7 +21,7 @@ class WorkOrdersController < ApplicationController
   # GET /work_orders/1
   def show
     @work_order = WorkOrder
-                    .includes(samples: [:specimens, {lab_tests: :test_type}])
+                    .includes(samples: [:specimens, {lab_tests: [:test_type_version, :test_status]}])
                     .find(params[:id])
   end
 

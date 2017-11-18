@@ -4,7 +4,7 @@ module DynamicHelper
     field["name"]
   end
 
-  def field_value(obj, field, empty: "Empty")
+  def field_value(obj, field, empty: t('empty_value', scope: :dynamic_fields))
     return empty if ((field["value"].nil?) or
                        (not field["value"].is_a? Numeric and field["value"].empty?)) and 
                        (field["type"] != "pictures")
@@ -19,7 +19,7 @@ module DynamicHelper
     end
   end
 
-  def field_images(obj, field, empty: "Empty")
+  def field_images(obj, field, empty: t('empty_value', scope: :dynamic_fields))
     return empty if field["pictures"].nil? or field["pictures"].empty?
 
     html = ''

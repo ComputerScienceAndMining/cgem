@@ -9,12 +9,12 @@
   <Worksheet ss:Name="<%= sheet_name %>">
     <Table>
       <Row>
-        <Cell><Data ss:Type="String">code</Data></Cell>
-        <Cell><Data ss:Type="String">remarks</Data></Cell>
-        <Cell><Data ss:Type="String">specimen type</Data></Cell>
-
-        <Cell><Data ss:Type="String">created at</Data></Cell>
-        <Cell><Data ss:Type="String">updated at</Data></Cell>
+        <Cell><Data ss:Type="String"><%= Specimen.human_attribute_name('code') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= Specimen.human_attribute_name('remarks') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= Specimen.human_attribute_name('specimen_type') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= Specimen.human_attribute_name('prepared_by') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= Specimen.human_attribute_name('created_at') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= Specimen.human_attribute_name('updated_at') %></Data></Cell>
         <% data[:fields].each do |field| %>
             <Cell><Data ss:Type="String"><%= field %></Data></Cell>
         <% end %>
@@ -23,7 +23,8 @@
       <Row>
         <Cell><Data ss:Type="String"><%= specimen.code %></Data></Cell>
         <Cell><Data ss:Type="String"><%= specimen.remarks %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= specimen.specimen_type %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= specimen.specimen_type_version.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= specimen.prepared_by %></Data></Cell>
         <Cell><Data ss:Type="String"><%= specimen.created_at %></Data></Cell>
         <Cell><Data ss:Type="String"><%= specimen.updated_at %></Data></Cell>
         <% specimen.data["fields"].each do |field| %>

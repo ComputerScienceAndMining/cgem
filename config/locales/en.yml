@@ -86,3 +86,7 @@ en:
   modals:
     detail: 'Detail'
     close: 'Close'
+  boolean_yes: 'Yes'
+  boolean_no: 'No'
+  dynamic_fields:
+    empty_value: 'Empty'

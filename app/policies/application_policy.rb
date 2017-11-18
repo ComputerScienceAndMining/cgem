@@ -11,11 +11,12 @@ class ApplicationPolicy
         scope
     end
 
-    def system_admin?   ; user.present? && user.role == 0     ; end
-    def system_manager? ; user.present? && user.role == 100   ; end
-    def staff?          ; user.present? && user.role == 200   ; end
-    def assistant?      ; user.present? && user.role == 300   ; end
-    def anonymous?      ; user.nil?                           ; end
+    def admin?      ; user.present? && user.role == 0     ; end
+    def lab_chief?  ; user.present? && user.role == 100   ; end
+    def lab_worker? ; user.present? && user.role == 200   ; end
+    def org_chief?  ; user.present? && user.role == 300   ; end
+    def org_worker? ; user.present? && user.role == 400   ; end
+    def anonymous?  ; user.nil?                           ; end
   end
 
   attr_reader :user, :record
@@ -29,11 +30,12 @@ class ApplicationPolicy
   end
 
   # Roles
-  def system_admin?   ; user.present? && user.role == 0     ; end
-  def system_manager? ; user.present? && user.role == 100   ; end
-  def staff?          ; user.present? && user.role == 200   ; end
-  def assistant?      ; user.present? && user.role == 300   ; end
-  def anonymous?      ; user.nil?                           ; end
+  def admin?      ; user.present? && user.role == 0     ; end
+  def lab_chief?  ; user.present? && user.role == 100   ; end
+  def lab_worker? ; user.present? && user.role == 200   ; end
+  def org_chief?  ; user.present? && user.role == 300   ; end
+  def org_worker? ; user.present? && user.role == 400   ; end
+  def anonymous?  ; user.nil?                           ; end
 
   # Actions
   def index?          ; true                                  ; end

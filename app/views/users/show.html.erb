@@ -19,12 +19,16 @@
     <div class="panel-heading panel-heading-toolbox">
       <h3 class="panel-title"><%= @user %></h3>
       <div class="panel-toolbar">
-        <%= link_to edit_user_path(@user), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: User.model_name.human) do %>
-          <%= icon 'pencil' %>
+        <% if policy(@user).edit? %>
+          <%= link_to edit_user_path(@user), data: { tooltip: 'tooltip' }, class: "btn btn-primary", title: t('edit_resource', scope: :crud_views, resource: User.model_name.human) do %>
+            <%= icon 'pencil' %>
+          <% end %>
         <% end %>
 
-        <%= link_to @user, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: User.model_name.human) do %>
-          <%= icon 'trash' %>
+        <% if policy(@user).destroy? %>
+          <%= link_to @user, method: :delete, data: { confirm: t('are_you_sure', scope: :crud_views), tooltip: 'tooltip' }, class: "btn btn-danger", title: t('delete_resource', scope: :crud_views, resource: User.model_name.human) do %>
+            <%= icon 'trash' %>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -35,9 +39,9 @@
         <dt><%= User.human_attribute_name('last_name') %></dt>
         <dd><%= @user.last_name %></dd>
         <dt><%= User.human_attribute_name('enabled') %></dt>
-        <dd><%= @user.enabled %></dd>
+        <dd><%= humanize_boolean @user.enabled  %></dd>
         <dt><%= User.human_attribute_name('role') %></dt>
-        <dd><%= @user.role %></dd>
+        <dd><%= @user.role_name %></dd>
       </dl>
     </div>
     <div class="panel-footer panel-footer-toolbox">

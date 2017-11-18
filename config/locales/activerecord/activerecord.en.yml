@@ -87,8 +87,11 @@ en:
         sample_type: Sample Type
         sample_type_id: Sample Type
         sample_type_version: Sample Type Version
+        sample_type_version_id: Sample Type Version
         work_order: Work Order
         data: Data
+        created_at: Created at
+        updated_at: Updated at
       specimen_type:
         name: Name
         data: Data
@@ -105,9 +108,12 @@ en:
         specimen_type: Specimen Type
         specimen_type_id: Specimen Type
         specimen_type_version: Specimen Type Version
+        specimen_type_version_id: Specimen Type Version
         prepared_by: Prepared by
         prepared_by_id: Prepared by
         data: Data
+        created_at: Created at
+        updated_at: Updated at
       specimen_group:
         work_order: Work Order
         name: Name
@@ -135,18 +141,31 @@ en:
         date_tested: date_tested
         work_order: Work Order
         test_status: test_status
+        test_status_id: test_status
         test_type: Test Type
         test_type_id: Test Type
         test_type_version: Test Type Version
+        test_type_version_id: Test Type Version
         specimen: Specimen
+        specimen_id: Specimen
+        specimen_type: Specimen Type
+        specimen_type_id: Specimen Type
+        specimen_type_version: Specimen Type Version
+        specimen_type_version_id: Specimen Type Version
         tested_by: Tested by
         tested_by_id: Tested by
         started_at: Started at
         ended_at: Ended at
         data: Data
+        created_at: Created at
+        updated_at: Updated at
       parameter:
         key: Key
         value: Value
+    no_models:
+      samples: 'No Samples'
+      specimens: 'No Specimens'
+      lab_tests: 'No Tests'
     others:
       id: Id
       created_at: Created at

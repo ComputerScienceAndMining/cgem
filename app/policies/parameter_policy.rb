@@ -5,9 +5,9 @@ class ParameterPolicy < ApplicationPolicy
     end
   end
 
-  # def index?   ; true ; end
-  # def create?  ; true ; end
-  # def show?    ; true ; end
-  # def update?  ; true ; end
-  # def destroy? ; true ; end
+  def index?   ; admin? ; end
+  def create?  ; admin? ; end
+  def show?    ; admin? ; end
+  def update?  ; admin? ; end
+  def destroy? ; admin? ; end
 end

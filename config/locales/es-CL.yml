@@ -86,3 +86,7 @@ es-CL:
   modals:
     detail: 'Detalle'
     close: 'Cerrar'
+  boolean_yes: 'Sí'
+  boolean_no: 'No'
+  dynamic_fields:
+    empty_value: 'Vacío'

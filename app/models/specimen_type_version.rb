@@ -23,7 +23,7 @@ class SpecimenTypeVersion < ActiveRecord::Base
 
   # Override to_s method
   def to_s
-    "#{name} [v#{id}]"
+    "#{name} (#{created_at.to_formatted_s(:short)})"
   end
 
 end

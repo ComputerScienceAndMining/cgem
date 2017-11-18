@@ -87,8 +87,11 @@ es-CL:
         sample_type: Tipo de Muestra
         sample_type_id: Tipo de Muestra
         sample_type_version: Versión de Tipo de Muestra
+        sample_type_version_id: Versión de Tipo de Muestra
         work_order: Orden de Trabajo
         data: Datos
+        created_at: Creado
+        updated_at: Modificado
       specimen_type:
         name: Nombre
         data: Datos
@@ -105,9 +108,12 @@ es-CL:
         specimen_type: Tipo de Espécimen
         specimen_type_id: Tipo de Espécimen
         specimen_type_version: Versión de Tipo de Espécimen
+        specimen_type_version_id: Versión de Tipo de Espécimen
         prepared_by: Preparado por
         prepared_by_id: Preparado por
         data: Datos
+        created_at: Creado
+        updated_at: Modificado
       specimen_group:
         work_order: Orden de Trabajo
         name: Nombre
@@ -135,18 +141,31 @@ es-CL:
         date_tested: Fecha de Ensayo
         work_order: Orden de Trabajo
         test_status: Status del Ensayo
+        test_status_id: Status del Ensayo
         test_type: Tipo de Ensayo
         test_type_id: Tipo de Ensayo
         test_type_version: Versión de Tipo de Ensayo
+        test_type_version_id: Versión de Tipo de Ensayo
         specimen: Espécimen
+        specimen_id: Espécimen
+        specimen_type: Tipo de Espécimen
+        specimen_type_id: Tipo de Espécimen
+        specimen_type_version: Versión de Tipo de Espécimen
+        specimen_type_version_id: Versión de Tipo de Espécimen
         tested_by: Ensayado por
         tested_by_id: Ensayado por
         started_at: Iniciado
         ended_at: Finalizado
         data: Datos
+        created_at: Creado
+        updated_at: Modificado
       parameter:
         key: Clave
         value: Valor
+    no_models:
+      samples: 'Sin Muestras'
+      specimens: 'Sin Especímenes'
+      lab_tests: 'Sin Ensayos'
     others:
       id: Id
       created_at: Creado

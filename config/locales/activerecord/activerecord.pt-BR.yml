@@ -63,6 +63,8 @@ pt-BR:
         role_name: Rol
         enabled: Habilitado
         enabled_user: Habilitado
+        organisation: Organización
+        organisation_id: Organización
       work_order_status:
         name: Nombre
       work_order:

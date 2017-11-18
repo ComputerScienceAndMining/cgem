@@ -10,10 +10,10 @@ class UserPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    if admin? || lab_chief?
-      [:first_name, :last_name, :enabled, :role, :organisation]
+    if admin? || lab_chief? || lab_worker?
+      [:email, :password, :password_confirmation, :first_name, :last_name, :enabled, :role, :organisation_id]
     else
-      [:first_name, :last_name, :enabled, :role, :organisation]
+      [:email, :password, :password_confirmation, :first_name, :last_name]
     end
   end
 
@@ -29,6 +29,10 @@ class UserPolicy < ApplicationPolicy
 
   def can_change_role?
     (admin? || lab_chief? || lab_worker?) && !same_user?
+  end
+
+  def can_change_organisation?
+    admin? || lab_chief? || lab_worker?
   end
 
   def same_user? ; record.id == user.id ; end

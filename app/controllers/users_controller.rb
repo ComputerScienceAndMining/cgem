@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    @user = User.new(user_params)
+    @user = User.new(permitted_attributes(@user))
 
     if @user.save
       redirect_to @user
@@ -47,10 +47,10 @@ class UsersController < ApplicationController
   def update
     successfully_updated = if needs_update_password? @user, params
       same_user = current_user.id == @user.id
-      @user.update(user_params)
+      @user.update(permitted_attributes(@user))
       sign_in(@user, bypass: true) if same_user
     else
-      @user.update_without_password(user_params.except(:current_password, :password, :password_confirmation))
+      @user.update_without_password(permitted_attributes(@user).except(:current_password, :password, :password_confirmation))
     end
 
     if successfully_updated

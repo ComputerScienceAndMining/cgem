@@ -90,3 +90,13 @@ pt-BR:
   boolean_no: 'Não'
   dynamic_fields:
     empty_value: 'Vazio'
+  form_help:
+    user:
+      enabled: 'Indica se um usuário está ativo. Desmarque esto em vez de eliminar contas.'
+  user_roles:
+    admin: 'Administrador'
+    lab_chief: 'Jefe de Laboratorio'
+    lab_worker: 'Trabajador de Laboratorio'
+    org_worker: 'Trabajador en Organización'
+    org_viewer: 'Visualizador de organización'
+    anonymous: 'Anónimo'

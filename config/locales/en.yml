@@ -90,3 +90,13 @@ en:
   boolean_no: 'No'
   dynamic_fields:
     empty_value: 'Empty'
+  form_help:
+    user:
+      enabled: 'Designates whether this user should be treated as active. Unselect this instead of deleting accounts.'
+  user_roles:
+    admin: 'Administrator'
+    lab_chief: 'Laboratory Chief'
+    lab_worker: 'Laboratory Worker'
+    org_worker: 'Organisation Worker'
+    org_viewer: 'Organisation Viewer'
+    anonymous: 'Anonymous'

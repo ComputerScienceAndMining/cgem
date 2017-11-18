@@ -63,6 +63,8 @@ en:
         role_name: Role
         enabled: Enabled
         enabled_user: Enabled
+        organisation: Organisation
+        organisation_id: Organisation
       work_order_status:
         name: Name
       work_order:

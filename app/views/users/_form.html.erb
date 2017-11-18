@@ -19,28 +19,6 @@
         <%= f.text_field :email, class: "form-control", placeholder: User.human_attribute_name('email') %>
       </div><!-- /.form-group -->
       <div class="form-group">
-        <%= f.label :first_name, class: "control-label" %>
-        <%= f.text_field :first_name, class: "form-control", placeholder: User.human_attribute_name('first_name') %>
-      </div><!-- /.form-group -->
-      <div class="form-group">
-        <%= f.label :last_name, class: "control-label" %>
-        <%= f.text_field :last_name, class: "form-control", placeholder: User.human_attribute_name('last_name') %>
-      </div><!-- /.form-group -->
-      <% if policy(@user).can_change_enabled? %>
-        <div class="form-group">
-          <%= f.label :enabled, class: "control-label" %>
-          <%= f.check_box :enabled %>
-        </div><!-- /.form-group -->
-      <% end %>
-      
-      <% if policy(@user).can_change_role? %>
-        <div class="form-group">
-          <%= f.label :role, class: "control-label" %>
-          <%= f.number_field :role, class: "form-control", placeholder: User.human_attribute_name('role') %>
-        </div><!-- /.form-group -->
-      <% end %>
-
-      <div class="form-group">
         <%= f.label :password, class: "control-label" %>
         <%= f.password_field :password, class: "form-control", placeholder: User.human_attribute_name('password') %>
       </div>
@@ -48,6 +26,37 @@
         <%= f.label :password_confirmation, class: "control-label" %>
         <%= f.password_field :password_confirmation, class: "form-control", placeholder: User.human_attribute_name('password_confirmation') %>
       </div>
+      <div class="form-group">
+        <%= f.label :first_name, class: "control-label" %>
+        <%= f.text_field :first_name, class: "form-control", placeholder: User.human_attribute_name('first_name') %>
+      </div><!-- /.form-group -->
+      <div class="form-group">
+        <%= f.label :last_name, class: "control-label" %>
+        <%= f.text_field :last_name, class: "form-control", placeholder: User.human_attribute_name('last_name') %>
+      </div><!-- /.form-group -->
+
+      <% if policy(@user).can_change_organisation? %>
+        <div class="form-group">
+          <%= f.label :organisation_id, class: "control-label" %>
+          <%= f.collection_select :organisation_id, Organisation.all, :id, :to_s, { prompt: true} , { class: 'form-control' } %>
+        </div><!-- /.form-group -->
+      <% end %>
+
+      <% if policy(@user).can_change_enabled? %>
+        <div class="form-group">
+          <%= f.label :enabled, class: "control-label" %>
+          <%= f.check_box :enabled %>
+          <span class="help-block"><%= t('enabled', scope: [:form_help, :user]) %></span>
+        </div><!-- /.form-group -->
+      <% end %>
+      
+      <% if policy(@user).can_change_role? %>
+        <div class="form-group">
+          <%= f.label :role, class: "control-label" %>
+          <%= f.select :role, User::ROLES.select{ |role| role[:id] >= current_user.role }.collect{ |role| [ I18n.t(role[:name], scope: :user_roles), role[:id] ] }, {}, {class: "form-control", prompt: 'Select a role'} %>
+        </div><!-- /.form-group -->
+      <% end %>
+
     </div><!-- /.panel-body -->
     <div class="panel-footer panel-footer-toolbox">
       <div class="panel-toolbar pull-right">

@@ -48,6 +48,11 @@
         </Style>
     </Styles>
   
+  <% if @sheets.size < 1  %>
+    <Worksheet ss:Name="NULL">
+    </Worksheet>
+  <% end %>
+  
   <% @sheets.each do |sheet_name, data| %>
   <Worksheet ss:Name="<%= sheet_name %>">
     <Table>

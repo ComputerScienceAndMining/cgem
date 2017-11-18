@@ -7,11 +7,11 @@ class User < ActiveRecord::Base
 
   # Constants
   ROLES = [
-    {id: 0,   name: 'Admin'},           # Developers
-    {id: 100, name: 'Laboratory Chief'},       # Organisation owner
-    {id: 200, name: 'Laboratory Worker'},          # Organisation owner
-    {id: 300, name: 'Organisation Worker'}, # Organisation owner
-    {id: 400, name: 'Organisation Viewer'},   # Organisation user
+    {id: 0,   name: 'admin'}, # Developers
+    {id: 100, name: 'lab_chief'},
+    {id: 200, name: 'lab_worker'},
+    {id: 300, name: 'org_worker'},
+    {id: 400, name: 'org_viewer'},
   ]
 
   # Relations
@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   # Validations
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :enabled, presence: true
+  # validates :enabled, presence: true
   validates :role, presence: true
 
   # Scopes (used for search form)
@@ -43,6 +43,12 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
     # (defined? name)? name : ((defined? email)? email : id)  # editable
   end
+
+  # Overriding devise method for active users
+  def active_for_authentication?  ; super && self.enabled? ; end
+
+  # Overriding devise inactive message
+  # def inactive_message    ; "Sorry, this account has been deactivated." ; end
 
   def role_name
     User::ROLES.find{ |rol| rol[:id] == self.role }[:name] if User::ROLES.any? { |rol| rol[:id] == self.role }

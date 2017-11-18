@@ -5,6 +5,11 @@
   xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
   xmlns:html="http://www.w3.org/TR/REC-html40">
   
+  <% if @sheets.size < 1  %>
+    <Worksheet ss:Name="NULL">
+    </Worksheet>
+  <% end %>
+
   <% @sheets.each do |sheet_name, data| %>
   <Worksheet ss:Name="<%= sheet_name %>">
     <Table>

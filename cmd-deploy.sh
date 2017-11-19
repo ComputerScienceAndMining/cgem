@@ -8,4 +8,4 @@ docker-compose build
 
 # Restart app
 docker-compose stop
-docker-compose start
+docker-compose up -d

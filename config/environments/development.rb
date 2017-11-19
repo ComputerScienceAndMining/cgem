@@ -48,20 +48,39 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   # Default URL options for the Devise mailer
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: ENV.fetch('MAILER_URL_HOST'), port: ENV.fetch('MAILER_URL_PORT') }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_options = {
-    from: 'From App <from.app@gmail.com>'
+    from: ENV.fetch('MAILER_FROM')
   }
   config.action_mailer.smtp_settings = {
     address:              'smtp.gmail.com',
     port:                 587,
     domain:               'gmail.com',
-    user_name:            'example@gmail.com',
-    password:             'pass',
+    user_name:            ENV.fetch('MAILER_USERNAME'),
+    password:             ENV.fetch('MAILER_PASS'),
     authentication:       'plain',
     enable_starttls_auto: true
   }
   
+
+  # Paperclip
+  #Paperclip.options[:command_path] = "/usr/local/bin/"
+  Paperclip.options[:content_type_mappings] = {
+    :jpeg => "image/jpeg",
+    :jpg => "image/jpeg",
+    :png => "image/png"
+  }
+
+  config.paperclip_defaults = {
+    storage: :s3,
+    s3_credentials: {
+      bucket: ENV.fetch('AWS_S3_BUCKET_NAME'),
+      access_key_id: ENV.fetch('AWS_S3_ACCESS_KEY_ID'),
+      secret_access_key: ENV.fetch('AWS_S3_SECRET_ACCESS_KEY'),
+      s3_region: ENV.fetch('AWS_S3_REGION'),
+      s3_host_name: "s3-#{ENV['AWS_S3_REGION']}.amazonaws.com",
+    }
+  }
 end

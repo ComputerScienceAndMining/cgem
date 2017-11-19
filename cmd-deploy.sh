@@ -7,4 +7,5 @@ git pull origin master
 docker-compose build
 
 # Restart app
-docker-compose restart
+docker-compose stop
+docker-compose start

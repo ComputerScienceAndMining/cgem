@@ -14,6 +14,26 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  # Paperclip
+  Paperclip.options[:content_type_mappings] = {
+    :jpeg => "image/jpeg",
+    :jpg => "image/jpeg",
+    :png => "image/png"
+  }
+
+  unless ENV['AWS_S3_ACCESS_KEY_ID'].blank?
+    config.paperclip_defaults = {
+      storage: :s3,
+      s3_credentials: {
+        bucket: ENV.fetch('AWS_S3_BUCKET_NAME'),
+        access_key_id: ENV.fetch('AWS_S3_ACCESS_KEY_ID'),
+        secret_access_key: ENV.fetch('AWS_S3_SECRET_ACCESS_KEY'),
+        s3_region: ENV.fetch('AWS_S3_REGION'),
+        s3_host_name: "s3-#{ENV['AWS_S3_REGION']}.amazonaws.com",
+      }
+    }
+  end
+
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
   # For large-scale production use, consider using a caching reverse proxy like
@@ -79,19 +99,20 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Default URL options for the Devise mailer
-  config.action_mailer.default_url_options = { host: '0.0.0.0', port: 3000 }
+  config.action_mailer.default_url_options = { host: ENV['MAILER_URL_HOST'], port: ENV['MAILER_URL_PORT'] }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_options = {
-    from: 'From App <from.app@gmail.com>'
+    from: ENV['MAILER_FROM']
   }
   config.action_mailer.smtp_settings = {
-    address:              '0.0.0.0',
-    port:                 25,
-    user_name:            'username',
-    password:             'pass',
-    authentication:       :login,
-    enable_starttls_auto: false
+    address:              'smtp.gmail.com',
+    port:                 587,
+    domain:               'gmail.com',
+    user_name:            ENV['MAILER_USERNAME'],
+    password:             ENV['MAILER_PASS'],
+    authentication:       'plain',
+    enable_starttls_auto: true
   }
 
 end

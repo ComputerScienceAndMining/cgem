@@ -1,3 +1,14 @@
 pt-BR:
   mailer:
-    
+    title: 'CGEM APP'
+    dear_user: 'Prezado Usuário'
+    bye:
+      html: 'Cordialmente,<br>CGEM - Universidade de Santiago do Chile.<br>'
+      text: |
+        Cordialmente
+        CGEM - Universidade de Santiago do Chile.
+    dont_respond:
+      html: 'ESTA MENSAGEM FOI GERADA AUTOMÁTICAMENTE.<br>POR FAVOR NÃO RESPONDER.'
+      text: |
+        ESTA MENSAGEM FOI GERADA AUTOMÁTICAMENTE.
+        POR FAVOR NÃO RESPONDER.

@@ -17,6 +17,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - SECRET_KEY_BASE=${SECRET_KEY_BASE}
     restart: always
     ports:
      - "80:80"
@@ -49,6 +51,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - SECRET_KEY_BASE=${SECRET_KEY_BASE}
     command: /sbin/my_init -- bundle exec sidekiq -e ${ENV} -c ${SIDEKIQ_CONCURRENCY}
     restart: always
     links:
@@ -79,6 +83,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - SECRET_KEY_BASE=${SECRET_KEY_BASE}
     restart: always
     links:
       - database

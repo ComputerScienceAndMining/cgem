@@ -1,5 +1,5 @@
 <div class="main container">
-  <%= form_for [@work_order, @lab_test], html: { class: "crud-form", role: "form" } do |f| %>
+  <%= form_for [@work_order, @lab_test], html: {multipart: true, class: "crud-form", role: "form" } do |f| %>
   <div class="panel panel-default">
     <div class="panel-heading panel-heading-toolbox">
       <h3 class="panel-title"><%= @lab_test.new_record? ? t('new_resource', scope: :crud_views, resource: LabTest.model_name.human) : @lab_test.to_s %></h3>
@@ -22,19 +22,19 @@
       </div><!-- /.form-group -->
       <div class="form-group">
         <%= f.label :specimen_id, class: "control-label" %>
-        <%= f.collection_select :specimen_id, @work_order.specimens, :id, :to_s, { prompt: true} , { class: 'form-control' }  %>
+        <%= f.collection_select :specimen_id, @work_order.specimens, :id, :to_s, { prompt: true} , { class: 'form-control', required: true }  %>
       </div><!-- /.form-group -->
       <div class="form-group">
         <%= f.label :test_status_id, class: "control-label" %>
-        <%= f.collection_select :test_status_id, TestStatus.all, :id, :to_s, { prompt: true} , { class: 'form-control' }  %>
+        <%= f.collection_select :test_status_id, TestStatus.all, :id, :to_s, { prompt: true} , { class: 'form-control', required: true }  %>
       </div><!-- /.form-group -->
       <div class="form-group">
         <%= f.label :tested_by_id, class: "control-label" %>
-        <%= f.collection_select :tested_by_id, User.all, :id, :to_s, { prompt: true} , { class: 'form-control' }  %>
+        <%= f.collection_select :tested_by_id, User.where(organisation_id: current_user.id), :id, :to_s, { prompt: true} , { class: 'form-control', required: true }  %>
       </div><!-- /.form-group -->
       <div class="form-group">
         <%= f.label :test_type_version_id, class: "control-label" %>
-        <%= f.collection_select :test_type_version_id, @test_type_versions, :id, :to_s, { prompt: true} , { class: 'form-control', 'ng-model': 'formCtrl.testTypeVersionId', 'ng-init': "formCtrl.testTypeVersionId='#{@lab_test.test_type_version_id}'", 'ng-change': 'formCtrl.updateTemplate()' } %>
+        <%= f.collection_select :test_type_version_id, @test_type_versions, :id, :to_s, { prompt: true} , { class: 'form-control', required: true, 'ng-model': 'formCtrl.testTypeVersionId', 'ng-init': "formCtrl.testTypeVersionId='#{@lab_test.test_type_version_id}'", 'ng-change': 'formCtrl.updateTemplate()' } %>
       </div><!-- /.form-group -->
 
       <dynamic-filler name="lab_test[data]" template="formCtrl.dynamicTemplate" value="<%= @lab_test.data %>"></dynamic-filler>
@@ -70,5 +70,22 @@
 <% end %>
 
 <% content_for :script do %>
-  <!-- Put your script code specific for lab_tests _form view -->
+  <script>
+  $(function () {
+
+    // Fix para Safari iOS
+    $('input[name="lab_test[started_at]"], input[name="lab_test[ended_at]"]').change(function () {
+      var value = $(this).val()
+      var data = value.split(':')
+      if (data.length == 2) {
+        value = data.join(':') + ':00'
+      }
+      else if (data.length == 3) {
+        data[2] = '00'
+        value = data.join(':')
+      }
+      $(this).val(value)
+    })
+  })
+  </script>
 <% end %>

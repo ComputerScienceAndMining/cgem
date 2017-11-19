@@ -5,7 +5,9 @@ class TestType < ActiveRecord::Base
   # Put here constants for TestType
 
   # Relations
-  has_many :test_type_versions
+  has_many :lab_tests, dependent: :restrict_with_error
+  has_many :test_type_versions, dependent: :restrict_with_error
+
   # Callbacks
   # Put here custom callback methods for TestType
   after_save :create_new_version

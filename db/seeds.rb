@@ -351,7 +351,7 @@ end
 specimens = []
 samples.each do |sample|
   (1..4).each do |num|
-    new_specimen = Specimen.create! code: "#{sample.code}-S#{num}", remarks: 'Sin observaciones', sample: sample, specimen_type: cilindro, specimen_type_version: cilindro_version, prepared_by: user_1, data: cilindro_data_filled
+    new_specimen = Specimen.create! code: "#{sample.code}-S#{num}", remarks: 'Sin observaciones', sample: sample, specimen_type: cilindro, specimen_type_version: cilindro_version, prepared_by: user_2, data: cilindro_data_filled
     specimens.append new_specimen
   end
 end
@@ -373,6 +373,6 @@ specimens.each do |specimen|
   new_vo_data_filled = tenpercdev(vo_data_filled.clone)
   new_ccnbd_data_filled = tenpercdev(ccnbd_data_filled.clone)
 
-  new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_vo, test_type_version: tt_vo_version, specimen: specimen, tested_by: user_1, data: vo_data_filled
+  new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_vo, test_type_version: tt_vo_version, specimen: specimen, tested_by: user_3, data: vo_data_filled
   new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_ccnbd, test_type_version: tt_ccnbd_version, specimen: specimen, tested_by: user_1, data: ccnbd_data_filled
 end

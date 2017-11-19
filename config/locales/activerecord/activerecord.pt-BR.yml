@@ -68,6 +68,7 @@ pt-BR:
       work_order_status:
         name: Nombre
       work_order:
+        work_orders: Órdenes de Trabajo #https://stackoverflow.com/a/25385812
         name: Nombre
         description: Descripción
         due_date: Fecha de entrega

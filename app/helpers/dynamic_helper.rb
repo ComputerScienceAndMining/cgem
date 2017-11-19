@@ -23,15 +23,31 @@ module DynamicHelper
     return empty if field["pictures"].nil? or field["pictures"].empty?
 
     html = ''
+    
+    if field["pictures"].size > 0
+      html += <<-HTML
+        <div class="photoswipe-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+      HTML
+    end
 
     field["pictures"].each do |pict|
       obj.pictures.each do |picture|
-        # if pict["local_id"] == picture.local_id
+        if pict["local_id"] == picture.local_id
           html += <<-HTML
-          <img src="#{picture.image.url(:thumb)}" alt="picture">
+          <figure class="thumb" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+            <a href="#{picture.image.url(:original)}" itemprop="contentUrl" data-size="#{picture.image.image_size}">
+                <img src="#{picture.image.url(:thumb)}" itemprop="thumbnail" alt="Image description" />
+            </a>
+          </figure>
           HTML
-        # end
+        end
       end
+    end
+
+    if field["pictures"].size > 0
+      html += <<-HTML
+        </div>
+      HTML
     end
 
     html.html_safe

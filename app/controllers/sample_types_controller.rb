@@ -58,6 +58,7 @@ class SampleTypesController < ApplicationController
     if @sample_type.destroy
       redirect_to sample_types_url
     else
+      @sample_type_versions = @sample_type.sample_type_versions
       render :show
     end
   end

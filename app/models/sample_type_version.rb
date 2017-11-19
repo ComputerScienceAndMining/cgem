@@ -6,6 +6,7 @@ class SampleTypeVersion < ActiveRecord::Base
 
   # Relations
   belongs_to :sample_type
+  has_many :samples, dependent: :restrict_with_error
 
   # Callbacks
   # Put here custom callback methods for SampleTypeVersion

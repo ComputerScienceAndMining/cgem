@@ -89,6 +89,6 @@ class LabTestsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def lab_test_params
-      params.require(:lab_test).permit(:name, :description, :started_at, :ended_at, :work_order_id, :test_status_id, :test_type_id, :test_type_version_id, :specimen_id, :tested_by_id, :data)
+      params.require(:lab_test).permit(:name, :description, :started_at, :ended_at, :work_order_id, :test_status_id, :test_type_id, :test_type_version_id, :specimen_id, :tested_by_id, :data, pictures_attributes: [ :id, :local_id, :image, :_destroy])
     end
 end

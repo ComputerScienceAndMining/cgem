@@ -1,6 +1,7 @@
 #encoding: utf-8
 class LabTest < ActiveRecord::Base
-
+  include Dynamisable
+  
   # Constants
   # Put here constants for LabTest
 
@@ -11,6 +12,12 @@ class LabTest < ActiveRecord::Base
   belongs_to :test_type_version
   belongs_to :specimen
   belongs_to :tested_by, class_name: 'User', foreign_key: 'tested_by_id'
+  has_many :pictures, dependent: :destroy
+
+  # Nested attributes
+  accepts_nested_attributes_for :pictures,
+    allow_destroy: true,
+    reject_if: lambda { |picture| picture[:image].blank? }
 
   # Callbacks
   # Put here custom callback methods for LabTest

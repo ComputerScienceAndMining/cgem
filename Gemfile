@@ -111,6 +111,10 @@ gem 'slack-notifier', '1.5.1'
 
 # File uploads
 gem "paperclip", "5.0.0"
+gem 'paperclip-meta', "3.0.0"
 
 # Amazon S3
 gem 'aws-sdk', '~> 2.3'
+
+# Image gallery
+gem 'photoswipe-rails', "4.1.2"

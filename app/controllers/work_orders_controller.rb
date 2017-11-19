@@ -8,6 +8,7 @@ class WorkOrdersController < ApplicationController
     @per_page = 10
 
     @work_orders_filtered = params[:q].present? ? policy_scope(WorkOrder).by_name(params[:q]) : policy_scope(WorkOrder).all
+    @work_orders_filtered = @work_orders_filtered.includes(:organisation, :responsible, :work_order_status)
     @work_orders = @work_orders_filtered.paginate page: params[:page], per_page: @per_page
 
     # Display the data collected according to a format

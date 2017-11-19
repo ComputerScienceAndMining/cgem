@@ -58,6 +58,7 @@ class TestTypesController < ApplicationController
     if @test_type.destroy
       redirect_to test_types_url
     else
+      @test_type_versions = @test_type.test_type_versions
       render :show
     end
   end

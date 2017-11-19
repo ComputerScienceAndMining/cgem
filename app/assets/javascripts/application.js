@@ -18,9 +18,12 @@
 //= require angular/angular
 //= require angular-resource/angular-resource
 //= require lodash/lodash
+//= require photoswipe
 
 //= require ng/app.module
 //= require ng/app.config
+//= require ng/app.run
+//= require ng/app.bootstrap
 //  require_tree ./ng/services
 //  require_tree ./ng/filters
 //= require_tree ./ng/directives
@@ -28,6 +31,8 @@
 //= require_tree ./ng/controllers
 //= require_tree ./ng/components
 
+// Aditional
+//= require ./photoswipe.init.js
 
 $(function(){
   // Tooltips

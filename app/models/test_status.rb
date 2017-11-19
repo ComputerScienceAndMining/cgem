@@ -5,7 +5,8 @@ class TestStatus < ActiveRecord::Base
   # Put here constants for TestStatus
 
   # Relations
-
+  has_many :lab_tests, dependent: :restrict_with_error
+  
   # Callbacks
   # Put here custom callback methods for TestStatus
 

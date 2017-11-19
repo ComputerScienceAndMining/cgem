@@ -89,6 +89,6 @@ class SpecimensController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def specimen_params
-      params.require(:specimen).permit(:code, :remarks, :sample_id, :specimen_type_id, :specimen_type_version_id, :prepared_by_id, :data, pictures_attributes: [ :id, :local_id, :image ])
+      params.require(:specimen).permit(:code, :remarks, :sample_id, :specimen_type_id, :specimen_type_version_id, :prepared_by_id, :data, pictures_attributes: [ :id, :local_id, :image, :_destroy])
     end
 end

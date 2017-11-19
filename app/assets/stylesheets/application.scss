@@ -11,6 +11,11 @@
  * file per style scope.
  *
  */
+
+/*
+ *= require photoswipe
+ */
+
 @import "widow/variables";
 @import "widow/bootstrap-overrides";
 
@@ -39,6 +44,7 @@ $icon-font-path: "bootstrap-sass/assets/fonts/bootstrap/";
 @import "widow/observation";
 @import "widow/panel";
 @import "widow/table";
+@import "widow/thumbnails";
 @import "widow/wells";
 
 @import "main";

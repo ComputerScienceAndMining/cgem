@@ -26,6 +26,7 @@ services:
     environment:
       SERVICE: app
       ENV: ${ENV}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
       PASSENGER_APP_ENV: ${ENV}
       POSTGRES_DB_NAME: ${POSTGRES_DB_NAME}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -46,6 +47,7 @@ services:
     environment:
       SERVICE: sidekiq
       ENV: ${ENV}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
       POSTGRES_DB_NAME: ${POSTGRES_DB_NAME}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -64,6 +66,7 @@ services:
     environment:
       SERVICE: ops
       ENV: ${ENV}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
       POSTGRES_DB_NAME: ${POSTGRES_DB_NAME}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

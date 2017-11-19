@@ -18,10 +18,11 @@
     vm.toggleCheckbox = toggleCheckbox
     vm.changeRadioButton = changeRadioButton
     vm.addPicture = addPicture
+    vm.destroyPicture = destroyPicture
     vm.$onInit = onInit
 
     function onInit () {
-    
+      vm.object_name = vm.name.split('[')[0]
     }
 
     function toggleCheckbox (field, alternative) {
@@ -47,6 +48,10 @@
       }, 50)
     }
 
+    function destroyPicture (field, picture) {
+      picture._destroy = true
+    }
+
     function _generateUUID() {
       var d = new Date().getTime();
       var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -57,7 +62,7 @@
       return uuid
     }
 
-    window.print = function () {
+    window.show = function () {
       console.log(vm)
     }
   }

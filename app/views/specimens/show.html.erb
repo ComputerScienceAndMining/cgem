@@ -45,7 +45,7 @@
             <dt><%= Specimen.human_attribute_name('remarks') %></dt>
             <dd><%= @specimen.remarks %></dd>
             <dt><%= Specimen.human_attribute_name('sample') %></dt>
-            <dd><%= @specimen.sample %></dd>
+            <dd><%= link_to @specimen.sample, work_order_sample_path(@work_order, @specimen.sample) %></dd>
             <dt><%= Specimen.human_attribute_name('specimen_type') %></dt>
             <dd><%= @specimen.specimen_type %></dd>
             <dt><%= Specimen.human_attribute_name('specimen_type_version') %></dt>
@@ -54,8 +54,8 @@
             <dd><%= @specimen.prepared_by %></dd>
             <hr>
             <% @specimen.data["fields"].each do |field| %>
-              <dt><%= field_title @sample, field %></dt>
-              <dd><%= field_value @sample, field %></dd>
+              <dt><%= field_title @specimen, field %></dt>
+              <dd><%= field_value @specimen, field %></dd>
             <% end %>
           </dl>
         </div>

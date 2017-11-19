@@ -5,7 +5,9 @@ class Organisation < ActiveRecord::Base
   # Put here constants for Organisation
 
   # Relations
-
+  has_many :work_orders, dependent: :restrict_with_error
+  has_many :users
+  
   # Callbacks
   # Put here custom callback methods for Organisation
 

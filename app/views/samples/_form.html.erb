@@ -14,7 +14,7 @@
     <div class="panel-body">
       <div class="form-group">
         <%= f.label :code, class: "control-label" %>
-        <%= f.text_field :code, class: "form-control", placeholder: Sample.human_attribute_name('code') %>
+        <%= f.text_field :code, class: "form-control", placeholder: Sample.human_attribute_name('code'), required: true %>
       </div><!-- /.form-group -->
       <div class="form-group">
         <%= f.label :remarks, class: "control-label" %>
@@ -23,7 +23,7 @@
 
       <div class="form-group">
         <%= f.label :sample_type_version_id, class: "control-label" %>
-        <%= f.collection_select :sample_type_version_id, @sample_type_versions, :id, :to_s, { prompt: true} , { class: 'form-control', 'ng-model': 'formCtrl.sampleTypeVersionId', 'ng-init': "formCtrl.sampleTypeVersionId='#{@sample.sample_type_version_id}'", 'ng-change': 'formCtrl.updateTemplate()' } %>
+        <%= f.collection_select :sample_type_version_id, @sample_type_versions, :id, :to_s, { prompt: true} , { class: 'form-control', required: true, 'ng-model': 'formCtrl.sampleTypeVersionId', 'ng-init': "formCtrl.sampleTypeVersionId='#{@sample.sample_type_version_id}'", 'ng-change': 'formCtrl.updateTemplate()' } %>
       </div><!-- /.form-group -->
 
       <dynamic-filler name="sample[data]" template="formCtrl.dynamicTemplate" value="<%= @sample.data %>"></dynamic-filler>

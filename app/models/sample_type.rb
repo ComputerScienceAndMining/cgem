@@ -5,8 +5,8 @@ class SampleType < ActiveRecord::Base
   # Put here constants for SampleType
 
   # Relations
-  has_many :samples
-  has_many :sample_type_versions
+  has_many :samples, dependent: :restrict_with_error
+  has_many :sample_type_versions, dependent: :restrict_with_error
 
   # Callbacks
   # Put here custom callback methods for SampleType

@@ -1,6 +1,15 @@
 #encoding: utf-8
 class Picture < ActiveRecord::Base
-  has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
+  has_attached_file :image, 
+                    styles: {
+                      original: "1920x1920>",
+                      thumb: "110x110#",
+                    }, 
+                    convert_options: {
+                      original: "-quality 75 -strip",
+                      thumb: "-quality 85 -strip",
+                    },
+                    default_url: "/images/:style/missing.png"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 
   # Constants

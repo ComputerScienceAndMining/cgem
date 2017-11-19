@@ -1,8 +1,14 @@
 // Fix for navbar fixed top
 // See more: http://getbootstrap.com/components/#navbar-fixed-top
-body {
+html {
+  background-color: #222;
 }
-
+body {
+  background-color: #fff;
+}
+.main-section {
+  min-height: 350px;
+}
 // Panel toolbar
 .btn-panel-toolbar {
 	padding: 9px 12px;

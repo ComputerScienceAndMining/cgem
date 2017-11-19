@@ -68,6 +68,7 @@ en:
       work_order_status:
         name: Name
       work_order:
+        work_orders: Work Orders #https://stackoverflow.com/a/25385812
         name: Name
         description: Description
         due_date: Due Date

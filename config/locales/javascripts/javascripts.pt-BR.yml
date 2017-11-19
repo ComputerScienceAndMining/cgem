@@ -1,3 +1,22 @@
 pt-BR:
   js:
-    
+    dynamic:
+      type: 'Tipo'
+      field: 'Campo'
+      fields: 'Campos'
+      edit_fields: 'Editar Campos'
+      alternatives: 'Alternativas'
+      add_alternative: 'Agregar Alternativas'
+      add_field: 'Agregar Campo'
+      previsualization: 'Previsualización'
+      data: 'Datos'
+      delete: 'Eliminar'
+      new_picture: 'Nueva Fotografía'
+      data_types:
+        number: 'Número'
+        text: 'Texto'
+        long_text: 'Texto Largo'
+        date: 'Fecha'
+        pictures: 'Fotografías'
+        unique_selection: 'Selección Unica'
+        multiple_selection: 'Selección Múltiple'

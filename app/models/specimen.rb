@@ -1,6 +1,7 @@
 #encoding: utf-8
 class Specimen < ActiveRecord::Base
-
+  include Dynamisable
+  
   # Constants
   # Put here constants for Specimen
 
@@ -10,6 +11,12 @@ class Specimen < ActiveRecord::Base
   belongs_to :specimen_type_version
   belongs_to :prepared_by, class_name: 'User', foreign_key: 'prepared_by_id'
   has_many :lab_tests, dependent: :restrict_with_error
+  has_many :pictures, dependent: :destroy
+
+  # Nested attributes
+  accepts_nested_attributes_for :pictures,
+    allow_destroy: true,
+    reject_if: lambda { |picture| picture[:image].blank? }
 
   # Callbacks
   # Put here custom callback methods for Specimen

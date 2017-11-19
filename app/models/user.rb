@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
 
   # Relations
   belongs_to :organisation
+  has_many :specimens, foreign_key: :prepared_by_id, dependent: :restrict_with_error
+  has_many :lab_tests, foreign_key: :tested_by_id, dependent: :restrict_with_error
 
   # Callbacks
   # Put here custom callback methods for User

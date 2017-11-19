@@ -5,7 +5,8 @@ class SpecimenType < ActiveRecord::Base
   # Put here constants for SpecimenType
 
   # Relations
-  has_many :specimen_type_versions
+  has_many :specimens, dependent: :restrict_with_error
+  has_many :specimen_type_versions, dependent: :restrict_with_error
 
   # Callbacks
   # Put here custom callback methods for SpecimenType

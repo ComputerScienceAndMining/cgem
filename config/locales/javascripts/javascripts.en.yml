@@ -1,3 +1,22 @@
 en:
   js:
-    
+    dynamic:
+      type: 'Type'
+      field: 'Field'
+      fields: 'Fields'
+      edit_fields: 'Edit Fields'
+      alternatives: 'Alternatives'
+      add_alternative: 'Add Alternative'
+      add_field: 'Add Field'
+      previsualization: 'Previsualization'
+      data: 'Data'
+      delete: 'Delete'
+      new_picture: 'New Picture'
+      data_types:
+        number: 'Number'
+        text: 'Text'
+        long_text: 'Long Text'
+        date: 'Date'
+        pictures: 'Pictures'
+        unique_selection: 'Unique Selection'
+        multiple_selection: 'Multiple Selection'

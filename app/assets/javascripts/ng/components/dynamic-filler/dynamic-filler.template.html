@@ -3,7 +3,7 @@
 </div>
 
 <div ng-show="dynamicFiller.template" class="panel panel-primary">
-  <div class="panel-heading">Data</div>
+  <div class="panel-heading">{{$root.lang.dynamic.data}}</div>
   <div class="panel-body dynamic-filler">
 
     <div class="dynamic-fields">
@@ -19,16 +19,29 @@
           <input ng-model="field.value" ng-switch-when="email" class="form-control" type="{{field.type}}">
 
           <div ng-switch-when="pictures" class="dynamic-multiple-media">
-            <label ng-repeat="picture in field.pictures">
-              <input style="display:none" type="text" name="sample[pictures_attributes][][id]" value="{{picture.id}}">
-              <input style="display:none" type="text" name="sample[pictures_attributes][][local_id]" value="picture.local_id">
-              <input id="{{picture.local_id}}" name="sample[pictures_attributes][][image]" class="form-control" type="file" accept="image/*" capture="camera">
-            </label>
-            <button class="btn btn-default btn-block" type="button" ng-click="dynamicFiller.addPicture(field)">New picture</button>
+            <div ng-repeat="picture in field.pictures">
+              <div ng-if="picture.id">
+                <div ng-if="picture._destroy">
+                  <input style="display:none" type="text" name="{{dynamicFiller.object_name}}[pictures_attributes][][id]" value="{{picture.id}}">
+                  <input style="display:none" type="text" name="{{dynamicFiller.object_name}}[pictures_attributes][][_destroy]" value="{{picture._destroy}}">
+                </div>
+                <div ng-if="!picture._destroy">
+                  <img src="{{picture.thumb_url}}" alt="thumb">
+                  <button ng-click="dynamicFiller.destroyPicture(field, picture)" type="button" class="btn btn-danger">{{$root.lang.dynamic.delete}}</button>
+                </div>
+              </div>
+              <div ng-if="!picture.id">
+                <label>
+                  <input style="display:none" type="text" name="{{dynamicFiller.object_name}}[pictures_attributes][][id]" value="{{picture.id}}">
+                  <input style="display:none" type="text" name="{{dynamicFiller.object_name}}[pictures_attributes][][local_id]" value="{{picture.local_id}}">
+                  <input id="{{picture.local_id}}" name="{{dynamicFiller.object_name}}[pictures_attributes][][image]" class="form-control" type="file" accept="image/*" capture="camera">
+                </label>
+              </div>
+            </div>
+            <button class="btn btn-default btn-block" type="button" ng-click="dynamicFiller.addPicture(field)">{{$root.lang.dynamic.new_picture}}</button>
           </div><!-- /.dynamic-multiple-media -->
 
           <!-- <input ng-switch-when="video" class="form-control" type="file" accept="video/*" capture="camcorder"> -->
-
           <!-- <input ng-switch-when="audio" class="form-control" type="file" accept="audio/*" capture="microphone"> -->
 
           <div class="dynamic-toggle-input" data-toggle="buttons">

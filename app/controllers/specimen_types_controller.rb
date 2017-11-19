@@ -58,6 +58,7 @@ class SpecimenTypesController < ApplicationController
     if @specimen_type.destroy
       redirect_to specimen_types_url
     else
+      @specimen_type_versions = @specimen_type.specimen_type_versions
       render :show
     end
   end

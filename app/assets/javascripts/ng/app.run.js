@@ -2,7 +2,7 @@
   'use strict'
 
   angular.module('app')
-  .run(function($rootScope){
+  .run(['$rootScope', function($rootScope){
     $rootScope.lang = {
       dynamic: {
         type : I18n.t('type', {scope: "js.dynamic"}),
@@ -27,6 +27,6 @@
         }
       }
     }
-  })
+  }])
 })();
   

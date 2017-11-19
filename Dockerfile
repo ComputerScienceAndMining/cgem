@@ -1,5 +1,8 @@
 FROM phusion/passenger-full:0.9.20
 
+# Argumentos for build
+ARG SECRET_KEY_BASE
+
 # Set correct environment variables
 ENV HOME /root
 ENV APP_HOME /home/app/webapp

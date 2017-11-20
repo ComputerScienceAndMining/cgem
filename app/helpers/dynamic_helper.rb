@@ -68,6 +68,7 @@ module DynamicHelper
   end
 
   def xls_field_type(obj, field)
+    return "Number" if field["type"] == "pictures"
     return "String" if field["value"].nil?
     return "String" if field["type"] == "text"
     return "Number" if field["type"] == "number"
@@ -81,7 +82,7 @@ module DynamicHelper
 
     case field["type"]
     when "pictures"
-      ''
+      field["pictures"].size
     when "date"
       field["value"].split("T")[0]
     else

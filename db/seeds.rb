@@ -48,11 +48,11 @@ LabTest.connection.execute('ALTER SEQUENCE lab_tests_id_seq RESTART WITH 1')
 
 # Organisations
 usach = Organisation.create! name: 'Universidad de Santiago de Chile'
-teniente = Organisation.create! name: 'Teniente'
+# teniente = Organisation.create! name: 'Teniente'
 
 # Users
 user_1 = User.create! first_name: 'Danilo', last_name: 'Aburto', email:'danilo.aburto@usach.cl', password: 'danilo123', password_confirmation:'danilo123', role: 0, enabled: true, organisation: usach
-user_2 = User.create! first_name: 'Marcos', last_name: 'Villarreal', email:'marcos.villarreal@usach.cl', password: 'marcos123', password_confirmation:'marcos123', role: 400, enabled: true, organisation: teniente
+user_2 = User.create! first_name: 'Marcos', last_name: 'Villarreal', email:'marcos.villarreal@usach.cl', password: 'marcos123', password_confirmation:'marcos123', role: 400, enabled: true, organisation: usach
 user_3 = User.create! first_name: 'Miguel', last_name: 'Vera', email:'miguel.vera@usach.cl', password: 'miguel123', password_confirmation:'miguel123', role: 300, enabled: true, organisation: usach
 
 # Work Order statuses
@@ -61,17 +61,17 @@ WorkOrderStatus.create! name: 'En progreso'
 WorkOrderStatus.create! name: 'Finalizada'
 WorkOrderStatus.create! name: 'Entregada'
 
-# Work orders
-wo_1 = WorkOrder.create! name: 'Pruebas Sondajes Sector Sur Teniente', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: teniente
-       WorkOrder.create! name: '2/2017 J3 Determinación de humedad', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
-       WorkOrder.create! name: '2/2017 J3 Picnometría', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
-       WorkOrder.create! name: '2/2017 J3 Le Chatelier', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
-       WorkOrder.create! name: '2/2017 J3 Razón de absorción', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
-       WorkOrder.create! name: '2/2017 J3 Esclerometría', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
-       WorkOrder.create! name: '2/2017 J3 Carga puntual', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
-       WorkOrder.create! name: '2/2017 J3 Velocidad de ondas', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
-       WorkOrder.create! name: '2/2017 J3 Tracción indirecta', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
-       WorkOrder.create! name: '2/2017 J3 CCNBD', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
+# # Work orders
+# wo_1 = WorkOrder.create! name: 'Pruebas Sondajes Sector Sur Teniente', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
+#        WorkOrder.create! name: '2/2017 J3 Determinación de humedad', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
+#        WorkOrder.create! name: '2/2017 J3 Picnometría', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
+#        WorkOrder.create! name: '2/2017 J3 Le Chatelier', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
+#        WorkOrder.create! name: '2/2017 J3 Razón de absorción', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
+#        WorkOrder.create! name: '2/2017 J3 Esclerometría', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
+#        WorkOrder.create! name: '2/2017 J3 Carga puntual', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
+#        WorkOrder.create! name: '2/2017 J3 Velocidad de ondas', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
+#        WorkOrder.create! name: '2/2017 J3 Tracción indirecta', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
+#        WorkOrder.create! name: '2/2017 J3 CCNBD', description: '', due_date: '2017-10-10', responsible_id: user_1.id, work_order_status: wos_creada, organisation: usach
 
 # SampleType type
 testigo_data = {
@@ -332,47 +332,47 @@ ccnbd_data_filled = {
   ]
 }
 
-testigo = SampleType.create! name: 'Testigo', data: testigo_data
-testigo_version = SampleTypeVersion.first
+# testigo = SampleType.create! name: 'Testigo', data: testigo_data
+# testigo_version = SampleTypeVersion.first
 
-cilindro = SpecimenType.create! name: 'Cilindro', data: cilindro_data
-cilindro_version = SpecimenTypeVersion.first
+# cilindro = SpecimenType.create! name: 'Cilindro', data: cilindro_data
+# cilindro_version = SpecimenTypeVersion.first
 
-bloque = SpecimenType.create! name: 'Bloque'
-bloque_version = SpecimenTypeVersion.first
+# bloque = SpecimenType.create! name: 'Bloque'
+# bloque_version = SpecimenTypeVersion.first
 
-samples = []
-(1..30).each do |num|
-  new_sample = Sample.create! code: "T1-S#{num}", remarks: 'Sin observaciones', sample_type: testigo, sample_type_version: testigo_version, work_order: wo_1, data: testigo_data_filled
-  samples.append new_sample
-end
+# samples = []
+# (1..30).each do |num|
+#   new_sample = Sample.create! code: "T1-S#{num}", remarks: 'Sin observaciones', sample_type: testigo, sample_type_version: testigo_version, work_order: wo_1, data: testigo_data_filled
+#   samples.append new_sample
+# end
 
-# Se crean especímenes
-specimens = []
-samples.each do |sample|
-  (1..4).each do |num|
-    new_specimen = Specimen.create! code: "#{sample.code}-S#{num}", remarks: 'Sin observaciones', sample: sample, specimen_type: cilindro, specimen_type_version: cilindro_version, prepared_by: user_2, data: cilindro_data_filled
-    specimens.append new_specimen
-  end
-end
+# # Se crean especímenes
+# specimens = []
+# samples.each do |sample|
+#   (1..4).each do |num|
+#     new_specimen = Specimen.create! code: "#{sample.code}-S#{num}", remarks: 'Sin observaciones', sample: sample, specimen_type: cilindro, specimen_type_version: cilindro_version, prepared_by: user_2, data: cilindro_data_filled
+#     specimens.append new_specimen
+#   end
+# end
 
-# Status de ensayos
-ts_creado = TestStatus.create! name: 'Creado', icon: 'pencil', icon_color: '#777777'
-ts_progreso = TestStatus.create! name: 'En progreso', icon: 'hourglass-2', icon_color: '#f0ad4e'
-ts_finalizado = TestStatus.create! name: 'Finalizado', icon: 'check', icon_color: '#5cb85c'
+# # Status de ensayos
+# ts_creado = TestStatus.create! name: 'Creado', icon: 'pencil', icon_color: '#777777'
+# ts_progreso = TestStatus.create! name: 'En progreso', icon: 'hourglass-2', icon_color: '#f0ad4e'
+# ts_finalizado = TestStatus.create! name: 'Finalizado', icon: 'check', icon_color: '#5cb85c'
 
-# Test Types
-tt_vo = TestType.create! name: 'Velocidad de onda', description: '', data: vo_data
-tt_vo_version = TestTypeVersion.last
-tt_ccnbd = TestType.create! name: 'CCNBD', description: '', data: ccnbd_data
-tt_ccnbd_version = TestTypeVersion.last
+# # Test Types
+# tt_vo = TestType.create! name: 'Velocidad de onda', description: '', data: vo_data
+# tt_vo_version = TestTypeVersion.last
+# tt_ccnbd = TestType.create! name: 'CCNBD', description: '', data: ccnbd_data
+# tt_ccnbd_version = TestTypeVersion.last
 
-# Se crean ensayos
-lab_tests = []
-specimens.each do |specimen|
-  new_vo_data_filled = tenpercdev(vo_data_filled.clone)
-  new_ccnbd_data_filled = tenpercdev(ccnbd_data_filled.clone)
+# # Se crean ensayos
+# lab_tests = []
+# specimens.each do |specimen|
+#   new_vo_data_filled = tenpercdev(vo_data_filled.clone)
+#   new_ccnbd_data_filled = tenpercdev(ccnbd_data_filled.clone)
 
-  new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_vo, test_type_version: tt_vo_version, specimen: specimen, tested_by: user_3, data: vo_data_filled
-  new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_ccnbd, test_type_version: tt_ccnbd_version, specimen: specimen, tested_by: user_1, data: ccnbd_data_filled
-end
+#   new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_vo, test_type_version: tt_vo_version, specimen: specimen, tested_by: user_3, data: vo_data_filled
+#   new_test_1 = LabTest.create! started_at: '2017-8-10 10:12:00.000000', ended_at: '2017-8-10 11:12:00.000000', work_order: wo_1, test_status: ts_finalizado, test_type: tt_ccnbd, test_type_version: tt_ccnbd_version, specimen: specimen, tested_by: user_1, data: ccnbd_data_filled
+# end

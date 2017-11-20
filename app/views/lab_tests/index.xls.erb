@@ -110,7 +110,7 @@
         <Cell ss:StyleID="Alt"><Data ss:Type="String"><%= specimen.sample.sample_type_version.name %></Data></Cell>
         
         <% specimen.sample.data["fields"].each do |field| %>
-            <Cell ss:StyleID="Alt"><Data ss:Type="<%= xls_field_type sample, field %>"><%= field_value specimen.sample, field %></Data></Cell>
+            <Cell ss:StyleID="Alt"><Data ss:Type="<%= xls_field_type sample, field %>"><%= xls_field_value specimen.sample, field %></Data></Cell>
         <% end %>
 
         <%# Specimens %>
@@ -119,7 +119,7 @@
         <Cell ss:StyleID="Normal"><Data ss:Type="String"><%= specimen.specimen_type_version.name %></Data></Cell>
 
         <% specimen.data["fields"].each do |field| %>
-            <Cell ss:StyleID="Normal"><Data ss:Type="<%= xls_field_type specimen, field %>"><%= field_value specimen, field %></Data></Cell>
+            <Cell ss:StyleID="Normal"><Data ss:Type="<%= xls_field_type specimen, field %>"><%= xls_field_value specimen, field %></Data></Cell>
         <% end %>
 
         <%# LabTest %>

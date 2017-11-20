@@ -17,7 +17,7 @@ pt-BR:
       last_attempt: Você tem mais uma única tentativa antes de sua conta ser bloqueada.
       not_found_in_database: Email ou senha inválidos.
       timeout: 'A sua sessão expirou, por favor, faça login novamente para continuar.'
-      unauthenticated: 'Para continuar, faça login ou registre-se.'
+      unauthenticated: 'Para continuar, faça login.'
       unconfirmed: 'Antes de continuar, confirme a sua conta.'
     mailer:
       confirmation_instructions:

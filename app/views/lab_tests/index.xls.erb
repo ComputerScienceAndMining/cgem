@@ -129,7 +129,7 @@
             <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test_version(test_type_version, specimen).try(:test_status) %></Data></Cell>
             <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="String"><%= find_test_version(test_type_version, specimen).try(:tested_by) %></Data></Cell>
             <% find_test_version(test_type_version, specimen).data["fields"].each do |field| %>
-                <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="<%= xls_field_type find_test_version(test_type_version, specimen), field %>"><%= field_value find_test_version(test_type_version, specimen), field, empty: '' %></Data></Cell>
+                <Cell ss:StyleID="<%= (index % 2 == 0)? 'Alt': 'Normal'%>"><Data ss:Type="<%= xls_field_type find_test_version(test_type_version, specimen), field %>"><%= xls_field_value find_test_version(test_type_version, specimen), field, empty: '' %></Data></Cell>
             <% end %>
         <% end %>
 

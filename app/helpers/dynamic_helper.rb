@@ -73,4 +73,19 @@ module DynamicHelper
     return "Number" if field["type"] == "number"
     return "String"
   end
+
+  def xls_field_value(obj, field, empty: t('empty_value', scope: :dynamic_fields))
+    return empty if ((field["value"].nil?) or
+                       (not field["value"].is_a? Numeric and field["value"].empty?)) and 
+                       (field["type"] != "pictures")
+
+    case field["type"]
+    when "pictures"
+      ''
+    when "date"
+      field["value"].split("T")[0]
+    else
+      field["value"]
+    end
+  end
 end
